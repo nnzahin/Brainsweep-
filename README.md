@@ -11,8 +11,10 @@ An idea that cannot be prioritized immediately is categorized as "Delayed" and p
 If it is something that will need referencing for later, it is put into the References section.
 
 API
-We will be using the Google Keep API to create Reference and Delayed items. 
-We hope to use the Google Calendar API to synchronize actionable events with the user’s calendar.
+We will be using 
+- Google Keep API to create Reference and Delayed items.
+- Google Task API for Actionable Items (tasks).
+- Google Calendar API to synchronize actionable events with the user’s calendar.
 
 Some other helpful documentation:
 
