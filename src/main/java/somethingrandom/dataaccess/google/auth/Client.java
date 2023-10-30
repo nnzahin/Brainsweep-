@@ -1,14 +1,12 @@
 package somethingrandom.dataaccess.google.auth;
 
 import okhttp3.*;
-import okio.ByteString;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Scanner;
 
@@ -17,63 +15,32 @@ import java.util.Scanner;
 @SuppressWarnings("KotlinInternalInJava")
 public class Client {
     private static final String OAUTH_CLIENT_ID = "1094948025113-ej3dvu6bs0ctmsfftd8p677o9mkv16m0.apps.googleusercontent.com";
+    private final CodeVerifier verifier;
     private final OkHttpClient httpClient;
     private final String clientSecret;
     private int usedPort = 0;
 
     public static void main(String[] args) throws IOException {
-        Client c = new Client(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"));
-        String verifier = c.getCodeVerifier();
-        System.out.println("got verifier: " + verifier);
-        String code = c.getAuthorizationCode(verifier);
+        Client c = new Client(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
+        String code = c.getAuthorizationCode();
         System.out.println("got authorization code: " + code);
-        String token = c.getAuthorizationToken(code, verifier);
+        String token = c.getAuthorizationToken(code);
         System.out.println("got authorization token: " + token);
 
         c.addEvent(token, "It works on October 2nd");
     }
 
-    public Client(OkHttpClient httpClient, String clientSecret) {
+    public Client(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
         this.httpClient = httpClient;
         this.clientSecret = clientSecret;
+        this.verifier = verifier;
 
         if (clientSecret == null) {
             throw new IllegalArgumentException("clientSecret cannot be null");
         }
     }
 
-    private String getCodeVerifier() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[64];
-        random.nextBytes(bytes);
-
-        for (int i = 0; i < bytes.length; i++) {
-            boolean ok;
-            while (true) {
-                if (bytes[i] < 0) {
-                    // definitely not valid, at least make it positive
-                    bytes[i] *= -1;
-                }
-
-                ok = Character.isAlphabetic(bytes[i]);
-                ok |= Character.isDigit(bytes[i]);
-                ok |= bytes[i] == '-';
-                ok |= bytes[i] == '.';
-                ok |= bytes[i] == '_';
-                ok |= bytes[i] == '~';
-
-                if (ok) {
-                    break;
-                }
-
-                bytes[i] = (byte) random.nextInt();
-            }
-        }
-
-        return ByteString.of(bytes).string(StandardCharsets.US_ASCII);
-    }
-
-    private String getAuthorizationCode(String verifier) throws IOException {
+    private String getAuthorizationCode() throws IOException {
         // This code is PERFECT and will never need refactoring.
         ServerSocket server = new ServerSocket();
         server.bind(new InetSocketAddress(0));
@@ -84,8 +51,8 @@ public class Client {
         uri += "?client_id=" + OAUTH_CLIENT_ID;
         uri += "&redirect_uri=http://127.0.0.1:" + usedPort;
         uri += "&scope=https://www.googleapis.com/auth/calendar";
-        uri += "&code_challenge=" + verifier;
-        uri += "&code_challenge_method=plain"; // TODO we should do S256
+        uri += "&code_challenge=" + verifier.getCodeChallenge();
+        uri += "&code_challenge_method=" + verifier.getMethodName();
         uri += "&response_type=code";
 
         URI parsed;
@@ -119,7 +86,7 @@ public class Client {
         }
     }
 
-    private String getAuthorizationToken(String code, String verifier) throws IOException {
+    private String getAuthorizationToken(String code) throws IOException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
                 .host("oauth2.googleapis.com")
@@ -131,7 +98,7 @@ public class Client {
                 .add("client_secret", clientSecret)
                 .add("code", code)
                 .add("grant_type", "authorization_code")
-                .add("code_verifier", verifier)
+                .add("code_verifier", verifier.getCodeVerifier())
                 .add("redirect_uri", "http://127.0.0.1:" + usedPort)
                 .build();
 
