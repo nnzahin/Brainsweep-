@@ -13,7 +13,7 @@ import java.util.Scanner;
 // https://developers.google.com/identity/protocols/oauth2/native-app
 
 @SuppressWarnings("KotlinInternalInJava")
-public class Client {
+public class LoginFlow {
     private static final String OAUTH_CLIENT_ID = "1094948025113-ej3dvu6bs0ctmsfftd8p677o9mkv16m0.apps.googleusercontent.com";
     private final CodeVerifier verifier;
     private final OkHttpClient httpClient;
@@ -21,7 +21,7 @@ public class Client {
     private int usedPort = 0;
 
     public static void main(String[] args) throws IOException {
-        Client c = new Client(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
+        LoginFlow c = new LoginFlow(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
         String code = c.getAuthorizationCode();
         System.out.println("got authorization code: " + code);
         String token = c.getAuthorizationToken(code);
@@ -30,7 +30,7 @@ public class Client {
         c.addEvent(token, "It works on October 2nd");
     }
 
-    public Client(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
+    public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
         this.httpClient = httpClient;
         this.clientSecret = clientSecret;
         this.verifier = verifier;
