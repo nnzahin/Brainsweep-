@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
 import java.security.SecureRandom;
+import java.time.Clock;
 import java.util.Scanner;
 
 // https://developers.google.com/identity/protocols/oauth2/native-app
@@ -37,6 +38,24 @@ public class LoginFlow {
 
         if (clientSecret == null) {
             throw new IllegalArgumentException("clientSecret cannot be null");
+        }
+    }
+
+    /**
+     * Starts the login process. This will synchronously start a Web browser and
+     * Web server, wait for the user to finish, then return a token.
+     *
+     * @return A token that can be used to authenticate.
+     * @throws LoginFailureException if an exception occurred while logging in.
+     */
+    public Token execute() throws LoginFailureException {
+        try {
+            String code = getAuthorizationCode();
+            String token = getAuthorizationToken(code);
+
+            return new Token(new GoogleTokenSource(verifier, code), Clock.systemUTC());
+        } catch (Exception e) {
+            throw new LoginFailureException(e);
         }
     }
 
