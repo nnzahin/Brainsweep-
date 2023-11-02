@@ -15,20 +15,18 @@ import java.util.Scanner;
 
 @SuppressWarnings("KotlinInternalInJava")
 public class LoginFlow {
-    private static final String OAUTH_CLIENT_ID = "1094948025113-ej3dvu6bs0ctmsfftd8p677o9mkv16m0.apps.googleusercontent.com";
+    static final String OAUTH_CLIENT_ID = "1094948025113-ej3dvu6bs0ctmsfftd8p677o9mkv16m0.apps.googleusercontent.com";
     private final CodeVerifier verifier;
     private final OkHttpClient httpClient;
     private final String clientSecret;
     private int usedPort = 0;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws AuthenticationException, IOException {
         LoginFlow c = new LoginFlow(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
-        String code = c.getAuthorizationCode();
-        System.out.println("got authorization code: " + code);
-        String token = c.getAuthorizationToken(code);
-        System.out.println("got authorization token: " + token);
+        Token t = c.execute();
+        System.out.println("got authorization token: " + t.getToken().substring(0, 5) + "...");
 
-        c.addEvent(token, "It works on October 2nd");
+        c.addEvent(t, "It works on October 2nd");
     }
 
     public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
@@ -51,9 +49,8 @@ public class LoginFlow {
     public Token execute() throws AuthenticationException {
         try {
             String code = getAuthorizationCode();
-            String token = getAuthorizationToken(code);
 
-            return new Token(new GoogleTokenSource(verifier, code), Clock.systemUTC());
+            return new Token(new GoogleTokenSource(httpClient, verifier, code, "http://127.0.0.1:" + usedPort, clientSecret), Clock.systemUTC());
         } catch (Exception e) {
             throw new AuthenticationException(e);
         }
@@ -105,35 +102,7 @@ public class LoginFlow {
         }
     }
 
-    private String getAuthorizationToken(String code) throws IOException {
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("https")
-                .host("oauth2.googleapis.com")
-                .addPathSegment("token")
-                .build();
-
-        RequestBody body = new FormBody.Builder()
-                .add("client_id", OAUTH_CLIENT_ID)
-                .add("client_secret", clientSecret)
-                .add("code", code)
-                .add("grant_type", "authorization_code")
-                .add("code_verifier", verifier.getCodeVerifier())
-                .add("redirect_uri", "http://127.0.0.1:" + usedPort)
-                .build();
-
-        Request req = new Request.Builder()
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .url(url)
-                .post(body)
-                .build();
-        try (Response response = httpClient.newCall(req).execute()) {
-            JSONObject parsed = new JSONObject(response.body().string());
-
-            return parsed.getString("access_token");
-        }
-    }
-
-    private void addEvent(String token, String eventName) throws IOException {
+    private void addEvent(Token token, String eventName) throws IOException, AuthenticationException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
                 .host("www.googleapis.com")
@@ -144,7 +113,7 @@ public class LoginFlow {
         Request req = new Request.Builder()
                 .post(RequestBody.create(new byte[0]))
                 .url(url)
-                .addHeader("Authorization", "Bearer " + token)
+                .addHeader("Authorization", "Bearer " + token.getToken())
                 .build();
 
         try (Response resp = httpClient.newCall(req).execute()) {
