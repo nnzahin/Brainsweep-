@@ -54,13 +54,13 @@ public class TokenTest {
     }
 
     @Test
-    public void shouldRequestFirstToken() {
+    public void shouldRequestFirstToken() throws AuthenticationException {
         Token token = new Token(createCountingSource(Instant.MAX), fixedClock);
         assertEquals(token.getToken(), "token #1");
     }
 
     @Test
-    public void shouldCacheTokens() {
+    public void shouldCacheTokens() throws AuthenticationException {
         Token token = new Token(createCountingSource(Instant.MAX), fixedClock);
 
         assertEquals(token.getToken(), "token #1");
@@ -68,7 +68,7 @@ public class TokenTest {
     }
 
     @Test
-    public void shouldExpireTokens() {
+    public void shouldExpireTokens() throws AuthenticationException {
         final Instant initialTime = Instant.parse("2023-11-02T14:37:00.00Z");
         final Instant expiresWhen = Instant.parse("2023-11-02T14:47:00.00Z");
         final Instant secondAttempt = Instant.parse("2023-11-02T14:58:00.00Z");
@@ -85,7 +85,7 @@ public class TokenTest {
     }
 
     @Test
-    public void shouldExpireTokensWithinEarlyWindow() {
+    public void shouldExpireTokensWithinEarlyWindow() throws AuthenticationException {
         final Instant initialTime = Instant.parse("2023-11-02T14:37:00.00Z");
         final Instant expiresWhen = Instant.parse("2023-11-02T14:46:31.00Z");
 
@@ -99,7 +99,7 @@ public class TokenTest {
     }
 
     @Test
-    public void shouldNotRequestTokenWhenConstructed() {
+    public void shouldNotRequestTokenWhenConstructed() throws AuthenticationException {
         final Instant initialTime = Instant.parse("2023-11-02T14:37:00.00Z");
         final Instant expiresWhen = Instant.parse("2023-11-02T14:47:00.00Z");
         final Instant secondAttempt = Instant.parse("2023-11-02T14:58:00.00Z");

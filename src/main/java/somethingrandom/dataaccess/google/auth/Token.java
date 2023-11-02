@@ -47,9 +47,10 @@ public class Token {
         /**
          * Requests a new token, and blocks synchronously until one is available.
          *
-         * @return The new token. Throws (TODO) if it could not be obtained.
+         * @return The new token, if successful.
+         * @throws AuthenticationException upon failure.
          */
-        ExpiringToken requestToken();
+        ExpiringToken requestToken() throws AuthenticationException;
     }
 
     /**
@@ -82,7 +83,7 @@ public class Token {
      *
      * @return The current token.
      */
-    public String getToken() {
+    public String getToken() throws AuthenticationException {
         if (cached == null || cached.expiry().minus(earlyExpiryWindow).isBefore(clock.instant())) {
             cached = source.requestToken();
         }

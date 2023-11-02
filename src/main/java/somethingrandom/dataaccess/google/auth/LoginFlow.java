@@ -46,16 +46,16 @@ public class LoginFlow {
      * Web server, wait for the user to finish, then return a token.
      *
      * @return A token that can be used to authenticate.
-     * @throws LoginFailureException if an exception occurred while logging in.
+     * @throws AuthenticationException if an exception occurred while logging in.
      */
-    public Token execute() throws LoginFailureException {
+    public Token execute() throws AuthenticationException {
         try {
             String code = getAuthorizationCode();
             String token = getAuthorizationToken(code);
 
             return new Token(new GoogleTokenSource(verifier, code), Clock.systemUTC());
         } catch (Exception e) {
-            throw new LoginFailureException(e);
+            throw new AuthenticationException(e);
         }
     }
 
