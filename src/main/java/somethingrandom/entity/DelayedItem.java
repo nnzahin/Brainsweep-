@@ -17,6 +17,7 @@ public class DelayedItem extends Item {
      *
      * @param name         the name
      * @param creationDate the creation date
+     * @param remindDate   the reminder date
      * @param itemKind     the item kind
      */
     public DelayedItem(String name, Instant creationDate, Instant remindDate, ItemKind itemKind){

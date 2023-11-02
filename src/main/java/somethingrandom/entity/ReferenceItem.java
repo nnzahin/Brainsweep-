@@ -32,7 +32,7 @@ public class ReferenceItem extends Item {
      * @param creationDate the creation date
      * @param itemKind     the item kind
      */
-    public ReferenceItem(String name, String description, Instant creationDate, ItemKind itemKind){
+    public ReferenceItem(String name, Instant creationDate, String description, ItemKind itemKind){
         this.name = name;
         this.id = UUID.randomUUID();
         this.description = description;
