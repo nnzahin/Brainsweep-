@@ -7,23 +7,16 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 class GoogleTokenSource implements Token.Source {
     private final OkHttpClient client;
-    private final CodeVerifier verifier;
-    private final String code;
-    private final String redirectUrl;
-    private final String clientSecret;
+    private final AuthenticationSession session;
 
     private static final HttpUrl TOKEN_ENDPOINT = HttpUrl.parse("https://oauth2.googleapis.com/token");
 
-    GoogleTokenSource(OkHttpClient client, CodeVerifier verifier, String code, String redirectUrl, String clientSecret) {
+    GoogleTokenSource(OkHttpClient client, AuthenticationSession authenticationSession) {
         this.client = client;
-        this.verifier = verifier;
-        this.code = code;
-        this.redirectUrl = redirectUrl;
-        this.clientSecret = clientSecret;
+        this.session = authenticationSession;
     }
 
     @Override
@@ -50,11 +43,11 @@ class GoogleTokenSource implements Token.Source {
     private RequestBody getRequestBody() {
         return new FormBody.Builder()
             .add("client_id", LoginFlow.OAUTH_CLIENT_ID)
-            .add("client_secret", clientSecret)
-            .add("code", code)
+            .add("client_secret", session.clientSecret())
+            .add("code", session.code())
             .add("grant_type", "authorization_code")
-            .add("code_verifier", verifier.getCodeVerifier())
-            .add("redirect_uri", redirectUrl)
+            .add("code_verifier", session.verifier().getCodeVerifier())
+            .add("redirect_uri", session.redirectUrl())
             .build();
     }
 }

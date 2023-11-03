@@ -49,8 +49,9 @@ public class LoginFlow {
     public Token execute() throws AuthenticationException {
         try {
             String code = getAuthorizationCode();
+            AuthenticationSession session = new AuthenticationSession(verifier, code, getRedirectUrl(), clientSecret);
 
-            return new Token(new GoogleTokenSource(httpClient, verifier, code, "http://127.0.0.1:" + usedPort, clientSecret), Clock.systemUTC());
+            return new Token(new GoogleTokenSource(httpClient, session), Clock.systemUTC());
         } catch (Exception e) {
             throw new AuthenticationException(e);
         }
@@ -100,6 +101,10 @@ public class LoginFlow {
             socket.getOutputStream().write("HTTP/1.0 400 Bad Request\r\nContent-Type: text/plain; charset=utf-8\\r\\n\\r\\nThe request wasn't valid; this is probably our bug.".getBytes());
             socket.close();
         }
+    }
+
+    private String getRedirectUrl() {
+        return "http://127.0.0.1:" + usedPort;
     }
 
     private void addEvent(Token token, String eventName) throws IOException, AuthenticationException {
