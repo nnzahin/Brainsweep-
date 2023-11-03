@@ -1,18 +1,21 @@
 package somethingrandom.dataaccess.google.auth;
 
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
+@SuppressWarnings("KotlinInternalInJava")
 class GoogleTokenSource implements Token.Source {
     private final OkHttpClient client;
     private final AuthenticationSession session;
 
-    private static final HttpUrl TOKEN_ENDPOINT = HttpUrl.parse("https://oauth2.googleapis.com/token");
+    private static final @NotNull HttpUrl TOKEN_ENDPOINT = Objects.requireNonNull(HttpUrl.parse("https://oauth2.googleapis.com/token"));
 
     GoogleTokenSource(OkHttpClient client, AuthenticationSession authenticationSession) {
         this.client = client;
