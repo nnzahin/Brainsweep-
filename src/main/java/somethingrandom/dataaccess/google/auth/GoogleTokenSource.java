@@ -28,6 +28,10 @@ class GoogleTokenSource implements Token.Source {
             .build();
 
         try (Response response = client.newCall(req).execute()) {
+            if (response.body() == null || response.code() != 200) {
+                throw new AuthenticationException(String.format("Could not redeem token: %s", response.message()));
+            }
+
             JSONObject parsed = new JSONObject(response.body().string());
 
             String token = parsed.getString("access_token");
