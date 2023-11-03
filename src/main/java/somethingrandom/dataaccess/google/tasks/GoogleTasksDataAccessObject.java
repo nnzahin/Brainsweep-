@@ -1,5 +1,6 @@
 package somethingrandom.dataaccess.google.tasks;
 
+import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 

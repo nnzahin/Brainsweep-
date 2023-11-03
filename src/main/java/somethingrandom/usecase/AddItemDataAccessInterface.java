@@ -1,5 +1,7 @@
 package somethingrandom.usecase;
 
+import somethingrandom.entity.Item;
+
 public interface AddItemDataAccessInterface {
     /**
      * Saves the item to the data store.

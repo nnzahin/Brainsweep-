@@ -12,6 +12,10 @@ public class AddItemPresenter implements AddItemOutputBoundary{
 
     private ViewManagerModel viewManagerModel;
 
+    public AddItemPresenter(AddItemViewModel viewModel) {
+        addItemViewModel = viewModel;
+    }
+
     public void prepareSuccessView(String response){
         AddItemState addItemState = addItemViewModel.getState();
     }
