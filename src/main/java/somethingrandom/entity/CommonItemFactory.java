@@ -9,15 +9,6 @@ public class CommonItemFactory implements ItemFactory{
      *
      * @param name         the name
      * @param creationDate the creation date
-     */
-    public ActionableItem createActionableItem(String name, Instant creationDate){
-        return new ActionableItem(name, creationDate, null, ItemKind.ACTIONABLE);
-    }
-    /**
-     * Return a new Actionable item.
-     *
-     * @param name         the name
-     * @param creationDate the creation date
      * @param neededTime the needed time
      */
     public ActionableItem createActionableItem(String name, Instant creationDate, Duration neededTime){
