@@ -19,21 +19,21 @@ public class AddReferenceItemInputData {
         this.creationDate = creationDate;
         this.description = description;
     }
-    String getName(){
+    public String getName(){
         return this.name;
     }
     /**
      * Return the creation date of the item to be created.
      *
      */
-    Instant getCreationDate(){
+    public Instant getCreationDate(){
         return this.creationDate;
     }
     /**
      * Return the item due date of the item to be created.
      *
      */
-    String getDescription(){
+    public String getDescription(){
         return this.description;
     }
 }

@@ -8,9 +8,9 @@ import java.util.UUID;
  */
 public class DelayedItem extends Item {
     private String name;
+    private UUID id;
     private final Instant creationDate;
     private Instant remindDate;
-    private final ItemKind itemKind;
 
     /**
      * Instantiates a new Delayed item.
@@ -18,29 +18,21 @@ public class DelayedItem extends Item {
      * @param name         the name
      * @param creationDate the creation date
      * @param remindDate   the reminder date
-     * @param itemKind     the item kind
      */
-    public DelayedItem(String name, Instant creationDate, Instant remindDate, ItemKind itemKind){
+    public DelayedItem(String name, Instant creationDate, Instant remindDate){
         this.name = name;
         this.id = UUID.randomUUID();
         this.creationDate = creationDate;
         this.remindDate = remindDate;
-        this.itemKind = itemKind;
     }
-    public String getName(){
-        return this.name;
+    /**
+     * Returns item kind.
+     *
+     * @return the item kind
+     */
+    public ItemKind getItemKind(){
+        return ItemKind.DELAYED;
     }
-    public UUID getID(){
-        return this.id;
-    }
-    public String setName(String name){
-        this.name = name;
-        return this.name;
-    }
-    public Instant getCreationDate(){
-        return this.creationDate;
-    }
-
     /**
      * Sets remind date.
      *
@@ -48,8 +40,5 @@ public class DelayedItem extends Item {
      */
     public void setRemindDate(Instant remindDate) {
         this.remindDate = remindDate;
-    }
-    public ItemKind getItemKind(){
-        return this.itemKind;
     }
 }

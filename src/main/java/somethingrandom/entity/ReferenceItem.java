@@ -12,6 +12,10 @@ public class ReferenceItem extends Item {
      */
     private String name;
     /**
+     * The ID.
+     */
+    private final UUID id;
+    /**
      * The Creation date.
      */
     private final Instant creationDate;
@@ -19,10 +23,6 @@ public class ReferenceItem extends Item {
      * The Description.
      */
     private String description;
-    /**
-     * The Item kind.
-     */
-    private final ItemKind itemKind;
 
     /**
      * Instantiates a new Reference item.
@@ -30,24 +30,20 @@ public class ReferenceItem extends Item {
      * @param name         the name
      * @param description  the description
      * @param creationDate the creation date
-     * @param itemKind     the item kind
      */
-    public ReferenceItem(String name, Instant creationDate, String description, ItemKind itemKind){
+    public ReferenceItem(String name, Instant creationDate, String description){
         this.name = name;
         this.id = UUID.randomUUID();
         this.description = description;
         this.creationDate = creationDate;
-        this.itemKind = itemKind;
     }
-    public String getName(){
-        return this.name;
-    }
-    public UUID getID(){
-        return this.id;
-    }
-    public String setName(String name){
-        this.name = name;
-        return this.name;
+    /**
+     * Returns item kind.
+     *
+     * @return the item kind
+     */
+    public ItemKind getItemKind(){
+        return ItemKind.REFERENCE;
     }
     /**
      * Get the item's description string.
@@ -62,13 +58,7 @@ public class ReferenceItem extends Item {
      *
      * @param description the description date
      */
-    public void setRemindDate(String description) {
+    public void setDescription(String description) {
         this.description = description;
-    }
-    public Instant getCreationDate(){
-        return this.creationDate;
-    }
-    public ItemKind getItemKind(){
-        return this.itemKind;
     }
 }

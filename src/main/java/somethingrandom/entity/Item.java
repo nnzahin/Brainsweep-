@@ -10,47 +10,48 @@ public abstract class Item {
     /**
      * The Name.
      */
-    public String name;
+    private String name;
     /**
      * The ID.
      */
-    public UUID id;
+    private UUID id;
     /**
      * The Creation date.
      */
-    public Instant creationDate;
-    /**
-     * The Item kind.
-     */
-    public ItemKind itemKind;
-
-    /**
-     * Gets creation date.
-     *
-     * @return the creation date
-     */
-    public abstract Instant getCreationDate();
-
+    private Instant creationDate;
     /**
      * Returns name.
      *
      * @return the name
      */
-    public abstract String getName();
+    public String getName(){
+        return this.name;
+    }
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
+    public Instant getCreationDate(){
+        return this.creationDate;
+    }
     /**
      * Returns ID.
      *
      * @return the ID
      */
-    public abstract UUID getID();
+    public UUID getID(){
+        return this.id;
+    }
     /**
      * Sets name.
      *
      * @param name the name
      * @return the name
      */
-    public abstract String setName(String name);
-
+    public void setName(String name){
+        this.name = name;
+    }
     /**
      * Returns item kind.
      *

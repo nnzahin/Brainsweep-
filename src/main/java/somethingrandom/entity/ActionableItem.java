@@ -13,25 +13,21 @@ public class ActionableItem extends Item {
     /**
      * The Name.
      */
-    public String name;
+    private String name;
     /**
      * The ID.
      */
-    public final UUID id;
+    private final UUID id;
     /**
      * The Creation date.
      */
 
-    public final Instant creationDate;
+    private final Instant creationDate;
     /**
      * The amount of time needed to complete the task.
      */
     @Nullable
-    public Duration neededTime;
-    /**
-     * The Item kind.
-     */
-    public final ItemKind itemKind;
+    private Duration neededTime;
 
     /**
      * Instantiates a new Actionable item.
@@ -39,29 +35,21 @@ public class ActionableItem extends Item {
      * @param name         the name
      * @param creationDate the creation date
      * @param neededTime   the needed time
-     * @param itemKind     the item kind
      */
-    public ActionableItem(String name, Instant creationDate, @Nullable Duration neededTime, ItemKind itemKind){
+    public ActionableItem(String name, Instant creationDate, @Nullable Duration neededTime){
         this.name = name;
         this.id = UUID.randomUUID();
         this.creationDate = creationDate;
         this.neededTime = neededTime;
-        this.itemKind = itemKind;
     }
-    public String getName(){
-        return this.name;
+    /**
+     * Returns item kind.
+     *
+     * @return the item kind
+     */
+    public ItemKind getItemKind(){
+        return ItemKind.ACTIONABLE;
     }
-    public UUID getID(){
-        return this.id;
-    }
-    public String setName(String name){
-        this.name = name;
-        return this.name;
-    }
-    public Instant getCreationDate(){
-        return this.creationDate;
-    }
-
     /**
      * Set needed time.
      *
@@ -69,8 +57,5 @@ public class ActionableItem extends Item {
      */
     public void setNeededTime(Duration neededTime){
         this.neededTime = neededTime;
-    }
-    public ItemKind getItemKind(){
-        return this.itemKind;
     }
 }

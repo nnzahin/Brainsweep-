@@ -9,10 +9,10 @@ public class CommonItemFactory implements ItemFactory{
      *
      * @param name         the name
      * @param creationDate the creation date
-     * @param neededTime the needed time
+     * @param neededTime   the needed time
      */
     public ActionableItem createActionableItem(String name, Instant creationDate, Duration neededTime){
-        return new ActionableItem(name, creationDate, neededTime, ItemKind.ACTIONABLE);
+        return new ActionableItem(name, creationDate, neededTime);
     }
     /**
      * Return a new Reference item.
@@ -22,7 +22,7 @@ public class CommonItemFactory implements ItemFactory{
      * @param description  the description
      */
     public ReferenceItem createReferenceItem(String name, Instant creationDate, String description){
-        return new ReferenceItem(name, creationDate, description, ItemKind.REFERENCE);
+        return new ReferenceItem(name, creationDate, description);
     }
     /**
      * Return a new Delayed item.
@@ -32,6 +32,6 @@ public class CommonItemFactory implements ItemFactory{
      * @param remindDate   the reminder date
      */
     public DelayedItem createDelayedItem(String name, Instant creationDate, Instant remindDate){
-        return new DelayedItem(name, creationDate, remindDate, ItemKind.DELAYED);
+        return new DelayedItem(name, creationDate, remindDate);
     }
 }

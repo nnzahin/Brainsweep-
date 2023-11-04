@@ -18,21 +18,21 @@ public class AddDelayedItemInputData {
         this.creationDate = creationDate;
         this.remindDate = remindDate;
     }
-    String getName(){
+    public String getName(){
         return this.name;
     }
     /**
      * Return the creation date of the item to be created.
      *
      */
-    Instant getCreationDate(){
+    public Instant getCreationDate(){
         return this.creationDate;
     }
     /**
      * Return the item due date of the item to be created.
      *
      */
-    Instant getRemindDate(){
+    public Instant getRemindDate(){
         return this.remindDate;
     }
 }
