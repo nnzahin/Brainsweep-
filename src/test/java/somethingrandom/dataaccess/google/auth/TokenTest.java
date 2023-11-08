@@ -111,4 +111,13 @@ public class TokenTest {
         clock.setInstant(expiresWhen);
         assertEquals("token #1", token.getToken());
     }
+
+    @Test
+    public void shouldNotChangeConstantToken() throws AuthenticationException {
+        // Assume the token at least will change immediately, since we can't mock out
+        // the clock.
+        Token t = Token.constant("abc");
+        assertEquals(t.getToken(), "abc");
+        assertEquals(t.getToken(), "abc");
+    }
 }
