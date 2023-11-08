@@ -1,6 +1,8 @@
 package somethingrandom.dataaccess.google.auth;
 
-public class AuthenticationException extends Exception {
+import somethingrandom.usecase.DataAccessException;
+
+public class AuthenticationException extends DataAccessException {
     public AuthenticationException(String message) {
         super(message);
     }
