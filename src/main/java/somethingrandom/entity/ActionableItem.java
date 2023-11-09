@@ -10,19 +10,22 @@ import java.util.UUID;
  * The type Actionable item.
  */
 public class ActionableItem extends Item {
+
     /**
      * The Name.
      */
     private String name;
+
     /**
      * The ID.
      */
-    private final UUID id;
+    private UUID id;
+
     /**
      * The Creation date.
      */
+    private Instant creationDate;
 
-    private final Instant creationDate;
     /**
      * The amount of time needed to complete the task.
      */
@@ -33,29 +36,33 @@ public class ActionableItem extends Item {
      * Instantiates a new Actionable item.
      *
      * @param name         the name
+     * @param id           the id
      * @param creationDate the creation date
      * @param neededTime   the needed time
      */
-    public ActionableItem(String name, Instant creationDate, @Nullable Duration neededTime){
-        this.name = name;
-        this.id = UUID.randomUUID();
-        this.creationDate = creationDate;
+
+    public ActionableItem(String name, UUID id, Instant creationDate, @Nullable Duration neededTime) {
+        super(name, id, creationDate);
         this.neededTime = neededTime;
     }
+
     /**
      * Returns item kind.
      *
      * @return the item kind
      */
-    public ItemKind getItemKind(){
+
+    public ItemKind getItemKind() {
         return ItemKind.ACTIONABLE;
     }
+
     /**
      * Set needed time.
      *
      * @param neededTime the needed time
      */
-    public void setNeededTime(Duration neededTime){
+
+    public void setNeededTime(Duration neededTime) {
         this.neededTime = neededTime;
     }
 }
