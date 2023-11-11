@@ -17,7 +17,6 @@ public class AddDelayedItemInputData {
      * @param creationDate The creation date of the item.
      * @param remindDate   The reminder date of the item.
      */
-
     public AddDelayedItemInputData(String name, UUID id, Instant creationDate, Instant remindDate) {
         this.name = name;
         this.id = id;
@@ -29,7 +28,6 @@ public class AddDelayedItemInputData {
      * Return the name of the item to be created.
      *
      */
-
     public String getName() {
         return this.name;
     }
@@ -38,7 +36,6 @@ public class AddDelayedItemInputData {
      * Return the id of the item to be created.
      *
      */
-
     public UUID getId() {
         return this.id;
     }
@@ -47,7 +44,6 @@ public class AddDelayedItemInputData {
      * Return the creation date of the item to be created.
      *
      */
-
     public Instant getCreationDate() {
         return this.creationDate;
     }
@@ -56,7 +52,6 @@ public class AddDelayedItemInputData {
      * Return the item due date of the item to be created.
      *
      */
-
     public Instant getRemindDate() {
         return this.remindDate;
     }

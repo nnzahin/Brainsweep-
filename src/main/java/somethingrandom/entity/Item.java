@@ -11,19 +11,16 @@ public abstract class Item {
     /**
      * The Name.
      */
-
     private String name;
 
     /**
      * The ID.
      */
-
     private final UUID id;
 
     /**
      * The Creation date.
      */
-
     private final Instant creationDate;
 
     public Item(String name, UUID id, Instant creationDate) {
@@ -37,7 +34,6 @@ public abstract class Item {
      *
      * @return the name
      */
-
     public String getName() {
         return this.name;
     }
@@ -47,7 +43,6 @@ public abstract class Item {
      *
      * @return the creation date
      */
-
     public Instant getCreationDate() {
         return this.creationDate;
     }
@@ -57,7 +52,6 @@ public abstract class Item {
      *
      * @return the ID
      */
-
     public UUID getID() {
         return this.id;
     }
@@ -67,7 +61,6 @@ public abstract class Item {
      *
      * @param name the new name
      */
-
     public void setName(String name) {
         this.name = name;
     }
@@ -77,6 +70,5 @@ public abstract class Item {
      *
      * @return the item kind
      */
-
     public abstract ItemKind getItemKind();
 }

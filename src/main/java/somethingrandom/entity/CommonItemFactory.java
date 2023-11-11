@@ -14,7 +14,6 @@ public class CommonItemFactory implements ItemFactory {
      * @param creationDate the creation date
      * @param neededTime   the needed time
      */
-
     public ActionableItem createActionableItem(String name, UUID id, Instant creationDate, Duration neededTime) {
         return new ActionableItem(name, id, creationDate, neededTime);
     }
@@ -27,7 +26,6 @@ public class CommonItemFactory implements ItemFactory {
      * @param creationDate the creation date
      * @param description  the description
      */
-
     public ReferenceItem createReferenceItem(String name, UUID id, Instant creationDate, String description) {
         return new ReferenceItem(name, id, creationDate, description);
     }
@@ -40,7 +38,6 @@ public class CommonItemFactory implements ItemFactory {
      * @param creationDate the creation date
      * @param remindDate   the reminder date
      */
-
     public DelayedItem createDelayedItem(String name, UUID id, Instant creationDate, Instant remindDate) {
         return new DelayedItem(name, id, creationDate, remindDate);
     }

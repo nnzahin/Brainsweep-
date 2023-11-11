@@ -17,7 +17,6 @@ public class AddActionableItemDataInput {
      * @param id            The id of the item
      * @param creationDate  The creation date of the item.
      */
-
     public AddActionableItemDataInput(String name, UUID id, Instant creationDate) {
         this.name = name;
         this.id = id;
@@ -33,7 +32,6 @@ public class AddActionableItemDataInput {
      * @param creationDate  The creation date of the item.
      * @param neededTime    The needed time to complete the item.
      */
-
     public AddActionableItemDataInput(String name, UUID id, Instant creationDate, Duration neededTime) {
         this.name = name;
         this.id = id;
@@ -45,7 +43,6 @@ public class AddActionableItemDataInput {
      * Return the name of the item to be created.
      *
      */
-
     public String getName() {
         return this.name;
     }
@@ -54,7 +51,6 @@ public class AddActionableItemDataInput {
      * Return the id of the item to be created.
      *
      */
-
     public UUID getId() {
         return this.id;
     }
@@ -63,7 +59,6 @@ public class AddActionableItemDataInput {
      * Return the creation date of the item to be created.
      *
      */
-
     public Instant getCreationDate() {
         return this.creationDate;
     }
@@ -72,7 +67,6 @@ public class AddActionableItemDataInput {
      * Return the item needed time of the item to be created.
      *
      */
-
     public Duration getNeededTime() {
         return this.neededTime;
     }

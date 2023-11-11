@@ -9,21 +9,6 @@ import java.util.UUID;
 public class ReferenceItem extends Item {
 
     /**
-     * The Name.
-     */
-    private String name;
-
-    /**
-     * The ID.
-     */
-    private UUID id;
-
-    /**
-     * The Creation date.
-     */
-    private Instant creationDate;
-
-    /**
      * The Description.
      */
     private String description;
@@ -46,7 +31,6 @@ public class ReferenceItem extends Item {
      *
      * @return the item kind
      */
-
     public ItemKind getItemKind() {
         return ItemKind.REFERENCE;
     }
@@ -56,7 +40,6 @@ public class ReferenceItem extends Item {
      *
      * @return the description
      */
-
     public String getDescription() {
         return this.description;
     }
@@ -66,7 +49,6 @@ public class ReferenceItem extends Item {
      *
      * @param description the description date
      */
-
     public void setDescription(String description) {
         this.description = description;
     }

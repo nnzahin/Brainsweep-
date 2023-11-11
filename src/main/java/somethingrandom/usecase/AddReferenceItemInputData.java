@@ -17,7 +17,6 @@ public class AddReferenceItemInputData {
      * @param creationDate  The creation date of the item.
      * @param description   The description of the item.
      */
-
     public AddReferenceItemInputData(String name, UUID id, Instant creationDate, String description) {
         this.name = name;
         this.id = id;
@@ -29,7 +28,6 @@ public class AddReferenceItemInputData {
      * Return the name of the item to be created.
      *
      */
-
     public String getName() {
         return this.name;
     }
@@ -38,7 +36,6 @@ public class AddReferenceItemInputData {
      * Return the id of the item to be created.
      *
      */
-
     public UUID getId() {
         return this.id;
     }
@@ -47,7 +44,6 @@ public class AddReferenceItemInputData {
      * Return the creation date of the item to be created.
      *
      */
-
     public Instant getCreationDate() {
         return this.creationDate;
     }
@@ -56,7 +52,6 @@ public class AddReferenceItemInputData {
      * Return the item due date of the item to be created.
      *
      */
-
     public String getDescription() {
         return this.description;
     }
