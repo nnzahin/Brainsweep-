@@ -1,7 +1,7 @@
 package somethingrandom.dataaccess.google.tasks;
 
-import org.json.JSONObject;
 import org.junit.Test;
+import somethingrandom.dataaccess.google.APIProvider;
 import somethingrandom.dataaccess.google.auth.Token;
 import somethingrandom.usecase.DataAccessException;
 
@@ -9,13 +9,13 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-public class TaskListTest {
+public class TaskAccountTest {
     private final Token token = Token.constant("token");
 
     @Test
     public void iterateListsThrowsOnIncorrectRootKind() {
         assertThrows(DataAccessException.class, () -> {
-            TaskList.iterateLists(token, new JSONObject("{\"kind\": \"not the right kind\"}"));
+            new TaskAccount(new APIProvider.Constant("{\"kind\": \"not the right kind\"}")).iterateLists();
         });
     }
 
@@ -23,13 +23,14 @@ public class TaskListTest {
     public void shouldThrowIfNoItemsKeyPresent() {
         // TODO We should ideally wrap this ourselves.
         assertThrows(Exception.class, () -> {
-            TaskList.iterateLists(token, new JSONObject("{\"kind\": \"tasks#taskLists\"}"));
+            new TaskAccount(new APIProvider.Constant("{\"kind\": \"tasks#taskLists\"}")).iterateLists();
         });
     }
 
     @Test
     public void shouldHandleEmptyItemsList() throws DataAccessException {
-        assertFalse(TaskList.iterateLists(token, new JSONObject("{\"kind\": \"tasks#taskLists\", \"items\": []}")).hasNext());
+        APIProvider provider = new APIProvider.Constant("{\"kind\": \"tasks#taskLists\", \"items\": []}");
+        assertFalse(new TaskAccount(provider).iterateLists().hasNext());
     }
 
     @Test
@@ -44,7 +45,7 @@ public class TaskListTest {
         """;
 
         assertThrows(DataAccessException.class, () -> {
-            TaskList.iterateLists(token, new JSONObject(DATA));
+            new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
         });
     }
 
@@ -62,7 +63,7 @@ public class TaskListTest {
         """;
 
         assertThrows(DataAccessException.class, () -> {
-            TaskList.iterateLists(token, new JSONObject(DATA));
+            new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
         });
     }
 
@@ -84,7 +85,7 @@ public class TaskListTest {
         }
         """;
 
-        Iterator<TaskList> tls = TaskList.iterateLists(token, new JSONObject(DATA));
+        Iterator<TaskList> tls = new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
         assertEquals("abc", tls.next().getIdentifier());
         assertEquals("def", tls.next().getIdentifier());
         assertFalse(tls.hasNext());
