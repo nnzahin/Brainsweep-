@@ -10,56 +10,33 @@ import java.util.UUID;
  * The type Actionable item.
  */
 public class ActionableItem extends Item {
-    /**
-     * The Name.
-     */
-    public String name;
-    /**
-     * The ID.
-     */
-    public final UUID id;
-    /**
-     * The Creation date.
-     */
 
-    public final Instant creationDate;
     /**
      * The amount of time needed to complete the task.
      */
     @Nullable
-    public Duration neededTime;
-    /**
-     * The Item kind.
-     */
-    public final ItemKind itemKind;
+    private Duration neededTime;
 
     /**
      * Instantiates a new Actionable item.
      *
      * @param name         the name
+     * @param id           the id
      * @param creationDate the creation date
      * @param neededTime   the needed time
-     * @param itemKind     the item kind
      */
-    public ActionableItem(String name, Instant creationDate, @Nullable Duration neededTime, ItemKind itemKind){
-        this.name = name;
-        this.id = UUID.randomUUID();
-        this.creationDate = creationDate;
+    public ActionableItem(String name, UUID id, Instant creationDate, @Nullable Duration neededTime) {
+        super(name, id, creationDate);
         this.neededTime = neededTime;
-        this.itemKind = itemKind;
     }
-    public String getName(){
-        return this.name;
-    }
-    public UUID getID(){
-        return this.id;
-    }
-    public String setName(String name){
-        this.name = name;
-        return this.name;
-    }
-    public Instant getCreationDate(){
-        return this.creationDate;
+
+    /**
+     * Returns item kind.
+     *
+     * @return the item kind
+     */
+    public ItemKind getItemKind() {
+        return ItemKind.ACTIONABLE;
     }
 
     /**
@@ -67,10 +44,7 @@ public class ActionableItem extends Item {
      *
      * @param neededTime the needed time
      */
-    public void setNeededTime(Duration neededTime){
+    public void setNeededTime(Duration neededTime) {
         this.neededTime = neededTime;
-    }
-    public ItemKind getItemKind(){
-        return this.itemKind;
     }
 }

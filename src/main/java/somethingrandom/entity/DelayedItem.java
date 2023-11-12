@@ -7,38 +7,32 @@ import java.util.UUID;
  * The type Delayed item.
  */
 public class DelayedItem extends Item {
-    private String name;
-    private final Instant creationDate;
+
+    /**
+     * The reminder date
+     */
     private Instant remindDate;
-    private final ItemKind itemKind;
 
     /**
      * Instantiates a new Delayed item.
      *
      * @param name         the name
+     * @param id           the id
      * @param creationDate the creation date
      * @param remindDate   the reminder date
-     * @param itemKind     the item kind
      */
-    public DelayedItem(String name, Instant creationDate, Instant remindDate, ItemKind itemKind){
-        this.name = name;
-        this.id = UUID.randomUUID();
-        this.creationDate = creationDate;
+    public DelayedItem(String name, UUID id, Instant creationDate, Instant remindDate) {
+        super(name, id, creationDate);
         this.remindDate = remindDate;
-        this.itemKind = itemKind;
     }
-    public String getName(){
-        return this.name;
-    }
-    public UUID getID(){
-        return this.id;
-    }
-    public String setName(String name){
-        this.name = name;
-        return this.name;
-    }
-    public Instant getCreationDate(){
-        return this.creationDate;
+
+    /**
+     * Returns item kind.
+     *
+     * @return the item kind
+     */
+    public ItemKind getItemKind() {
+        return ItemKind.DELAYED;
     }
 
     /**
@@ -48,8 +42,5 @@ public class DelayedItem extends Item {
      */
     public void setRemindDate(Instant remindDate) {
         this.remindDate = remindDate;
-    }
-    public ItemKind getItemKind(){
-        return this.itemKind;
     }
 }

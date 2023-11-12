@@ -2,10 +2,11 @@ package somethingrandom.usecase;
 
 import somethingrandom.entity.*;
 
-public class AddActionableItemInteracter implements AddActionableItemDataInputBoundary{
-    final AddItemDataAccessInterface dataAccessInterface;
-    final CommonItemFactory factory;
-    public AddActionableItemInteracter(AddItemDataAccessInterface dataAccessInterface, CommonItemFactory factory){
+public class AddActionableItemInteracter implements AddActionableItemDataInputBoundary {
+    private final AddItemDataAccessInterface dataAccessInterface;
+    private final CommonItemFactory factory;
+
+    public AddActionableItemInteracter(AddItemDataAccessInterface dataAccessInterface, CommonItemFactory factory) {
         this.dataAccessInterface = dataAccessInterface;
         this.factory = factory;
     }
@@ -17,7 +18,7 @@ public class AddActionableItemInteracter implements AddActionableItemDataInputBo
      */
     @Override
     public void execute(AddActionableItemDataInput inputData) throws DataAccessException {
-        ActionableItem item = factory.createActionableItem(inputData.getName(), inputData.getCreationDate(), inputData.getNeededTime());
+        ActionableItem item = factory.createActionableItem(inputData.getName(), inputData.getId(), inputData.getCreationDate(), inputData.getNeededTime());
         dataAccessInterface.save(item);
     }
 }

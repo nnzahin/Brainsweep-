@@ -7,49 +7,63 @@ import java.util.UUID;
  * An abstract Item.
  */
 public abstract class Item {
+
     /**
      * The Name.
      */
-    public String name;
+    private String name;
+
     /**
      * The ID.
      */
-    public UUID id;
+    private final UUID id;
+
     /**
      * The Creation date.
      */
-    public Instant creationDate;
-    /**
-     * The Item kind.
-     */
-    public ItemKind itemKind;
+    private final Instant creationDate;
 
-    /**
-     * Gets creation date.
-     *
-     * @return the creation date
-     */
-    public abstract Instant getCreationDate();
+    public Item(String name, UUID id, Instant creationDate) {
+        this.name = name;
+        this.id = id;
+        this.creationDate = creationDate;
+    }
 
     /**
      * Returns name.
      *
      * @return the name
      */
-    public abstract String getName();
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
+    public Instant getCreationDate() {
+        return this.creationDate;
+    }
+
     /**
      * Returns ID.
      *
      * @return the ID
      */
-    public abstract UUID getID();
+    public UUID getID() {
+        return this.id;
+    }
+
     /**
      * Sets name.
      *
-     * @param name the name
-     * @return the name
+     * @param name the new name
      */
-    public abstract String setName(String name);
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Returns item kind.

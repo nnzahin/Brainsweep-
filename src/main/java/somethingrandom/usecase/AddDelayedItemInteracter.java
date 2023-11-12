@@ -3,10 +3,11 @@ package somethingrandom.usecase;
 import somethingrandom.entity.CommonItemFactory;
 import somethingrandom.entity.DelayedItem;
 
-public class AddDelayedItemInteracter implements AddDelayedItemInputBoundary{
-    final AddItemDataAccessInterface dataAccessInterface;
-    final CommonItemFactory factory;
-    public AddDelayedItemInteracter(AddItemDataAccessInterface dataAccessInterface, CommonItemFactory factory){
+public class AddDelayedItemInteracter implements AddDelayedItemInputBoundary {
+    private final AddItemDataAccessInterface dataAccessInterface;
+    private final CommonItemFactory factory;
+
+    public AddDelayedItemInteracter(AddItemDataAccessInterface dataAccessInterface, CommonItemFactory factory) {
         this.dataAccessInterface = dataAccessInterface;
         this.factory = factory;
     }
@@ -18,7 +19,7 @@ public class AddDelayedItemInteracter implements AddDelayedItemInputBoundary{
      */
     @Override
     public void execute(AddDelayedItemInputData inputData) throws DataAccessException {
-        DelayedItem item = factory.createDelayedItem(inputData.getName(), inputData.getCreationDate(), inputData.getRemindDate());
+        DelayedItem item = factory.createDelayedItem(inputData.getName(), inputData.getId(), inputData.getCreationDate(), inputData.getRemindDate());
         dataAccessInterface.save(item);
     }
 }
