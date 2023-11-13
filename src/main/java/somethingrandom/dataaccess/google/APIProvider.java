@@ -19,43 +19,13 @@ public interface APIProvider {
      * The request will be made with the required authentication, along with
      * the specified request body.
      *
+     * @param body The data to accompany the request.
      * @param url The URL to request.
      * @return The parsed JSON API result.
      * @throws IOException on network errors
      * @throws AuthenticationException if the token could not be refreshed
      */
-    JSONObject request(Body body, String url) throws IOException, AuthenticationException;
-
-    /**
-     * Represents the additional data to be sent with the request.
-     * <p>
-     * This entails the request method, content, and MIME type.
-     */
-    interface Body {
-        String getMethod();
-        String getContent();
-        String getMimeType();
-    }
-
-    /**
-     * A GetBody is a Body with no content using the GET method.
-     */
-    class GetBody implements Body {
-        @Override
-        public String getMethod() {
-            return "GET";
-        }
-
-        @Override
-        public String getContent() {
-            return null;
-        }
-
-        @Override
-        public String getMimeType() {
-            return null;
-        }
-    }
+    JSONObject request(APIRequestBody body, String url) throws IOException, AuthenticationException;
 
     class Constant implements APIProvider {
         private final String source;
@@ -65,7 +35,7 @@ public interface APIProvider {
         }
 
         @Override
-        public JSONObject request(Body body, String url) {
+        public JSONObject request(APIRequestBody body, String url) {
             return new JSONObject(source);
         }
     }

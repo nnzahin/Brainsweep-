@@ -3,6 +3,7 @@ package somethingrandom.dataaccess.google.tasks;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import somethingrandom.dataaccess.google.APIProvider;
+import somethingrandom.dataaccess.google.APIRequestBody;
 import somethingrandom.usecase.DataAccessException;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class TaskAccount {
     public Iterator<TaskList> iterateLists() throws DataAccessException {
         JSONObject result;
         try {
-            result = provider.request(new APIProvider.GetBody(), "https://tasks.googleapis.com/tasks/v1/users/@me/lists");
+            result = provider.request(new APIRequestBody.GetBody(), "https://tasks.googleapis.com/tasks/v1/users/@me/lists");
         } catch (IOException e) {
             throw new DataAccessException(e);
         }

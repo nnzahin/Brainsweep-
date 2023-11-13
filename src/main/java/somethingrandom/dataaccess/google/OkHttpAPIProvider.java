@@ -29,10 +29,17 @@ class OkHttpAPIProvider implements APIProvider {
     }
 
     @Override
-    public JSONObject request(Body body, String url) throws IOException, AuthenticationException {
+    public JSONObject request(APIRequestBody body, String url) throws IOException, AuthenticationException {
+        RequestBody requestBody;
+        if (body.getContent() == null) {
+            requestBody = null;
+        } else {
+            requestBody = RequestBody.create(body.getContent(), MediaType.get(body.getMimeType()));
+        }
+
         Request request = new Request.Builder()
             .url(url)
-            .method(body.getMethod(), RequestBody.create(body.getContent(), MediaType.get(body.getMimeType())))
+            .method(body.getMethod(), requestBody)
             .addHeader("Authorization", "Bearer " + token.getToken())
             .get().build();
 
