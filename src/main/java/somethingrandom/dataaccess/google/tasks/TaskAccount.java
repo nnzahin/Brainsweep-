@@ -21,7 +21,7 @@ public class TaskAccount {
     public Iterator<TaskList> iterateLists() throws DataAccessException {
         JSONObject result;
         try {
-            result = provider.request("https://tasks.googleapis.com/tasks/v1/users/@me/lists");
+            result = provider.request(new APIProvider.GetBody(), "https://tasks.googleapis.com/tasks/v1/users/@me/lists");
         } catch (IOException e) {
             throw new DataAccessException(e);
         }

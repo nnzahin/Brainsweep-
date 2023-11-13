@@ -1,15 +1,13 @@
 package somethingrandom.dataaccess.google;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.json.JSONObject;
 import somethingrandom.dataaccess.google.auth.AuthenticationException;
 import somethingrandom.dataaccess.google.auth.Token;
 
 import java.io.IOException;
 
-public class OkHttpAPIProvider implements APIProvider {
+class OkHttpAPIProvider implements APIProvider {
     private final OkHttpClient client;
     private final Token token;
 
@@ -19,9 +17,10 @@ public class OkHttpAPIProvider implements APIProvider {
     }
 
     @Override
-    public JSONObject request(String url) throws IOException, AuthenticationException {
+    public JSONObject request(Body body, String url) throws IOException, AuthenticationException {
         Request request = new Request.Builder()
             .url(url)
+            .method(body.getMethod(), RequestBody.create(body.getContent(), MediaType.get(body.getMimeType())))
             .addHeader("Authorization", "Bearer " + token.getToken())
             .get().build();
 
