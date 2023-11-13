@@ -7,10 +7,22 @@ import somethingrandom.dataaccess.google.auth.Token;
 
 import java.io.IOException;
 
+/**
+ * OkHttpAPIProvider is an API provider that uses the OkHttp3 library to make
+ * its requests.
+ *
+ * This is the primary one used in Brainsweep as of writing.
+ */
 class OkHttpAPIProvider implements APIProvider {
     private final OkHttpClient client;
     private final Token token;
 
+    /**
+     * Creates an API provider for the given HTTP client and token.
+     *
+     * @param client The client to execute requests with.
+     * @param token The token to authenticate requests with.
+     */
     public OkHttpAPIProvider(OkHttpClient client, Token token) {
         this.client = client;
         this.token = token;
