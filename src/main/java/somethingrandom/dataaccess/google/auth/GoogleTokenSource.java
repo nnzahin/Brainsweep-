@@ -9,11 +9,14 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.Optional;
 
 @SuppressWarnings("KotlinInternalInJava")
 class GoogleTokenSource implements Token.Source {
     private final OkHttpClient client;
     private final AuthenticationSession session;
+
+    private Optional<String> refreshToken = Optional.empty();
 
     private static final @NotNull HttpUrl TOKEN_ENDPOINT = Objects.requireNonNull(HttpUrl.parse("https://oauth2.googleapis.com/token"));
 
@@ -41,6 +44,11 @@ class GoogleTokenSource implements Token.Source {
             Number expiresAfterTime = parsed.getNumber("expires_in");
 
             Instant expiry = Instant.now().plus(expiresAfterTime.longValue(), ChronoUnit.SECONDS);
+
+            if (refreshToken.isEmpty()) {
+                refreshToken = Optional.of(token);
+            }
+
             return new Token.ExpiringToken(token, expiry);
         } catch (IOException | JSONException e) {
             throw new AuthenticationException(e);
@@ -48,13 +56,20 @@ class GoogleTokenSource implements Token.Source {
     }
 
     private RequestBody getRequestBody() {
-        return new FormBody.Builder()
-            .add("client_id", LoginFlow.OAUTH_CLIENT_ID)
-            .add("client_secret", session.clientSecret())
-            .add("code", session.code())
-            .add("grant_type", "authorization_code")
-            .add("code_verifier", session.verifier().getCodeVerifier())
-            .add("redirect_uri", session.redirectUrl())
-            .build();
+        FormBody.Builder builder = new FormBody.Builder();
+
+        builder.add("client_id", LoginFlow.OAUTH_CLIENT_ID);
+        builder.add("client_secret", session.clientSecret());
+
+        if (refreshToken.isEmpty()) {
+            builder.add("code", session.code());
+            builder.add("grant_type", "authorization_code");
+            builder.add("code_verifier", session.verifier().getCodeVerifier());
+            builder.add("redirect_uri", session.redirectUrl());
+        } else {
+            builder.add("refresh_token", refreshToken.get());
+        }
+
+        return builder.build();
     }
 }
