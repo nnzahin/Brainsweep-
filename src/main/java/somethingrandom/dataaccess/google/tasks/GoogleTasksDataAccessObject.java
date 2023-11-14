@@ -11,6 +11,12 @@ import somethingrandom.usecase.DataAccessException;
  * <a href="https://developers.google.com/tasks/reference/rest">published online</a>.
  */
 public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
+    private final TaskList taskList;
+
+    public GoogleTasksDataAccessObject(TaskList list) {
+        this.taskList = list;
+    }
+
     @Override
     public void save(Item item) throws DataAccessException {
         throw new RuntimeException("not implemented");
