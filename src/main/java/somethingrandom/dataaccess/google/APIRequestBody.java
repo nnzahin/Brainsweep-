@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public interface APIRequestBody {
     /**
      * Gets the HTTP method that should be used for the request.
-     *
+     * <p>
      * This will probably be "GET" or "POST".
      *
      * @return the method to use
@@ -28,7 +28,7 @@ public interface APIRequestBody {
 
     /**
      * Gets the MIME type of the body.
-     *
+     * <p>
      * This will be used in the request's Content-Type.
      *
      * @return the MIME type associated with the request
@@ -57,7 +57,7 @@ public interface APIRequestBody {
 
     /**
      * A JSONBody is a Body containing a JSONObject.
-     *
+     * <p>
      * It uses the method specified in the constructor.
      */
     class JSONBody implements APIRequestBody {

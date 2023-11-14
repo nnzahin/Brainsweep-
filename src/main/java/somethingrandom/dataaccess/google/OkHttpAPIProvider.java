@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * OkHttpAPIProvider is an API provider that uses the OkHttp3 library to make
  * its requests.
- *
+ * <p>
  * This is the primary one used in Brainsweep as of writing.
  */
 class OkHttpAPIProvider implements APIProvider {

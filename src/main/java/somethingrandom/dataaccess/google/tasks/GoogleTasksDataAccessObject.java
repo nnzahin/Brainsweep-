@@ -6,7 +6,7 @@ import somethingrandom.usecase.DataAccessException;
 
 /**
  * Implements an interface to store items in the Google Tasks API.
- *
+ * <p>
  * The API is
  * <a href="https://developers.google.com/tasks/reference/rest">published online</a>.
  */
