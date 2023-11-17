@@ -1,6 +1,7 @@
 package somethingrandom.interfaceadapters.additem;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,6 +25,9 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
     public AddItemView(AddItemController itemController, AddItemViewModel addItemViewModel) {
         this.itemController = itemController;
         this.addItemViewModel = addItemViewModel;
+
+        JLabel title = new JLabel("ADD ITEM");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
         saveItem = new JButton();
@@ -123,12 +127,17 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String itemTitle = userItem.getText();
-
+        System.out.println("Click " + e.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        AddItemState state = (AddItemState) evt.getNewValue();
+        setFields(state);
 
+    }
+
+    private void setFields(AddItemState state) {
+        itemtitleInput.setText(state.getItemName());
     }
 }
