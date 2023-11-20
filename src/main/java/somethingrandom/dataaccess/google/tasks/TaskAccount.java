@@ -61,19 +61,24 @@ public class TaskAccount {
                 throw new DataAccessException("Task list has invalid type");
             }
 
+            Object title = taskList.opt("title");
+            if (!(title instanceof String)) {
+                throw new DataAccessException("Task list is missing title");
+            }
+
             Object id = taskList.opt("id");
             if (!(id instanceof String)) {
                 throw new DataAccessException("Task list is missing ID");
             }
 
-            found.add(new TaskList(provider, (String) id));
+            found.add(new TaskList(provider, (String)title, (String) id));
         }
 
         return found.iterator();
     }
 
     /**
-     * Finds the task list in this account with the provided identifier.
+     * Finds the task list in this account with the provided title.
      *
      * @param name The name to assign.
      * @return the task list, or an empty Optional if it was not found.
@@ -82,7 +87,7 @@ public class TaskAccount {
     public Optional<TaskList> findTaskListByIdentifier(String name) throws DataAccessException {
         for (Iterator<TaskList> it = iterateLists(); it.hasNext(); ) {
             TaskList tl = it.next();
-            if (tl.getIdentifier().equals(name)) {
+            if (tl.getTitle().equals(name)) {
                 return Optional.of(tl);
             }
         }
