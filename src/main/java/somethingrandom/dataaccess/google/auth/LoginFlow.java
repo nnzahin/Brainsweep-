@@ -20,14 +20,6 @@ public class LoginFlow {
     private final String clientSecret;
     private int usedPort = 0;
 
-    public static void main(String[] args) throws AuthenticationException, IOException {
-        LoginFlow c = new LoginFlow(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
-        Token t = c.execute();
-        System.out.println("got authorization token: " + t.getToken().substring(0, 5) + "...");
-
-        c.addEvent(t, "It works on October 2nd");
-    }
-
     public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
         this.httpClient = httpClient;
         this.clientSecret = clientSecret;
@@ -104,25 +96,5 @@ public class LoginFlow {
 
     private String getRedirectUrl() {
         return "http://127.0.0.1:" + usedPort;
-    }
-
-    private void addEvent(Token token, String eventName) throws IOException, AuthenticationException {
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("https")
-                .host("www.googleapis.com")
-                .addPathSegments("calendar/v3/calendars/primary/events/quickAdd")
-                .addQueryParameter("text", eventName)
-                .build();
-
-        Request req = new Request.Builder()
-                .post(RequestBody.create(new byte[0]))
-                .url(url)
-                .addHeader("Authorization", "Bearer " + token.getToken())
-                .build();
-
-        try (Response resp = httpClient.newCall(req).execute()) {
-            System.out.println("event creation gave " + resp.code() + ": " + resp.message());
-            System.out.println(resp.body().string());
-        }
     }
 }
