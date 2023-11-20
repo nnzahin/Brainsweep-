@@ -17,6 +17,10 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
         this.taskList = list;
     }
 
+    public static String getScope() {
+        return "https://www.googleapis.com/auth/tasks";
+    }
+
     @Override
     public void save(Item item) throws DataAccessException {
         throw new RuntimeException("not implemented");

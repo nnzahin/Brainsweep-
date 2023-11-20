@@ -19,11 +19,13 @@ public class LoginFlow {
     private final OkHttpClient httpClient;
     private final String clientSecret;
     private int usedPort = 0;
+    private String[] scopes;
 
-    public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
+    public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier, String[] scopes) {
         this.httpClient = httpClient;
         this.clientSecret = clientSecret;
         this.verifier = verifier;
+        this.scopes = scopes;
 
         if (clientSecret == null) {
             throw new IllegalArgumentException("clientSecret cannot be null");
@@ -58,7 +60,7 @@ public class LoginFlow {
         String uri = "https://accounts.google.com/o/oauth2/v2/auth";
         uri += "?client_id=" + OAUTH_CLIENT_ID;
         uri += "&redirect_uri=http://127.0.0.1:" + usedPort;
-        uri += "&scope=https://www.googleapis.com/auth/calendar";
+        uri += "&scope=" + String.join("+", scopes);
         uri += "&code_challenge=" + verifier.getCodeChallenge();
         uri += "&code_challenge_method=" + verifier.getMethodName();
         uri += "&response_type=code";

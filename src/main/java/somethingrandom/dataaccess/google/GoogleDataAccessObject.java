@@ -36,6 +36,12 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface {
         this.tasksDAO = createTasksDAO(provider, taskListName);
     }
 
+    public static String[] getScopes() {
+        return new String[] {
+            GoogleTasksDataAccessObject.getScope(),
+        };
+    }
+
     @NotNull
     private static GoogleTasksDataAccessObject createTasksDAO(APIProvider provider, String taskListName) throws DataAccessException {
         TaskAccount account = new TaskAccount(provider);
