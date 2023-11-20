@@ -24,6 +24,14 @@ public class Brainsweep {
         new ViewManager(cardLayout,views, viewManagerModel);
 
         AddItemViewModel addItemViewModel = new AddItemViewModel();
+        AddItemView addItemView = AddItemUseCaseFactory.create(viewManagerModel, addItemViewModel);
+        views.add(addItemView, addItemView.viewName);
+
+        viewManagerModel.setActiveView(addItemView.viewName);
+        viewManagerModel.firePropertyChanged();
+
+        application.pack();
+        application.setVisible(true);
 
 
 

@@ -14,7 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class AddItemView extends JPanel implements ActionListener, PropertyChangeListener {
-
+    public final String viewName = "add item";
     private static JPanel panel = new JPanel();
     private static JFrame frame = new JFrame();
     private static JLabel itemTitle = new JLabel();
