@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -76,6 +77,19 @@ public class Token {
         this.source = source;
         this.clock = clock;
         this.earlyExpiryWindow = earlyExpiryWindow;
+    }
+
+    /**
+     * Creates a token with a constant value.
+     * <p>
+     * This is intended for testing purposes, and is likely not useful outside of that.
+     *
+     * @param value The constant value the token should take on.
+     * @return The newly-created constant token.
+     */
+    public static Token constant(String value) {
+        return new Token(() -> new Token.ExpiringToken(value, Instant.MAX),
+            Clock.fixed(Instant.MIN, ZoneId.of("UTC")));
     }
 
     /**
