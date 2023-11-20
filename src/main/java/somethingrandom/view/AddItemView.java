@@ -1,4 +1,8 @@
-package somethingrandom.interfaceadapters.additem;
+package somethingrandom.view;
+
+import somethingrandom.interfaceadapters.additem.AddItemController;
+import somethingrandom.interfaceadapters.additem.AddItemState;
+import somethingrandom.interfaceadapters.additem.AddItemViewModel;
 
 import javax.swing.*;
 import java.awt.*;
