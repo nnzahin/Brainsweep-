@@ -20,4 +20,8 @@ public class TaskList {
     public String getTitle() {
         return title;
     }
+
+    public APIProvider getProvider() {
+        return provider;
+    }
 }
