@@ -1,12 +1,13 @@
 package somethingrandom.dataaccess.google.auth;
 
+import dataaccess.google.auth.AuthenticationException;
+import dataaccess.google.auth.Token;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 

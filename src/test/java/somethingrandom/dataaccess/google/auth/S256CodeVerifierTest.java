@@ -1,5 +1,6 @@
 package somethingrandom.dataaccess.google.auth;
 
+import dataaccess.google.auth.S256CodeVerifier;
 import org.junit.Before;
 import org.junit.Test;
 

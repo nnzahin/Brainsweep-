@@ -1,9 +1,11 @@
 package somethingrandom.dataaccess.google.tasks;
 
+import dataaccess.google.tasks.TaskAccount;
+import dataaccess.google.tasks.TaskList;
 import org.junit.Test;
-import somethingrandom.dataaccess.google.APIProvider;
-import somethingrandom.dataaccess.google.auth.Token;
-import somethingrandom.usecase.DataAccessException;
+import dataaccess.google.APIProvider;
+import dataaccess.google.auth.Token;
+import usecase.DataAccessException;
 
 import java.util.Iterator;
 
