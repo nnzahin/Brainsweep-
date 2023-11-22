@@ -5,14 +5,15 @@ import java.util.Date;
 import java.util.UUID;
 
 public class AddItemInputData {
-    private final String name;
-    private final UUID id;
-    private final Instant creationDate;
-    private final Duration neededTime;
-    private final Instant remindDate;
-
-    private final String description;
+    private String name;
     private String item;
+    private UUID id;
+    private Instant creationDate;
+    private Duration neededTime;
+    private Instant remindDate;
+
+    private String description;
+
     public AddItemInputData(String item, String description) {
         this.item = item;
         this.description = description;
@@ -46,29 +47,47 @@ public class AddItemInputData {
         this.creationDate = creationDate;
         this.description = description;
     }
-    String getItem() {return item;}
+
 
     public String getName() {
         return name;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getItem() {return item;}
     public void setItem(String item) {
         this.item = item;
     }
-
     public UUID getId() {
         return id;
     }
-
+    public void SetId(UUID id) {
+        this.id = id;
+    }
     public Instant getCreationDate() {
         return creationDate;
+    }
+    public void setCreationDate(Instant creationDate){
+        this.creationDate = creationDate;
     }
 
     public Duration getNeededTime() {
         return neededTime;
     }
+    public void setNeededTime(Duration neededTime){
+        this.neededTime = neededTime;
+    }
 
     public Instant getRemindDate() {
         return remindDate;
     }
-    String getDescription() {return description;}
+    public void setRemindDate(Instant remindDate){
+        this.remindDate = remindDate;
+    }
+
+    public String getDescription() {return description;}
+    public void setDescription(String description){
+        this.description = description;
+    }
 }
