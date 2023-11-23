@@ -1,4 +1,4 @@
-package interfaceadapters.listitem;
+package interfaceadapters.listitems;
 
 public class ListItemsController {
 }

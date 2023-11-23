@@ -1,11 +1,10 @@
 package interfaceadapters.listitems;
 
 import interfaceadapters.ViewModel;
-import view.ListItemsView;
-import interfaceadapters.listitems.ListItemsState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ListItemsViewModel extends ViewModel {
 
@@ -17,6 +16,8 @@ public class ListItemsViewModel extends ViewModel {
     public static final String SEARCH_BUTTON_LABEL = "Search";
 
     private ListItemsState state = new ListItemsState();
+
+    private ArrayList<String> items;
 
     public ListItemsViewModel(String viewName) {
         super(viewName);
@@ -32,7 +33,6 @@ public class ListItemsViewModel extends ViewModel {
     public void firePropertyChanged() {support.firePropertyChange("state", null, this.state);
 
     }
-
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
