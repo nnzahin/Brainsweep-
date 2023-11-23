@@ -36,6 +36,6 @@ public class AddItemUseCaseFactory {
         AddItemOutputBoundary addItemOutputBoundary = new AddItemPresenter(addItemViewModel, viewManagerModel);
         CommonItemFactory commonItemFactory = new CommonItemFactory();
 
-        AddItemInputBoundary addItemInteracter = new AddItemInteracter(addItemDataAccessObject, commonItemFactory);
+        AddItemInputBoundary addItemInteractor = new AddItemInteracter(addItemDataAccessObject, commonItemFactory);
     }
 }
