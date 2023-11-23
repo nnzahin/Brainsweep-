@@ -1,11 +1,11 @@
 package somethingrandom.interfaceadapters.searchitems;
 
-import somethingrandom.usecase.SearchsItemInputBoundary;
+import somethingrandom.usecase.SearchItemsInputBoundary;
 
 public class SearchItemsController {
-    private final SearchsItemInputBoundary boundary;
+    private final SearchItemsInputBoundary boundary;
 
-    public SearchItemsController(SearchsItemInputBoundary boundary) {
+    public SearchItemsController(SearchItemsInputBoundary boundary) {
         this.boundary = boundary;
     }
 

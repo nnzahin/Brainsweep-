@@ -6,7 +6,7 @@ package somethingrandom.usecase;
  * This is used by both the item listing controller/presenter and the (upcoming)
  * item search controller/presenter.
  */
-public interface SearchsItemInputBoundary {
+public interface SearchItemsInputBoundary {
     /**
      * Executes a search with the provided query.
      * <p>
