@@ -62,7 +62,7 @@ public class AddItemInputData {
     public UUID getId() {
         return id;
     }
-    public void SetId(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public Instant getCreationDate() {
