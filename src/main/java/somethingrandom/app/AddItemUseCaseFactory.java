@@ -17,7 +17,7 @@ public class AddItemUseCaseFactory {
     private AddItemUseCaseFactory() {}
 
     public static AddItemView create(
-        ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel) {
+        ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface userDataAccessObject) {
 
         try {
             AddItemController addItemController = createAddItemUseCase(viewManagerModel, addItemViewModel, userDataAccessObject);

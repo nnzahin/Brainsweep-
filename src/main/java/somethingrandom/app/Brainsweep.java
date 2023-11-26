@@ -1,13 +1,16 @@
 package somethingrandom.app;
 
+import somethingrandom.dataaccess.google.tasks.GoogleTasksDataAccessObject;
 import somethingrandom.entity.ItemFactory;
 import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
+import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.view.AddItemView;
 import somethingrandom.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Brainsweep {
     public static void main(String[] args) {
@@ -23,9 +26,18 @@ public class Brainsweep {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(cardLayout,views, viewManagerModel);
 
+        AddItemDataAccessInterface addItemDataAccessObject;
+        try {
+            addItemDataAccessObject = new GoogleTasksDataAccessObject();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
         AddItemViewModel addItemViewModel = new AddItemViewModel();
-        AddItemView addItemView = AddItemUseCaseFactory.create(viewManagerModel, addItemViewModel);
+        AddItemView addItemView = AddItemUseCaseFactory.create(viewManagerModel, addItemViewModel,addItemDataAccessObject );
         views.add(addItemView, addItemView.viewName);
+
+
 
         viewManagerModel.setActiveView(addItemView.viewName);
         viewManagerModel.firePropertyChanged();

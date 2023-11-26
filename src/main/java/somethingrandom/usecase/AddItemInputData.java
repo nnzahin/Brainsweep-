@@ -18,29 +18,60 @@ public class AddItemInputData {
         this.item = item;
         this.description = description;
     }
-    //AddActionable Item Constructor 1
+    /**
+     * AddActionable Item Constructor 1
+     * Create a new item with the following details.
+     *
+     * @param name          The name of the item.
+     * @param id            The id of the item
+     * @param creationDate  The creation date of the item.
+     */
+
     public AddItemInputData(String name, UUID id, Instant creationDate) {
         this.name = name;
         this.id = id;
         this.creationDate = creationDate;
         this.neededTime = null;
     }
-    // AddActionable Item Constructor 2
+    /**
+     * AddActionable Item Constructor 2
+     * Create a new item with the following details.
+     *
+     * @param name          The name of the item.
+     * @param id            The id of the item
+     * @param creationDate  The creation date of the item.
+     * @param neededTime    The needed time to complete the item.
+     */
     public AddItemInputData(String name, UUID id, Instant creationDate, Duration neededTime) {
         this.name = name;
         this.id = id;
         this.creationDate = creationDate;
         this.neededTime = neededTime;
     }
-    //AddDelayed Item Constructor
+    /**
+     * Add Delayed Item Constructor
+     * Create a new item with the following details.
+     *
+     * @param name         The name of the item.
+     * @param id           The id
+     * @param creationDate The creation date of the item.
+     * @param remindDate   The reminder date of the item.
+     */
     public AddItemInputData(String name, UUID id, Instant creationDate, Instant remindDate) {
         this.name = name;
         this.id = id;
         this.creationDate = creationDate;
         this.remindDate = remindDate;
     }
-
-    //AddReferenceItem Constructor
+    /**
+     * AddReferenceItem Constructor
+     * Create a new item with the following details.
+     *
+     * @param name          The name of the item.
+     * @param id            The id of the item
+     * @param creationDate  The creation date of the item.
+     * @param description   The description of the item.
+     */
     public AddItemInputData(String name, UUID id, Instant creationDate, String description) {
         this.name = name;
         this.id = id;

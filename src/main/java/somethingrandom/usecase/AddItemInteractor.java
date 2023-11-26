@@ -23,7 +23,7 @@ public class AddItemInteractor implements AddItemInputBoundary{
     }
 
     @Override
-    public void execute(AddActionableItemDataInput addItemInputData) throws DataAccessException {
+    public void execute(AddItemInputData addItemInputData) throws DataAccessException {
         if (addItemInputData.getNeededTime() != null) {
             try {
                 ActionableItem item = factory.createActionableItem(addItemInputData.getName(), addItemInputData.getId(), addItemInputData.getCreationDate(), addItemInputData.getNeededTime());
