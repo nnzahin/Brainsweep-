@@ -5,11 +5,11 @@ import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.additem.AddItemController;
 import somethingrandom.interfaceadapters.additem.AddItemPresenter;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
-import somethingrandom.usecase.*;
+import somethingrandom.usecase.AddItemDataAccessInterface;
+import somethingrandom.usecase.AddItemInputBoundary;
+import somethingrandom.usecase.AddItemInteractor;
+import somethingrandom.usecase.AddItemOutputBoundary;
 import somethingrandom.view.AddItemView;
-
-import javax.swing.*;
-import java.io.IOException;
 
 public class AddItemUseCaseFactory {
 

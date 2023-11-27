@@ -13,7 +13,6 @@ import somethingrandom.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.security.SecureRandom;
 
 public class Brainsweep {
