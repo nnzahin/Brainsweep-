@@ -70,5 +70,6 @@ public abstract class Item {
      *
      * @return the item kind
      */
-    public abstract ItemKind getItemKind();
-}
+    public abstract String getItemKind();
+
+    }
