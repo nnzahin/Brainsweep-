@@ -1,5 +1,12 @@
 package somethingrandom.usecase.search;
 
+import somethingrandom.entity.Item;
+import somethingrandom.usecase.DataAccessException;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * A SearchItemsInteractor is responsible for using a query to filter
  * the list of items and present them on a view.
@@ -27,6 +34,21 @@ public class SearchItemsInteractor implements SearchItemsInputBoundary{
      */
     @Override
     public void execute(SearchItemsInputData query) {
-        //not sure how we're implementing this yet.
+        try {
+            Collection<Item> items = dataAccess.getAllItems();
+            List<Item> results = new ArrayList<>();
+
+            String searchText = query.getSearchQuery().toLowerCase();
+
+            for (Item item : items) {
+                if (item.getName().toLowerCase().contains(searchText)) {
+                    results.add(item);
+                }
+            }
+
+            presenter.presentSearchResults(results);
+        } catch (DataAccessException e) {
+            presenter.presentSearchFailure(e.getMessage());
+        }
     }
 }
