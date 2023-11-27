@@ -18,10 +18,6 @@ public class ActionableItem extends Item {
     private Duration neededTime;
 
     /**
-     * The item kind
-     */
-    private final String ITEMKIND = "ACTIONABLE";
-    /**
      * Instantiates a new Actionable item.
      *
      * @param name         the name
@@ -40,7 +36,7 @@ public class ActionableItem extends Item {
      * @return the item kind
      */
     public String getItemKind() {
-        return ITEMKIND;
+        return "ACTIONABLE";
     }
 
     /**

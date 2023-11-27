@@ -14,10 +14,6 @@ public class ReferenceItem extends Item {
     private String description;
 
     /**
-     * The item kind
-     */
-    private final String ITEMKIND = "REFERENCE";
-    /**
      * Instantiates a new Reference item.
      *
      * @param name         the name
@@ -36,7 +32,10 @@ public class ReferenceItem extends Item {
      * @return the item kind
      */
     public String getItemKind() {
-        return ITEMKIND;
+        /**
+         * The item kind
+         */
+        return "REFERENCE";
     }
 
     /**

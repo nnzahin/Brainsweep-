@@ -14,10 +14,6 @@ public class DelayedItem extends Item {
     private Instant remindDate;
 
     /**
-     * The item kind
-     */
-    private final String ITEMKIND = "DELAYED";
-    /**
      * Instantiates a new Delayed item.
      *
      * @param name         the name
@@ -36,7 +32,7 @@ public class DelayedItem extends Item {
      * @return the item kind
      */
     public String getItemKind() {
-        return ITEMKIND;
+        return "DELAYED";
     }
 
     /**
