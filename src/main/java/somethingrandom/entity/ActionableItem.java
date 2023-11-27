@@ -60,4 +60,13 @@ public class ActionableItem extends Item {
     public Duration getNeededTime() {
         return this.neededTime;
     }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return the string
+     */
+    public String toString(){
+        return super.toString() + "\n Needed time: " + this.neededTime;
+    }
 }

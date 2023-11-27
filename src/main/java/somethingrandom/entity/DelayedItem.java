@@ -56,4 +56,13 @@ public class DelayedItem extends Item {
     public Instant getRemindDate() {
         return this.remindDate;
     }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return the string
+     */
+    public String toString(){
+        return super.toString() + "\n Remind Date: " + this.remindDate;
+    }
 }
