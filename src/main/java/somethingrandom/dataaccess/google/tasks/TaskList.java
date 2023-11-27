@@ -3,6 +3,7 @@ package somethingrandom.dataaccess.google.tasks;
 import org.json.JSONObject;
 import somethingrandom.dataaccess.google.APIProvider;
 import somethingrandom.dataaccess.google.APIRequestBody;
+import somethingrandom.entity.Item;
 import somethingrandom.usecase.DataAccessException;
 
 import java.io.IOException;
@@ -22,7 +23,13 @@ public class TaskList {
         return identifier;
     }
 
-    public void add(JSONObject item) throws DataAccessException, IOException {
-        provider.request(new APIRequestBody.JSONBody("POST", item), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+    public void add(Item item) throws DataAccessException, IOException {
+        JSONObject request = new JSONObject();
+        request.put("kind", "tasks#task");
+        request.put("id", item.getID());
+        request.put("title" , item.getName());
+        request.put("status" , "needsAction");
+        request.put("notes" , item.toString());
+        provider.request(new APIRequestBody.JSONBody("POST", request), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
     }
 }

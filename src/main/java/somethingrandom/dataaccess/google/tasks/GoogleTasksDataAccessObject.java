@@ -1,8 +1,6 @@
 package somethingrandom.dataaccess.google.tasks;
 
-import org.json.JSONObject;
-import somethingrandom.dataaccess.google.APIRequestBody;
-import somethingrandom.entity.*;
+import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 
@@ -28,14 +26,8 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
 
     @Override
     public void save(Item item) throws DataAccessException {
-        JSONObject request = new JSONObject();
-        request.put("kind", "tasks#task");
-        request.put("id", item.getID());
-        request.put("title" , item.getName());
-        request.put("status" , "needsAction");
-        request.put("notes" , item.toString());
         try {
-            this.taskList.add(request);
+            this.taskList.add(item);
         } catch (IOException e) {
             throw new DataAccessException(e);
         }
