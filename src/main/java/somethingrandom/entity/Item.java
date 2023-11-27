@@ -72,4 +72,7 @@ public abstract class Item {
      */
     public abstract String getItemKind();
 
+    public String toString(){
+        return "Item: " + this.name + "\n Creation Date: " + this.creationDate;
     }
+}
