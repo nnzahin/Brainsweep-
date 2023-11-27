@@ -47,4 +47,13 @@ public class DelayedItem extends Item {
     public void setRemindDate(Instant remindDate) {
         this.remindDate = remindDate;
     }
+
+    /**
+     * Get remind date.
+     *
+     * @return the reminder date
+     */
+    public Instant getRemindDate() {
+        return this.remindDate;
+    }
 }

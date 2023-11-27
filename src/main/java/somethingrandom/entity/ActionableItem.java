@@ -51,4 +51,13 @@ public class ActionableItem extends Item {
     public void setNeededTime(Duration neededTime) {
         this.neededTime = neededTime;
     }
+
+    /**
+     * Get needed time.
+     *
+     * @return the needed time
+     */
+    public Duration getNeededTime() {
+        return this.neededTime;
+    }
 }
