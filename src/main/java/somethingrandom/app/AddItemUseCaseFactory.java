@@ -19,17 +19,11 @@ public class AddItemUseCaseFactory {
     public static AddItemView create(
         ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface userDataAccessObject) {
 
-        try {
-            AddItemController addItemController = createAddItemUseCase(viewManagerModel, addItemViewModel, userDataAccessObject);
-            return new AddItemView(addItemController, addItemViewModel);
-        } catch (IOException e){
-            JOptionPane.showMessageDialog(null, "Error.");
-
-        }
-        return null;
+        AddItemController addItemController = createAddItemUseCase(viewManagerModel, addItemViewModel, userDataAccessObject);
+        return new AddItemView(addItemController, addItemViewModel);
     }
 
-    private static AddItemController createAddItemUseCase(ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface addItemDataAccessObject) throws IOException{
+    private static AddItemController createAddItemUseCase(ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface addItemDataAccessObject) {
         AddItemOutputBoundary addItemOutputBoundary = new AddItemPresenter(addItemViewModel,viewManagerModel);
         CommonItemFactory commonItemFactory = new CommonItemFactory();
 
