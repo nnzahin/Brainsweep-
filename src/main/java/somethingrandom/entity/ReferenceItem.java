@@ -32,9 +32,6 @@ public class ReferenceItem extends Item {
      * @return the item kind
      */
     public String getItemKind() {
-        /**
-         * The item kind
-         */
         return "REFERENCE";
     }
 
