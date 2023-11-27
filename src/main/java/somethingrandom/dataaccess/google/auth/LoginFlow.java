@@ -19,19 +19,13 @@ public class LoginFlow {
     private final OkHttpClient httpClient;
     private final String clientSecret;
     private int usedPort = 0;
+    private String[] scopes;
 
-    public static void main(String[] args) throws AuthenticationException, IOException {
-        LoginFlow c = new LoginFlow(new OkHttpClient(), System.getenv("OAUTH_CLIENT_SECRET"), new S256CodeVerifier(new SecureRandom()));
-        Token t = c.execute();
-        System.out.println("got authorization token: " + t.getToken().substring(0, 5) + "...");
-
-        c.addEvent(t, "It works on October 2nd");
-    }
-
-    public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier) {
+    public LoginFlow(OkHttpClient httpClient, String clientSecret, CodeVerifier verifier, String[] scopes) {
         this.httpClient = httpClient;
         this.clientSecret = clientSecret;
         this.verifier = verifier;
+        this.scopes = scopes;
 
         if (clientSecret == null) {
             throw new IllegalArgumentException("clientSecret cannot be null");
@@ -66,7 +60,7 @@ public class LoginFlow {
         String uri = "https://accounts.google.com/o/oauth2/v2/auth";
         uri += "?client_id=" + OAUTH_CLIENT_ID;
         uri += "&redirect_uri=http://127.0.0.1:" + usedPort;
-        uri += "&scope=https://www.googleapis.com/auth/calendar";
+        uri += "&scope=" + String.join("+", scopes);
         uri += "&code_challenge=" + verifier.getCodeChallenge();
         uri += "&code_challenge_method=" + verifier.getMethodName();
         uri += "&response_type=code";
@@ -104,25 +98,5 @@ public class LoginFlow {
 
     private String getRedirectUrl() {
         return "http://127.0.0.1:" + usedPort;
-    }
-
-    private void addEvent(Token token, String eventName) throws IOException, AuthenticationException {
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("https")
-                .host("www.googleapis.com")
-                .addPathSegments("calendar/v3/calendars/primary/events/quickAdd")
-                .addQueryParameter("text", eventName)
-                .build();
-
-        Request req = new Request.Builder()
-                .post(RequestBody.create(new byte[0]))
-                .url(url)
-                .addHeader("Authorization", "Bearer " + token.getToken())
-                .build();
-
-        try (Response resp = httpClient.newCall(req).execute()) {
-            System.out.println("event creation gave " + resp.code() + ": " + resp.message());
-            System.out.println(resp.body().string());
-        }
     }
 }

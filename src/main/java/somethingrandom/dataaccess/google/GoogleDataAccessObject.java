@@ -14,10 +14,10 @@ import java.util.Optional;
 
 /**
  * GoogleDataAccessObject is a generic data access object to interact
- * with either Google Keep or Google Tasks.
+ * with Google Tasks, or any other Google services that may be added.
  * <p>
- * It automatically selects the backend corresponding: Keep for reference
- * items, and Tasks for others.
+ * Currently, Google Tasks is always used; adding Google Keep support,
+ * for example, may be possible in an enterprise scenario.
  */
 public class GoogleDataAccessObject implements AddItemDataAccessInterface {
     private final GoogleTasksDataAccessObject tasksDAO;
@@ -34,6 +34,12 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface {
     public GoogleDataAccessObject(OkHttpClient client, Token token, String taskListName) throws DataAccessException {
         OkHttpAPIProvider provider = new OkHttpAPIProvider(client, token);
         this.tasksDAO = createTasksDAO(provider, taskListName);
+    }
+
+    public static String[] getScopes() {
+        return new String[] {
+            GoogleTasksDataAccessObject.getScope(),
+        };
     }
 
     @NotNull

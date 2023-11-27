@@ -50,13 +50,51 @@ public class TaskAccountTest {
     }
 
     @Test
-    public void shouldTestIdIsPresent() {
+    public void shouldTestIdAndTitleArePresent() {
         final String DATA = """
         {
             "kind": "tasks#taskLists",
             "items": [
                 {
                     "kind": "tasks#taskList"
+                }
+            ]
+        }
+        """;
+
+        assertThrows(DataAccessException.class, () -> {
+            new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
+        });
+    }
+
+    @Test
+    public void shouldTestTitleIsPresent() {
+        final String DATA = """
+        {
+            "kind": "tasks#taskLists",
+            "items": [
+                {
+                    "kind": "tasks#taskList",
+                    "id": "something"
+                }
+            ]
+        }
+        """;
+
+        assertThrows(DataAccessException.class, () -> {
+            new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
+        });
+    }
+
+    @Test
+    public void shouldTestIdIsPresent() {
+        final String DATA = """
+        {
+            "kind": "tasks#taskLists",
+            "items": [
+                {
+                    "kind": "tasks#taskList",
+                    "title": "something"
                 }
             ]
         }
@@ -75,19 +113,28 @@ public class TaskAccountTest {
             "items": [
                 {
                     "kind": "tasks#taskList",
-                    "id": "abc"
+                    "id": "abc",
+                    "title": "Tuv"
                 },
                 {
                     "kind": "tasks#taskList",
-                    "id": "def"
+                    "id": "def",
+                    "title": "Xyz"
                 }
             ]
         }
         """;
 
         Iterator<TaskList> tls = new TaskAccount(new APIProvider.Constant(DATA)).iterateLists();
-        assertEquals("abc", tls.next().getIdentifier());
-        assertEquals("def", tls.next().getIdentifier());
+
+        TaskList tl = tls.next();
+        assertEquals("abc", tl.getIdentifier());
+        assertEquals("Tuv", tl.getTitle());
+
+        tl = tls.next();
+        assertEquals("def", tl.getIdentifier());
+        assertEquals("Xyz", tl.getTitle());
+
         assertFalse(tls.hasNext());
     }
 }
