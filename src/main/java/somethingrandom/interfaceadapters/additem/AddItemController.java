@@ -10,7 +10,7 @@ public class AddItemController {
     public AddItemController(AddItemInputBoundary addItemUseCaseInteractor) {
         this.addItemUseCaseInteractor = addItemUseCaseInteractor;
     }
-    public void execute(String item, String description) throws DataAccessException {
+    public void execute(String item, String description) {
         AddItemInputData addItemInputData = new AddItemInputData(item, description);
         addItemUseCaseInteractor.execute(addItemInputData);
     }
