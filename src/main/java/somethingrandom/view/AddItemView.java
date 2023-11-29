@@ -83,7 +83,7 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
                 @Override
                 public void keyTyped(KeyEvent e) {
                     AddItemState currentState = addItemViewModel.getState();
-                    currentState.setItemName(itemDiscInput.getText() + e.getKeyChar());
+                    currentState.setDescription(itemDiscInput.getText() + e.getKeyChar());
                     addItemViewModel.setState(currentState);
 
                 }
