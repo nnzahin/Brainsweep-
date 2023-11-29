@@ -59,15 +59,6 @@ public class ActionableItem extends Item {
     }
 
     /**
-     * Get needed time.
-     *
-     * @return the needed time
-     */
-    public Duration getNeededTime() {
-        return this.neededTime;
-    }
-
-    /**
      * Returns a string representation of the object.
      *
      * @return the string
