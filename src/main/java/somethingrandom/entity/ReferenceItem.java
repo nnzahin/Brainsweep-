@@ -31,8 +31,8 @@ public class ReferenceItem extends Item {
      *
      * @return the item kind
      */
-    public ItemKind getItemKind() {
-        return ItemKind.REFERENCE;
+    public String getItemKind() {
+        return "REFERENCE";
     }
 
     /**
@@ -51,5 +51,14 @@ public class ReferenceItem extends Item {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return the string
+     */
+    public String toString(){
+        return super.toString() + "\n Description: " + this.description;
     }
 }

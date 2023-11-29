@@ -35,8 +35,8 @@ public class ActionableItem extends Item {
      *
      * @return the item kind
      */
-    public ItemKind getItemKind() {
-        return ItemKind.ACTIONABLE;
+    public String getItemKind() {
+        return "ACTIONABLE";
     }
 
     /**
@@ -56,5 +56,23 @@ public class ActionableItem extends Item {
      */
     public void setNeededTime(Duration neededTime) {
         this.neededTime = neededTime;
+    }
+
+    /**
+     * Get needed time.
+     *
+     * @return the needed time
+     */
+    public Duration getNeededTime() {
+        return this.neededTime;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return the string
+     */
+    public String toString(){
+        return super.toString() + "\n Needed time: " + this.neededTime;
     }
 }

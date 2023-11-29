@@ -31,8 +31,8 @@ public class DelayedItem extends Item {
      *
      * @return the item kind
      */
-    public ItemKind getItemKind() {
-        return ItemKind.DELAYED;
+    public String getItemKind() {
+        return "DELAYED";
     }
 
     /**
@@ -51,5 +51,23 @@ public class DelayedItem extends Item {
      */
     public void setRemindDate(Instant remindDate) {
         this.remindDate = remindDate;
+    }
+
+    /**
+     * Get remind date.
+     *
+     * @return the reminder date
+     */
+    public Instant getRemindDate() {
+        return this.remindDate;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return the string
+     */
+    public String toString(){
+        return super.toString() + "\n Remind Date: " + this.remindDate;
     }
 }
