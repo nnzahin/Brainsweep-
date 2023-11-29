@@ -23,6 +23,8 @@ public class TaskList {
         return identifier;
     }
 
+    public String getTitle() { return title; }
+
     public void add(Item item) throws DataAccessException, IOException {
         JSONObject request = new JSONObject();
         request.put("kind", "tasks#task");

@@ -1,5 +1,5 @@
 package somethingrandom.usecase;
-
+/*
 public class SearchItemsInteractor implements SearchItemsInputBoundary{
 
     final SearchItemsDataAccessInterface searchItemsDataAccessObject;
@@ -18,4 +18,4 @@ public class SearchItemsInteractor implements SearchItemsInputBoundary{
     }
 
 
-}
+}*/

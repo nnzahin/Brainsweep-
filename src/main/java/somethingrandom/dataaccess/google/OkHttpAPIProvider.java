@@ -41,7 +41,7 @@ class OkHttpAPIProvider implements APIProvider {
             .url(url)
             .method(body.getMethod(), requestBody)
             .addHeader("Authorization", "Bearer " + token.getToken())
-            .get().build();
+            .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful() || response.body() == null) {
