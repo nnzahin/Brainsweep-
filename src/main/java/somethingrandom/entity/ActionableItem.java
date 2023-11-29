@@ -40,6 +40,16 @@ public class ActionableItem extends Item {
     }
 
     /**
+     * Returns the needed time.
+     *
+     * @return the needed time
+     */
+    @Nullable
+    public Duration getNeededTime() {
+        return this.neededTime;
+    }
+
+    /**
      * Set needed time.
      *
      * @param neededTime the needed time

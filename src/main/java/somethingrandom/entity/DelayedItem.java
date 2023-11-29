@@ -36,6 +36,15 @@ public class DelayedItem extends Item {
     }
 
     /**
+     * Returns the reminder date.
+     *
+     * @return the remindDate
+     */
+    public Instant getReminderDate() {
+        return this.remindDate;
+    }
+
+    /**
      * Sets remind date.
      *
      * @param remindDate the reminder date

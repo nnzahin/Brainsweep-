@@ -4,6 +4,9 @@ import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 
+import java.io.IOException;
+
+
 /**
  * Implements an interface to store items in the Google Tasks API.
  * <p>
@@ -23,6 +26,10 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
 
     @Override
     public void save(Item item) throws DataAccessException {
-        throw new RuntimeException("not implemented");
+        try {
+            this.taskList.add(item);
+        } catch (IOException e) {
+            throw new DataAccessException(e);
+        }
     }
 }
