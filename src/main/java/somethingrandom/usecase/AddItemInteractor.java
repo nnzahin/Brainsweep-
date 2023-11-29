@@ -4,6 +4,9 @@ import org.jetbrains.annotations.Nullable;
 import somethingrandom.entity.CommonItemFactory;
 import somethingrandom.entity.Item;
 
+import java.time.Instant;
+import java.util.UUID;
+
 public class AddItemInteractor implements AddItemInputBoundary{
     final AddItemDataAccessInterface addItemDataAccessObject;
 
@@ -35,12 +38,15 @@ public class AddItemInteractor implements AddItemInputBoundary{
     }
 
     private @Nullable Item createItemForInputData(AddItemInputData addItemInputData) {
+        UUID uuid = UUID.randomUUID();
+        Instant creationDate = Instant.now();
+
         if (addItemInputData.getNeededTime() != null) {
-            return factory.createActionableItem(addItemInputData.getName(), addItemInputData.getId(), addItemInputData.getCreationDate(), addItemInputData.getNeededTime());
+            return factory.createActionableItem(addItemInputData.getName(), uuid, creationDate, addItemInputData.getNeededTime());
         } else if (addItemInputData.getDescription() != null) {
-            return factory.createReferenceItem(addItemInputData.getName(), addItemInputData.getId(),addItemInputData.getCreationDate(), addItemInputData.getDescription());
+            return factory.createReferenceItem(addItemInputData.getName(), uuid, creationDate, addItemInputData.getDescription());
         } else if (addItemInputData.getRemindDate() != null) {
-            return factory.createDelayedItem(addItemInputData.getName(), addItemInputData.getId(), addItemInputData.getCreationDate(), addItemInputData.getRemindDate());
+            return factory.createDelayedItem(addItemInputData.getName(), uuid, creationDate, addItemInputData.getRemindDate());
         }
 
         return null;
