@@ -15,7 +15,7 @@ public interface SearchItemsOutputBoundary {
      * As they are provided in a Collection, there is no guarantee of order.
      * It's expected that the view be responsible for this.
      */
-    void presentSearchResults(Collection<Item> items);
+    void presentSearchResults(Collection<SearchItemsResult> items);
 
     /**
      * Called if the search fails for some reason. The view should notify
