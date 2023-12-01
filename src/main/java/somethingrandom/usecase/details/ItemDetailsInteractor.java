@@ -35,7 +35,7 @@ public class ItemDetailsInteractor implements ItemDetailsInputBoundary {
         if (item instanceof ReferenceItem) {
             presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((ReferenceItem) item).getDescription(), item.getCreationDate()));
         } else {
-            presenter.presentFailure("Unknown item kind");
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getCreationDate()));
         }
     }
 }

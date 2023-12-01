@@ -9,11 +9,17 @@ import java.time.Instant;
  * Stores information about an item that would be useful in the details pane.
  */
 public class ItemDetailsOutputData {
-    private final String title;
-    private final String description;
-    private final Instant creationTime;
+    private final @NotNull String title;
+    private final @Nullable String description;
+    private final @NotNull Instant creationTime;
 
-    ItemDetailsOutputData(String title, String description, Instant creationTime) {
+    public ItemDetailsOutputData(@NotNull String title, @NotNull Instant creationTime) {
+        this.title = title;
+        this.description = null;
+        this.creationTime = creationTime;
+    }
+
+    public ItemDetailsOutputData(@NotNull String title, @Nullable String description, @NotNull Instant creationTime) {
         this.title = title;
         this.description = description;
         this.creationTime = creationTime;
