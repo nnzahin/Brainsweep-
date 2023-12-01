@@ -10,6 +10,7 @@ import somethingrandom.usecase.DataAccessException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TaskList {
@@ -52,5 +53,9 @@ public class TaskList {
 
         uuidsToIds.put(item.getID(), id);
         idsToUUIDs.put(id, item.getID());
+    }
+
+    public Optional<Item> getItem(UUID uuid) throws DataAccessException {
+        throw new RuntimeException("not implemented");
     }
 }

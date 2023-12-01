@@ -3,8 +3,11 @@ package somethingrandom.dataaccess.google.tasks;
 import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.details.ItemDetailsDataAccessInterface;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 
 /**
@@ -13,7 +16,7 @@ import java.io.IOException;
  * The API is
  * <a href="https://developers.google.com/tasks/reference/rest">published online</a>.
  */
-public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
+public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, ItemDetailsDataAccessInterface {
     private final TaskList taskList;
 
     public GoogleTasksDataAccessObject(TaskList list) {
@@ -31,5 +34,10 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
         } catch (IOException e) {
             throw new DataAccessException(e);
         }
+    }
+
+    @Override
+    public Optional<Item> getItemById(UUID uuid) throws DataAccessException {
+        return taskList.getItem(uuid);
     }
 }
