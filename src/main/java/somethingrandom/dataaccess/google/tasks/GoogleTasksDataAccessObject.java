@@ -1,10 +1,12 @@
 package somethingrandom.dataaccess.google.tasks;
 
+import somethingrandom.dataaccess.google.auth.AuthenticationException;
 import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 
 import java.io.IOException;
+import java.util.Collection;
 
 
 /**
@@ -29,6 +31,15 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
         try {
             this.taskList.add(item);
         } catch (IOException e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    @Override
+    public Collection<Item> getAll() {
+        try {
+            return this.taskList.getAll();
+        } catch (IOException | AuthenticationException e) {
             throw new DataAccessException(e);
         }
     }
