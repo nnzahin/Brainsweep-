@@ -56,7 +56,7 @@ public class AddItemTest {
         item3Data.put("description", item3.getDescription());
 
         try {
-            FileUserDataAccessObject dao = new FileUserDataAccessObject("./data.json");
+            FileUserDataAccessObject dao = new FileUserDataAccessObject("./data.json", factory);
             dao.save(item1);
             dao.save(item2);
             dao.save(item3);
@@ -120,6 +120,25 @@ public class AddItemTest {
             assert item3Data.get("description").equals(parser.path(item3Data.get("id")).path("description").asText());
 
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @org.junit.Test
+    public void testDataPersists() {
+        try{
+            ItemFactory factory = new CommonItemFactory();
+            FileUserDataAccessObject dao = new FileUserDataAccessObject("./data.json", factory);
+            BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode parser = mapper.readTree(reader);
+            assert item3Data.get("name").equals(parser.path(item3Data.get("id")).path("name").asText());
+            assert item3Data.get("id").equals(parser.path(item3Data.get("id")).path("id").asText());
+            assert item3Data.get("creationDate").equals(parser.path(item3Data.get("id")).path("creationDate").asText());
+            assert item3Data.get("itemKind").equals(parser.path(item3Data.get("id")).path("itemKind").asText());
+            assert item3Data.get("description").equals(parser.path(item3Data.get("id")).path("description").asText());
+
+        } catch (IOException | DataAccessException e) {
             throw new RuntimeException(e);
         }
     }

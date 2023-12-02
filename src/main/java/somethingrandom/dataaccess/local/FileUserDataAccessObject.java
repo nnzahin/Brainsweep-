@@ -1,6 +1,6 @@
 package somethingrandom.dataaccess.local;
 
-import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONWriter;
 import somethingrandom.entity.*;
 import somethingrandom.usecase.DataAccessException;
@@ -28,8 +28,24 @@ public class FileUserDataAccessObject {
 
     private void load(){
         try {
-
-        } catch ()
+            BufferedReader reader = new BufferedReader(new FileReader(dataFile));
+            JSONObject data = new JSONObject(reader.readLine());
+            reader.close();
+            for (String key: data.keySet()) {
+                if (!data.keySet().contains(key)) {
+                    Map<String, String> itemData = new HashMap<>();
+                    JSONObject item = data.getJSONObject(key);
+                    for (String itemKey : item.keySet()) {
+                        if (!itemKey.equals("empty")) {
+                            itemData.put(itemKey, item.getString(itemKey));
+                        }
+                    }
+                    items.put(UUID.fromString(key), itemData);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -87,7 +103,7 @@ public class FileUserDataAccessObject {
         }
     }
 
-    public Collection<Item> getAllItems() throws DataAccessException {
+    public Collection<Item> getAllItems() {
         Collection<Item> all = new ArrayList<>();
         for (UUID key: items.keySet()) {
             if(items.get(key).get("itemKind").equals("ACTIONABLE")){
@@ -102,14 +118,14 @@ public class FileUserDataAccessObject {
     }
 
     private ActionableItem toItem(String name, UUID id, Instant creationDate, Duration neededTime) {
-        return new ActionableItem(name, id, creationDate, neededTime);
+        return factory.createActionableItem(name, id, creationDate, neededTime);
     }
 
     private DelayedItem toItem(String name, UUID id, Instant creationDate, Instant remindDate) {
-        return new DelayedItem(name, id, creationDate, remindDate);
+        return factory.createDelayedItem(name, id, creationDate, remindDate);
     }
 
     private ReferenceItem toItem(String name, UUID id, Instant creationDate, String description) {
-        return new ReferenceItem(name, id, creationDate, description);
+        return factory.createReferenceItem(name, id, creationDate, description);
     }
 }
