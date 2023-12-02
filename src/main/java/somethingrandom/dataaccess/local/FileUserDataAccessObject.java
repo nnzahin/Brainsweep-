@@ -1,16 +1,14 @@
 package somethingrandom.dataaccess.local;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONWriter;
+import somethingrandom.entity.ActionableItem;
+import somethingrandom.entity.DelayedItem;
 import somethingrandom.entity.Item;
 import somethingrandom.entity.ReferenceItem;
-import somethingrandom.entity.DelayedItem;
-import somethingrandom.entity.ActionableItem;
 import somethingrandom.usecase.DataAccessException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -22,7 +20,15 @@ public class FileUserDataAccessObject {
     public FileUserDataAccessObject(String dataFilePath) throws DataAccessException {
         dataFile = new File(dataFilePath);
         items = new HashMap<>();
-        save();
+        if (dataFile.length() == 0) {
+            save();
+        } else {
+            load();
+        }
+    }
+
+    private void load(){
+
     }
 
     /**
@@ -67,8 +73,14 @@ public class FileUserDataAccessObject {
     private void save() throws DataAccessException {
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(writer, items);
+            JSONWriter jsonWriter = new JSONWriter(writer);
+            jsonWriter.object();
+            for (UUID key: items.keySet()) {
+                jsonWriter.key(key.toString());
+                jsonWriter.value(items.get(key));
+            }
+            jsonWriter.endObject();
+            writer.close();
         } catch (IOException e) {
             throw new DataAccessException("Error while saving data");
         }
