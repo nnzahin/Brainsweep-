@@ -44,7 +44,7 @@ public class TaskList {
         JSONObject items = response.getJSONObject("items");
         Collection<Item> allItems = new ArrayList<>();
         for (Object item: response.getJSONArray("items")) {
-            JSONObject jsonItem = new JSONObject(item);
+            JSONObject jsonItem = (JSONObject) item;
             if (!idsToUUIDs.containsKey(jsonItem.get("id"))) {
                 UUID id = UUID.randomUUID();
                 idsToUUIDs.put(jsonItem.get("id"), id);
