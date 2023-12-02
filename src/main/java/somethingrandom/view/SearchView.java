@@ -1,6 +1,7 @@
 package somethingrandom.view;
 
 import somethingrandom.interfaceadapters.additem.AddItemState;
+import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchState;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
 
@@ -24,7 +25,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
 
 
-    public SearchView(SearchController searchController, SearchViewModel searchViewModel, ListItemsViewModel listItemsViewModel){
+    public SearchView(SearchController searchController, SearchViewModel searchViewModel){
         this.searchController = searchController;
         this.searchViewModel = searchViewModel;
 
