@@ -8,6 +8,7 @@ import somethingrandom.entity.Item;
 import somethingrandom.usecase.DataAccessException;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -58,7 +59,12 @@ public class TaskList {
         idsToUUIDs.put(id, item.getID());
     }
 
-    public Optional<Item> getItem(UUID uuid) throws DataAccessException {
-        throw new RuntimeException("not implemented");
+    public Optional<Item> getItem(UUID uuid) throws DataAccessException, IOException {
+        JSONObject response = provider.request(new APIRequestBody.GetBody(), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + uuidsToIds.get(uuid));
+        if (response == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(JsonItemFactory.createItem(uuid, response));
     }
 }

@@ -38,6 +38,10 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, 
 
     @Override
     public Optional<Item> getItemById(UUID uuid) throws DataAccessException {
-        return taskList.getItem(uuid);
+        try {
+            return this.taskList.getItem(uuid);
+        } catch (IOException e) {
+            throw new DataAccessException(e);
+        }
     }
 }
