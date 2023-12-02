@@ -10,6 +10,7 @@ import somethingrandom.usecase.DataAccessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 public class TaskList {
     private final APIProvider provider;
@@ -39,20 +40,19 @@ public class TaskList {
     }
 
     public Collection<Item> getAll() throws AuthenticationException, IOException {
-        try {
-            JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
-            JSONObject items = response.getJSONObject("items");
-            Collection<Item> allItems = new ArrayList<>();
-            JsonItemFactory factory = new JsonItemFactory();
-            for (Object item: items.toMap().values()) {
-                JSONObject jsonItem = new JSONObject(item);
-                allItems.add(factory.createItem(idsToUUIDs.get(jsonItem.get("id")), jsonItem));
+        JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+        JSONObject items = response.getJSONObject("items");
+        Collection<Item> allItems = new ArrayList<>();
+        for (Object item: response.getJSONArray("items")) {
+            JSONObject jsonItem = new JSONObject(item);
+            if (!idsToUUIDs.containsKey(jsonItem.get("id"))) {
+                UUID id = UUID.randomUUID();
+                idsToUUIDs.put(jsonItem.get("id"), id);
+                uuidsToIds.put(id, jsonItem.get("id"));
             }
-            return allItems;
-        } catch (AuthenticationException e) {
-            throw new AuthenticationException(e);
-        } catch (IOException e) {
-            throw new IOException(e);
+            allItems.add(JsonItemFactory.createItem(idsToUUIDs.get(jsonItem.get("id")), jsonItem));
         }
+        return allItems;
+
     }
 }

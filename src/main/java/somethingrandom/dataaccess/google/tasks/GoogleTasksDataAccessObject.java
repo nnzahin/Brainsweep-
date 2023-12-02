@@ -36,7 +36,7 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
     }
 
     @Override
-    public Collection<Item> getAll() {
+    public Collection<Item> getAll() throws DataAccessException {
         try {
             return this.taskList.getAll();
         } catch (IOException | AuthenticationException e) {
