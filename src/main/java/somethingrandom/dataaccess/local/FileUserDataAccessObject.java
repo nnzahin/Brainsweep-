@@ -99,7 +99,7 @@ public class FileUserDataAccessObject {
             jsonWriter.endObject();
             writer.close();
         } catch (IOException e) {
-            throw new DataAccessException("Error while saving data");
+            throw new DataAccessException(e);
         }
     }
 
