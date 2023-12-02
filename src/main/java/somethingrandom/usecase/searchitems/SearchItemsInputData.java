@@ -1,4 +1,4 @@
-package somethingrandom.usecase;
+package somethingrandom.usecase.searchitems;
 
 public class SearchItemsInputData {
 

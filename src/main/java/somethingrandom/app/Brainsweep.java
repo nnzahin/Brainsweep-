@@ -18,6 +18,17 @@ import java.security.SecureRandom;
 public class Brainsweep {
     public static void main(String[] args) {
 
+        /*
+        Constructing the main program view
+         */
+        JFrame mainWindow = new JFrame("Brainsweep");
+        GridLayout grid = new GridLayout();
+        mainWindow.setLayout(grid);
+        mainWindow.setSize(800, 600);
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        JButton addButton = new JButton("Add+");
         JFrame application = new JFrame("Add To-Do List Item");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
