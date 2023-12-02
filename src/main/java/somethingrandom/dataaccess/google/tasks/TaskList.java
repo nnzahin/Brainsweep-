@@ -43,6 +43,9 @@ public class TaskList {
 
         APIRequestBody body = new APIRequestBody.JSONBody("POST", request);
         JSONObject response = provider.request(body, "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+        if (response == null) {
+            throw new DataAccessException("API endpoint was not found");
+        }
 
         String id;
         try {
