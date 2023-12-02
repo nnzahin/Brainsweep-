@@ -26,7 +26,7 @@ public class FileUserDataAccessObject {
         }
     }
 
-    private void load(){
+    private void load() throws DataAccessException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dataFile));
             JSONObject data = new JSONObject(reader.readLine());
@@ -44,7 +44,7 @@ public class FileUserDataAccessObject {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException(e);
         }
     }
 

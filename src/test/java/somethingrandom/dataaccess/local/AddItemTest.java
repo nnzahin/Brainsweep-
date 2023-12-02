@@ -55,89 +55,75 @@ public class AddItemTest {
 
     @org.junit.Test
     public void testActionableItemSavedProperly() throws IOException {
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
-            JSONObject data = new JSONObject(reader.readLine());
-            reader.close();
-            JSONObject item = data.getJSONObject(item1.getID().toString());
-            Map<String, String> itemData = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
+        JSONObject data = new JSONObject(reader.readLine());
+        reader.close();
+        JSONObject item = data.getJSONObject(item1.getID().toString());
 
-            for (String itemKey : item.keySet()) {
-                if (!itemKey.equals("empty")) {
-                    itemData.put(itemKey, item.getString(itemKey));
-                }
+        Map<String, String> itemData = new HashMap<>();
+
+        for (String itemKey : item.keySet()) {
+            if (!itemKey.equals("empty")) {
+                itemData.put(itemKey, item.getString(itemKey));
             }
-
-            assertEquals(itemData.get("name"), item1.getName());
-            assertEquals(itemData.get("id"), item1.getID().toString());
-            assertEquals(itemData.get("creationDate"), item1.getCreationDate().toString());
-            assertEquals(itemData.get("itemKind"), item1.getItemKind());
-            assertEquals(itemData.get("neededTime"), item1.getNeededTime().toString());
-        } catch (IOException e) {
-            throw new IOException(e);
         }
+
+        assertEquals(itemData.get("name"), item1.getName());
+        assertEquals(itemData.get("id"), item1.getID().toString());
+        assertEquals(itemData.get("creationDate"), item1.getCreationDate().toString());
+        assertEquals(itemData.get("itemKind"), item1.getItemKind());
+        assertEquals(itemData.get("neededTime"), item1.getNeededTime().toString());
+
     }
 
     @org.junit.Test
     public void testDelayedItemSavedProperly() throws IOException {
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
-            JSONObject data = new JSONObject(reader.readLine());
-            reader.close();
-            JSONObject item = data.getJSONObject(item2.getID().toString());
-            Map<String, String> itemData = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
+        JSONObject data = new JSONObject(reader.readLine());
+        reader.close();
+        JSONObject item = data.getJSONObject(item2.getID().toString());
+        Map<String, String> itemData = new HashMap<>();
 
-            for (String itemKey : item.keySet()) {
-                if (!itemKey.equals("empty")) {
-                    itemData.put(itemKey, item.getString(itemKey));
-                }
+        for (String itemKey : item.keySet()) {
+            if (!itemKey.equals("empty")) {
+                itemData.put(itemKey, item.getString(itemKey));
             }
-
-            assertEquals(itemData.get("name"), item2.getName());
-            assertEquals(itemData.get("id"), item2.getID().toString());
-            assertEquals(itemData.get("creationDate"), item2.getCreationDate().toString());
-            assertEquals(itemData.get("itemKind"), item2.getItemKind());
-            assertEquals(itemData.get("remindDate"), item2.getReminderDate().toString());
-        } catch (IOException e) {
-            throw new IOException(e);
         }
+
+        assertEquals(itemData.get("name"), item2.getName());
+        assertEquals(itemData.get("id"), item2.getID().toString());
+        assertEquals(itemData.get("creationDate"), item2.getCreationDate().toString());
+        assertEquals(itemData.get("itemKind"), item2.getItemKind());
+        assertEquals(itemData.get("remindDate"), item2.getReminderDate().toString());
     }
 
     @org.junit.Test
     public void testReferenceItemSavedProperly() throws IOException {
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
-            JSONObject data = new JSONObject(reader.readLine());
-            reader.close();
-            JSONObject item = data.getJSONObject(item3.getID().toString());
-            Map<String, String> itemData = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader("./data.json"));
+        JSONObject data = new JSONObject(reader.readLine());
+        reader.close();
+        JSONObject item = data.getJSONObject(item3.getID().toString());
+        Map<String, String> itemData = new HashMap<>();
 
-            for (String itemKey : item.keySet()) {
-                if (!itemKey.equals("empty")) {
-                    itemData.put(itemKey, item.getString(itemKey));
-                }
+        for (String itemKey : item.keySet()) {
+            if (!itemKey.equals("empty")) {
+                itemData.put(itemKey, item.getString(itemKey));
             }
-
-            assertEquals(itemData.get("name"), item3.getName());
-            assertEquals(itemData.get("id"), item3.getID().toString());
-            assertEquals(itemData.get("creationDate"), item3.getCreationDate().toString());
-            assertEquals(itemData.get("itemKind"), item3.getItemKind());
-            assertEquals(itemData.get("description"), item3.getDescription());
-        } catch (IOException e) {
-            throw new IOException(e);
         }
+
+        assertEquals(itemData.get("name"), item3.getName());
+        assertEquals(itemData.get("id"), item3.getID().toString());
+        assertEquals(itemData.get("creationDate"), item3.getCreationDate().toString());
+        assertEquals(itemData.get("itemKind"), item3.getItemKind());
+        assertEquals(itemData.get("description"), item3.getDescription());
     }
 
     @org.junit.Test
-    public void testDataPersists() throws IOException {
-        try{
-            ItemFactory factory = new CommonItemFactory();
-            FileUserDataAccessObject dao = new FileUserDataAccessObject("./data.json", factory);
-            testActionableItemSavedProperly();
-            testReferenceItemSavedProperly();
-            testDelayedItemSavedProperly();
-        } catch (IOException | DataAccessException e) {
-            throw new IOException(e);
-        }
+    public void testDataPersists() throws IOException, DataAccessException {
+        ItemFactory factory = new CommonItemFactory();
+        FileUserDataAccessObject dao = new FileUserDataAccessObject("./data.json", factory);
+        testActionableItemSavedProperly();
+        testReferenceItemSavedProperly();
+        testDelayedItemSavedProperly();
     }
 }
