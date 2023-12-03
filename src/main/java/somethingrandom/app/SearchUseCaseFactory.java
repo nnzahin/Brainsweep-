@@ -1,8 +1,10 @@
 package somethingrandom.app;
+import somethingrandom.entity.Item;
 import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchPresenter;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
+import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
 import somethingrandom.usecase.search.SearchItemsInputBoundary;
 import somethingrandom.usecase.search.SearchItemsInteractor;
@@ -12,19 +14,37 @@ import somethingrandom.view.SearchView;
 import javax.swing.*;
 import java.io.IOException;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class SearchUseCaseFactory {
 
-    /*
-    Not actually sure what this does, I just mirrored the CA use case factory from class
-     */
     private SearchUseCaseFactory(){}
 
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject){
         try {
-            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
 
+            // Retrieving names for default view
+            ArrayList<String> allItemNames = new ArrayList<>();
+            try {
+                Collection<Item> allItems = searchDataAccessObject.getAllItems();
+                for (Item item: allItems){
+                    allItemNames.add(item.getName());
+                }
+                searchViewModel.setItemNamesList(allItemNames);
+
+            }
+            catch (DataAccessException e){
+                JOptionPane.showMessageDialog(null, "Error");
+
+                // I don't think this is right, please give suggestions.
+            }
+
+            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
             return new SearchView(searchController, searchViewModel);
+
+
+
         }
         catch (IOException e){
             JOptionPane.showMessageDialog(null, "Item not found.");
@@ -38,6 +58,8 @@ public class SearchUseCaseFactory {
         SearchItemsInputBoundary searchInteractor = new SearchItemsInteractor(searchDataAccessObject, searchItemsOutputBoundary, clock);
         return new SearchController(searchInteractor);
     }
+
+
 
 
 }
