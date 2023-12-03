@@ -64,6 +64,10 @@ public class ActionableItem extends Item {
      * @return the string
      */
     public String toString(){
-        return super.toString() + "\nNeeded time: " + this.neededTime;
+        if (this.neededTime == null) {
+            return super.toString();
+        } else {
+            return super.toString() + "\nNeeded time: " + this.neededTime.getSeconds();
+        }
     }
 }
