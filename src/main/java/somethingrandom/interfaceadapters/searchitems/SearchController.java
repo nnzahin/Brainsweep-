@@ -1,7 +1,6 @@
 package somethingrandom.interfaceadapters.searchitems;
-
-import somethingrandom.usecase.edititem.EditItemInputBoundary;
-import somethingrandom.usecase.searchitems.SearchItemsInputData;
+import somethingrandom.usecase.search.SearchItemsInputBoundary;
+import somethingrandom.usecase.search.SearchItemsInputData;
 
 public class SearchController {
     final SearchItemsInputBoundary searchItemUseCaseInteractor;

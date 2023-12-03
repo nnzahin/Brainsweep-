@@ -1,7 +1,5 @@
 package somethingrandom.usecase.search;
 
-import somethingrandom.entity.Item;
-
 import java.util.Collection;
 
 /**
@@ -15,7 +13,7 @@ public interface SearchItemsOutputBoundary {
      * As they are provided in a Collection, there is no guarantee of order.
      * It's expected that the view be responsible for this.
      */
-    void presentSearchResults(Collection<SearchItemsResult> items);
+    void presentSearchResults(Collection<SearchItemsOutputData> items);
 
     /**
      * Called if the search fails for some reason. The view should notify
