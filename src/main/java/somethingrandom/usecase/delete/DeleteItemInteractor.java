@@ -25,4 +25,17 @@ public class DeleteItemInteractor implements DeleteItemInputBoundary{
                presenter.presentFailureView(e.getMessage());
         }
     }
+
+    public void execute(String name) {
+        try {
+            String message = dao.delete(name);
+            if (message == null){
+                presenter.presentFailureView("Item not found");
+            } else {
+                presenter.presentSuccessView(message);
+            }
+        } catch (DataAccessException e) {
+            presenter.presentFailureView(e.getMessage());
+        }
+    }
 }
