@@ -9,6 +9,11 @@ import somethingrandom.entity.Item;
 import somethingrandom.usecase.DataAccessException;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +52,9 @@ public class TaskList {
 
         APIRequestBody body = new APIRequestBody.JSONBody("POST", request);
         JSONObject response = provider.request(body, "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+        if (response == null) {
+            throw new DataAccessException("API endpoint was not found");
+        }
 
         String id;
         try {
@@ -59,20 +67,33 @@ public class TaskList {
         idsToUUIDs.put(id, item.getID());
     }
 
-    public Collection<Item> getAll() throws AuthenticationException, IOException {
+    public Collection<Item> getAll() throws DataAccessException, IOException {
         JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
         JSONObject items = response.getJSONObject("items");
         Collection<Item> allItems = new ArrayList<>();
         for (Object item: response.getJSONArray("items")) {
             JSONObject jsonItem = (JSONObject) item;
-            if (!idsToUUIDs.containsKey(jsonItem.get("id"))) {
+            if (!idsToUUIDs.containsKey(jsonItem.getString("id"))) {
                 UUID id = UUID.randomUUID();
-                idsToUUIDs.put(jsonItem.get("id"), id);
-                uuidsToIds.put(id, jsonItem.get("id"));
+                idsToUUIDs.put(jsonItem.getString("id"), id);
+                uuidsToIds.put(id, jsonItem.getString("id"));
             }
-            allItems.add(JsonItemFactory.createItem(idsToUUIDs.get(jsonItem.get("id")), jsonItem));
+            allItems.add(JsonItemFactory.createItem(idsToUUIDs.get(jsonItem.getString("id")), jsonItem));
         }
         return allItems;
+    }
+  
+    public Optional<Item> getItem(UUID uuid) throws DataAccessException, IOException {
+        JSONObject response = provider.request(new APIRequestBody.GetBody(), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + uuidsToIds.get(uuid));
+        if (response == null) {
+            return Optional.empty();
+        }
 
+        return Optional.of(JsonItemFactory.createItem(uuid, response));
+    }
+
+    void addUUIDPair(UUID uuid, String apiID) {
+        uuidsToIds.put(uuid, apiID);
+        idsToUUIDs.put(apiID, uuid);
     }
 }
