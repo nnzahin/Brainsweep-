@@ -67,6 +67,13 @@ public class TaskList {
         idsToUUIDs.put(id, item.getID());
     }
 
+    public Boolean delete(UUID id) throws DataAccessException, IOException {
+        JSONObject response = provider.request(new APIRequestBody.JSONBody("DELETE", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + uuidsToIds.get(id));
+        if (response == null) {
+            return false;
+        }
+        return true;
+    }
     public Collection<Item> getAll() throws DataAccessException, IOException {
         JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
         JSONObject items = response.getJSONObject("items");
