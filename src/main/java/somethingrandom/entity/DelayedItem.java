@@ -68,6 +68,6 @@ public class DelayedItem extends Item {
      * @return the string
      */
     public String toString(){
-        return super.toString() + "\n Remind Date: " + this.remindDate;
+        return super.toString() + "\nRemind Date: " + this.remindDate;
     }
 }

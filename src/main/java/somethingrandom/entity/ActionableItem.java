@@ -64,6 +64,6 @@ public class ActionableItem extends Item {
      * @return the string
      */
     public String toString(){
-        return super.toString() + "\n Needed time: " + this.neededTime;
+        return super.toString() + "\nNeeded time: " + this.neededTime;
     }
 }
