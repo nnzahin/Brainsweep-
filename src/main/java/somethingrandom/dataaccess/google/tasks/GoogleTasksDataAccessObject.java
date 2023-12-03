@@ -5,6 +5,7 @@ import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.details.ItemDetailsDataAccessInterface;
+import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
 
 import java.io.IOException;
 import java.util.Collection;
