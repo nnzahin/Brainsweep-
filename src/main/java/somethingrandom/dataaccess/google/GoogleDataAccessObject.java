@@ -10,6 +10,7 @@ import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Optional;
  * Currently, Google Tasks is always used; adding Google Keep support,
  * for example, may be possible in an enterprise scenario.
  */
-public class GoogleDataAccessObject implements AddItemDataAccessInterface {
+public class GoogleDataAccessObject implements AddItemDataAccessInterface, SearchItemsDataAccessInterface {
     private final GoogleTasksDataAccessObject tasksDAO;
 
     /**
@@ -57,5 +58,10 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface {
     @Override
     public void save(Item item) throws DataAccessException {
         tasksDAO.save(item);
+    }
+
+    @Override
+    public Collection<Item> getAllItems() throws DataAccessException {
+        return tasksDAO.getAllItems();
     }
 }
