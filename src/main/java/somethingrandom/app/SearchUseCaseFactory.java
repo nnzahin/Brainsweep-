@@ -20,9 +20,9 @@ public class SearchUseCaseFactory {
      */
     private SearchUseCaseFactory(){}
 
-    public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject, Clock clock){
+    public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject){
         try {
-            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject, clock);
+            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
 
             return new SearchView(searchController, searchViewModel);
         }
@@ -32,8 +32,9 @@ public class SearchUseCaseFactory {
         return null;
     }
 
-    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject, Clock clock) throws IOException {
+    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) throws IOException {
         SearchItemsOutputBoundary searchItemsOutputBoundary = new SearchPresenter(searchViewModel, viewManagerModel);
+        Clock clock = Clock.systemUTC();
         SearchItemsInputBoundary searchInteractor = new SearchItemsInteractor(searchDataAccessObject, searchItemsOutputBoundary, clock);
         return new SearchController(searchInteractor);
     }
