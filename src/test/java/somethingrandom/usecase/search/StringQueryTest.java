@@ -7,7 +7,6 @@ import somethingrandom.entity.DelayedItem;
 import somethingrandom.entity.Item;
 import somethingrandom.entity.ReferenceItem;
 
-import javax.swing.*;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -38,10 +37,10 @@ public class StringQueryTest {
     }
 
     private static class DummyPresenter implements SearchItemsOutputBoundary {
-        public Collection<SearchItemsResult> results = null;
+        public Collection<SearchItemsOutputData> results = null;
 
         @Override
-        public void presentSearchResults(Collection<SearchItemsResult> items) {
+        public void presentSearchResults(Collection<SearchItemsOutputData> items) {
             results = items;
         }
 
@@ -102,8 +101,8 @@ public class StringQueryTest {
         assertResultsMatch(presenter.results, List.of(referenceItem, actionableItem));
     }
 
-    private static void assertResultsMatch(Iterable<SearchItemsResult> results, Iterable<Item> items) {
-        outer: for (SearchItemsResult result : results) {
+    private static void assertResultsMatch(Iterable<SearchItemsOutputData> results, Iterable<Item> items) {
+        outer: for (SearchItemsOutputData result : results) {
             for (Item item : items) {
                 if (item.getID().equals(result.getUUID())) {
                     assertEquals(item.getName(), result.getName());
@@ -124,7 +123,7 @@ public class StringQueryTest {
         }
 
         outer: for (Item item : items) {
-            for (SearchItemsResult result : results) {
+            for (SearchItemsOutputData result : results) {
                 if (item.getID().equals(result.getUUID())) {
                     continue outer;
                 }
