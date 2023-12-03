@@ -39,7 +39,7 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, 
     }
 
     @Override
-    public String delete(UUID id) throws DataAccessException {
+    public Boolean delete(UUID id) throws DataAccessException {
         try {
             return this.taskList.delete(id);
         } catch (IOException e) {
@@ -48,7 +48,7 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, 
     }
 
     @Override
-    public String delete(String name) throws DataAccessException {
+    public Boolean delete(String name) throws DataAccessException {
         try {
             return this.taskList.delete(name);
         } catch (IOException e) {

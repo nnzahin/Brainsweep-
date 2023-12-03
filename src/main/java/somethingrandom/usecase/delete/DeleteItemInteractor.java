@@ -15,11 +15,10 @@ public class DeleteItemInteractor implements DeleteItemInputBoundary{
 
     public void execute(UUID id) {
         try {
-            String message = dao.delete(id);
-            if (message == null){
-                presenter.presentFailureView("Item not found");
+            if (dao.delete(id)){
+                presenter.presentSuccessView("Item successfully deleted");
             } else {
-                presenter.presentSuccessView(message);
+                presenter.presentFailureView("Item not found");
             }
         } catch (DataAccessException e) {
                presenter.presentFailureView(e.getMessage());
@@ -28,11 +27,10 @@ public class DeleteItemInteractor implements DeleteItemInputBoundary{
 
     public void execute(String name) {
         try {
-            String message = dao.delete(name);
-            if (message == null){
-                presenter.presentFailureView("Item not found");
+            if (dao.delete(name)){
+                presenter.presentSuccessView("Item successfully deleted");
             } else {
-                presenter.presentSuccessView(message);
+                presenter.presentFailureView("Item not found");
             }
         } catch (DataAccessException e) {
             presenter.presentFailureView(e.getMessage());

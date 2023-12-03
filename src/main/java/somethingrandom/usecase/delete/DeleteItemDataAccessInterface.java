@@ -11,7 +11,7 @@ public interface DeleteItemDataAccessInterface {
      * @param id The ID of the item to delete.
      * @throws DataAccessException if an error occurs
      */
-    String delete(UUID id) throws DataAccessException;
+    Boolean delete(UUID id) throws DataAccessException;
 
     /**
      * Delete an item from the database. If there are multiple items
@@ -20,5 +20,5 @@ public interface DeleteItemDataAccessInterface {
      * @param name The name of the item to delete.
      * @throws DataAccessException if an error occurs
      */
-    String delete(String name) throws DataAccessException;
+    Boolean delete(String name) throws DataAccessException;
 }

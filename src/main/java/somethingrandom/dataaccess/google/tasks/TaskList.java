@@ -60,15 +60,15 @@ public class TaskList {
      * @throws DataAccessException
      * @throws IOException
      */
-    public String delete(UUID id) throws DataAccessException, IOException {
+    public Boolean delete(UUID id) throws DataAccessException, IOException {
         String taskId = uuidsToIds.get(id);
         if (taskId == null) {
-            return null;
+            return false;
         }
         provider.request(new APIRequestBody.JSONBody("DELETE", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + taskId);
         uuidsToIds.remove(id);
         idsToUUIDs.remove(taskId);
-        return taskId;
+        return true;
     }
 
     /**
@@ -79,17 +79,17 @@ public class TaskList {
      * @throws DataAccessException
      * @throws IOException
      */
-    public String delete(String name) throws DataAccessException, IOException {
+    public Boolean delete(String name) throws DataAccessException, IOException {
         Collection<Item> allItems = getAll();
         for (Item item: allItems) {
             if (item.getName().equals(name)) {
                 String taskId = uuidsToIds.get(item.getID());
                 uuidsToIds.remove(idsToUUIDs.remove(taskId));
                 provider.request(new APIRequestBody.JSONBody("DELETE", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + taskId);
-                return taskId;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public Collection<Item> getAll() throws DataAccessException, IOException {

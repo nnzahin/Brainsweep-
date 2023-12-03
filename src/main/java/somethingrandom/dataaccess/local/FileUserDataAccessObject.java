@@ -49,30 +49,30 @@ public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
         }
     }
 
-    public String delete(UUID id) throws DataAccessException {
+    public Boolean delete(UUID id) throws DataAccessException {
         try {
             String name = items.get(id).get("name");
             if (name == null) {
-                return "";
+                return false;
             }
             items.remove(id);
             this.save();
-            return name;
+            return true;
         } catch (DataAccessException e) {
             throw new DataAccessException(e);
         }
     }
 
-    public String delete(String name) throws DataAccessException {
+    public Boolean delete(String name) throws DataAccessException {
         try {
             for (Map<String, String> item: items.values()) {
                 if (item.get("name").equals(name)) {
                     items.remove(UUID.fromString(item.get("id")));
                     this.save();
-                    return name;
+                    return true;
                 }
             }
-            return null;
+            return false;
         } catch (DataAccessException e) {
             throw new DataAccessException(e);
         }
