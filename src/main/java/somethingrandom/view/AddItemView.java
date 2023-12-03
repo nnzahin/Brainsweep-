@@ -1,6 +1,6 @@
 package somethingrandom.view;
 
-import somethingrandom.interfaceadapters.additem.AddItemController;
+import somethingrandom.interfaceadapters.ItemDialogController;
 import somethingrandom.interfaceadapters.additem.AddItemState;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
 
@@ -18,17 +18,11 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
     private final AddItemViewModel addItemViewModel;
     private final JTextField itemTitleInput = new JTextField(100);
     private final JTextField itemDiscInput = new JTextField(10);
-    private final AddItemController addItemController;
+    private final ItemDialogController controller;
     private final JButton saveItem;
 
-    //private static JPanel panel = new JPanel();
-    //private static JFrame frame = new JFrame();
-    //private static JLabel itemTitle = new JLabel();
-
-    //private static JLabel itemDisc = new JLabel();
-
-    public AddItemView(AddItemController itemController, AddItemViewModel addItemViewModel) {
-        this.addItemController = itemController;
+    public AddItemView(ItemDialogController itemController, AddItemViewModel addItemViewModel) {
+        this.controller = itemController;
         this.addItemViewModel = addItemViewModel;
         addItemViewModel.addPropertyChangeListener(this);
 
@@ -51,7 +45,7 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
                     if (e.getSource().equals(saveItem)){
                         AddItemState currentState = addItemViewModel.getState();
 
-                        itemController.execute(
+                        itemController.finished(
                             currentState.getItemName(),
                             currentState.getDescription()
                         );

@@ -1,17 +1,22 @@
 package somethingrandom.interfaceadapters.additem;
+
+import somethingrandom.interfaceadapters.ItemDialogController;
 import somethingrandom.usecase.AddItemInputBoundary;
 import somethingrandom.usecase.AddItemInputData;
-import somethingrandom.usecase.DataAccessException;
+public class AddItemController implements ItemDialogController {
+    private final AddItemInputBoundary addItemUseCaseInteractor;
 
-import java.util.Date;
-public class AddItemController {
-
-    final AddItemInputBoundary addItemUseCaseInteractor;
     public AddItemController(AddItemInputBoundary addItemUseCaseInteractor) {
         this.addItemUseCaseInteractor = addItemUseCaseInteractor;
     }
-    public void execute(String item, String description) {
-        AddItemInputData addItemInputData = new AddItemInputData(item, description);
+
+    @Override
+    public void finished(String title, String description) {
+        if (title.isEmpty()) {
+            return;
+        }
+
+        AddItemInputData addItemInputData = new AddItemInputData(title, description);
         addItemUseCaseInteractor.execute(addItemInputData);
     }
 }
