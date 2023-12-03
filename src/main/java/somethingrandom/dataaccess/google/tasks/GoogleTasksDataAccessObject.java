@@ -48,15 +48,6 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, 
     }
 
     @Override
-    public Boolean delete(String name) throws DataAccessException {
-        try {
-            return this.taskList.delete(name);
-        } catch (IOException e) {
-            throw new DataAccessException(e);
-        }
-    }
-
-    @Override
     public Collection<Item> getAllItems() throws DataAccessException {
         try {
             return this.taskList.getAll();

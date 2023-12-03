@@ -69,11 +69,6 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface, Searc
     }
 
     @Override
-    public Boolean delete(String name) throws DataAccessException {
-        return tasksDAO.delete(name);
-    }
-
-    @Override
     public Collection<Item> getAllItems() throws DataAccessException {
         return tasksDAO.getAllItems();
     }

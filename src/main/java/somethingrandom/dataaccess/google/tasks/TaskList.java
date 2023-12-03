@@ -71,27 +71,6 @@ public class TaskList {
         return true;
     }
 
-    /**
-     * Deletes a task from the task list.
-     * Return an empty string if the item was not found
-     * @param name The name of the task to delete.
-     * @return The name of the task that was deleted.
-     * @throws DataAccessException
-     * @throws IOException
-     */
-    public Boolean delete(String name) throws DataAccessException, IOException {
-        Collection<Item> allItems = getAll();
-        for (Item item: allItems) {
-            if (item.getName().equals(name)) {
-                String taskId = uuidsToIds.get(item.getID());
-                uuidsToIds.remove(idsToUUIDs.remove(taskId));
-                provider.request(new APIRequestBody.JSONBody("DELETE", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks/" + taskId);
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Collection<Item> getAll() throws DataAccessException, IOException {
         JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
         Collection<Item> allItems = new ArrayList<>();
