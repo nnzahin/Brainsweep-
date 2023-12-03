@@ -59,6 +59,6 @@ public class ReferenceItem extends Item {
      * @return the string
      */
     public String toString(){
-        return super.toString() + "\n Description: " + this.description;
+        return super.toString() + "\nDescription: " + this.description;
     }
 }
