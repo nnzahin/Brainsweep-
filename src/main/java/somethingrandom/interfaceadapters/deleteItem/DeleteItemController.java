@@ -11,10 +11,6 @@ public class DeleteItemController {
         this.deleteItemUseCaseInteractor = deleteItemUseCaseInteractor;
     }
 
-    public void execute(String item) {
-        deleteItemUseCaseInteractor.execute(item);
-    }
-
     public void execute(UUID id) {
         deleteItemUseCaseInteractor.execute(id);
     }
