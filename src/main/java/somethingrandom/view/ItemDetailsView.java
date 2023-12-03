@@ -26,7 +26,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
     private final ItemDetailsController controller;
     private final ItemDetailsViewModel viewModel;
 
-    private final JScrollPane scrollPane;
+    private final JPanel itemContainer;
     private final JPanel detailRows;
     private final JLabel errorMessage;
 
@@ -43,10 +43,26 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         detailRows.setLayout(new GridLayout(0, 1, 0, 12));
         detailRowsAnchor.add(detailRows, BorderLayout.NORTH);
 
-        scrollPane = new JScrollPane(detailRowsAnchor);
-        scrollPane.setVisible(false);
+        JScrollPane scrollPane = new JScrollPane(detailRowsAnchor);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        add(scrollPane);
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+        JButton edit = new JButton(ItemDetailsViewModel.EDIT_LABEL);
+        edit.addActionListener((event) -> openEditDialog());
+        buttons.add(edit);
+
+        JButton delete = new JButton(ItemDetailsViewModel.DELETE_LABEL);
+        delete.setEnabled(false);
+        buttons.add(delete);
+
+        itemContainer = new JPanel();
+        itemContainer.setLayout(new BorderLayout());
+        itemContainer.setVisible(false);
+        itemContainer.add(buttons, BorderLayout.NORTH);
+        itemContainer.add(scrollPane, BorderLayout.CENTER);
+        add(itemContainer);
 
         errorMessage = new JLabel();
         errorMessage.setVisible(true);
@@ -73,12 +89,12 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
 
     private void showState(Map<String, String> newValue) {
         if (newValue == null) {
-            scrollPane.setVisible(false);
+            itemContainer.setVisible(false);
             errorMessage.setVisible(true);
             return;
         }
 
-        scrollPane.setVisible(true);
+        itemContainer.setVisible(true);
         errorMessage.setVisible(false);
 
         detailRows.removeAll();
@@ -88,6 +104,10 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
 
         detailRows.repaint();
         detailRows.revalidate();
+    }
+
+    public void openEditDialog() {
+        System.out.println("Edit!");
     }
 
     private static class DummyDAO implements ItemDetailsDataAccessInterface {
