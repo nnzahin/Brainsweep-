@@ -9,6 +9,7 @@ import somethingrandom.dataaccess.google.tasks.TaskAccount;
 import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
 
 import java.util.Collection;
 import java.util.Optional;
