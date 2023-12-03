@@ -1,6 +1,4 @@
 package somethingrandom.app;
-
-import somethingrandom.entity.CommonItemFactory;
 import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchPresenter;
