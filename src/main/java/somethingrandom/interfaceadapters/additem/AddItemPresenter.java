@@ -13,7 +13,7 @@ public class AddItemPresenter implements AddItemOutputBoundary{
 
     public AddItemPresenter(AddItemViewModel viewModel, ViewManagerModel viewManagerModel) {
         addItemViewModel = viewModel;
-        viewManagerModel = viewManagerModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     public void prepareSuccessView(String response){
