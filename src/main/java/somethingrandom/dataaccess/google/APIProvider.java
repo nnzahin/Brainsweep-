@@ -41,4 +41,12 @@ public interface APIProvider {
             return new JSONObject(source);
         }
     }
+
+    class NotFound implements APIProvider {
+        @Nullable
+        @Override
+        public JSONObject request(APIRequestBody body, String url) throws IOException, AuthenticationException {
+            return null;
+        }
+    }
 }

@@ -91,4 +91,9 @@ public class TaskList {
 
         return Optional.of(JsonItemFactory.createItem(uuid, response));
     }
+
+    void addUUIDPair(UUID uuid, String apiID) {
+        uuidsToIds.put(uuid, apiID);
+        idsToUUIDs.put(apiID, uuid);
+    }
 }
