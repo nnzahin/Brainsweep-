@@ -10,6 +10,9 @@ public class AddItemViewModel extends ViewModel {
     public static final String SAVE_BUTTON_LABEL = "Save";
     public static final String TITLE_LABEL = "Add Item";
     public static final String DISC_LABEL = "Description";
+    public static final String ACTIONABLE = "Actionable";
+    public static final String DELAYED = "Delayed";
+    public static final String REFERENCE = "Reference";
     private AddItemState state = new AddItemState();
     public AddItemViewModel() {super("Add Item");}
     public void setState(AddItemState state) {this.state = state;}
