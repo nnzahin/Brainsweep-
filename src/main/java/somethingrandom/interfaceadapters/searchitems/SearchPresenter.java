@@ -2,12 +2,13 @@ package somethingrandom.interfaceadapters.searchitems;
 
 import somethingrandom.entity.Item;
 import somethingrandom.interfaceadapters.ViewManagerModel;
-import somethingrandom.usecase.searchitems.SearchItemsOutputData;
+import somethingrandom.usecase.search.SearchItemsOutputBoundary;
+import somethingrandom.usecase.search.SearchItemsOutputData;
 
 import javax.swing.text.View;
 import java.util.Collection;
 
-public class SearchPresenter implements SearchItemsOutputBoundary{
+public class SearchPresenter implements SearchItemsOutputBoundary {
     private final SearchViewModel searchViewModel;
 
     private ViewManagerModel viewManagerModel;
@@ -15,16 +16,20 @@ public class SearchPresenter implements SearchItemsOutputBoundary{
     public SearchPresenter(SearchViewModel searchViewModel, ViewManagerModel viewManagerModel){
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
+
     }
 
-    public void presentSearchResults(SearchItemsOutputData result){
+
+    @Override
+    public void presentSearchResults(Collection<SearchItemsOutputData> items) {
         SearchState searchState = searchViewModel.getState();
-        searchState.setResults(result.getItems());
+        searchState.setResults(items);
         this.searchViewModel.setState(searchState);
         this.searchViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+
     }
 
     /**
