@@ -1,5 +1,7 @@
 package somethingrandom.usecase.details;
 
+import somethingrandom.entity.ActionableItem;
+import somethingrandom.entity.DelayedItem;
 import somethingrandom.entity.Item;
 import somethingrandom.entity.ReferenceItem;
 import somethingrandom.usecase.DataAccessException;
@@ -34,6 +36,10 @@ public class ItemDetailsInteractor implements ItemDetailsInputBoundary {
         Item item = itemOptional.get();
         if (item instanceof ReferenceItem) {
             presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((ReferenceItem) item).getDescription(), item.getCreationDate()));
+        } else if (item instanceof ActionableItem) {
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((ActionableItem) item).getNeededTime(), item.getCreationDate()));
+        } else if (item instanceof DelayedItem) {
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((DelayedItem) item).getRemindDate(), item.getCreationDate()));
         } else {
             presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getCreationDate()));
         }

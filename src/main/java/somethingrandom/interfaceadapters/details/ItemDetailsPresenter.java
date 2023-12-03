@@ -24,6 +24,7 @@ public class ItemDetailsPresenter implements ItemDetailsOutputBoundary {
     @Override
     public void presentDetails(ItemDetailsOutputData details) {
         Map<String, String> state = new HashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale).withZone(zone);
 
         state.put("Title", details.getTitle());
 
@@ -31,7 +32,14 @@ public class ItemDetailsPresenter implements ItemDetailsOutputBoundary {
             state.put("Description", details.getDescription());
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale).withZone(zone);
+        if (details.getExpectedDuration() != null) {
+            state.put("Expected Duration", details.getExpectedDuration().toMinutes() + " minutes");
+        }
+
+        if (details.getRemindDate() != null) {
+            state.put("Remind Date", formatter.format(details.getRemindDate()));
+        }
+
         state.put("Created", formatter.format(details.getCreationTime()));
 
         viewModel.setState(state);

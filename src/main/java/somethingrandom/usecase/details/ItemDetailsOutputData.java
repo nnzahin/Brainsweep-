@@ -3,6 +3,7 @@ package somethingrandom.usecase.details;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.Duration;
 import java.time.Instant;
 
 /**
@@ -10,12 +11,13 @@ import java.time.Instant;
  */
 public class ItemDetailsOutputData {
     private final @NotNull String title;
-    private final @Nullable String description;
     private final @NotNull Instant creationTime;
+    private @Nullable String description = null;
+    private @Nullable Duration expectedDuration = null;
+    private @Nullable Instant remindDate = null;
 
     public ItemDetailsOutputData(@NotNull String title, @NotNull Instant creationTime) {
         this.title = title;
-        this.description = null;
         this.creationTime = creationTime;
     }
 
@@ -23,6 +25,18 @@ public class ItemDetailsOutputData {
         this.title = title;
         this.description = description;
         this.creationTime = creationTime;
+    }
+
+    public ItemDetailsOutputData(@NotNull String title, @Nullable Duration duration, @NotNull Instant creationTime) {
+        this.title = title;
+        this.creationTime = creationTime;
+        this.expectedDuration = duration;
+    }
+
+    public ItemDetailsOutputData(@NotNull String title, @Nullable Instant remindDate, @NotNull Instant creationTime) {
+        this.title = title;
+        this.creationTime = creationTime;
+        this.remindDate = remindDate;
     }
 
     /**
@@ -50,5 +64,23 @@ public class ItemDetailsOutputData {
      */
     public @NotNull Instant getCreationTime() {
         return creationTime;
+    }
+
+    /**
+     * Returns the duration that the user expects the task to take.
+     *
+     * @return The item's duration.
+     */
+    public @Nullable Duration getExpectedDuration() {
+        return expectedDuration;
+    }
+
+    /**
+     * Gets the date the user needs the task done by.
+     *
+     * @return The item's due date.
+     */
+    public @Nullable Instant getRemindDate() {
+        return remindDate;
     }
 }
