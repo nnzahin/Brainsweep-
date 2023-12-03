@@ -15,7 +15,7 @@ import java.util.Collection;
  * The API is
  * <a href="https://developers.google.com/tasks/reference/rest">published online</a>.
  */
-public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, SearchItemsDataAccessInterface {
+public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface {
     private final TaskList taskList;
 
     public GoogleTasksDataAccessObject(TaskList list) {
@@ -36,7 +36,7 @@ public class GoogleTasksDataAccessObject implements AddItemDataAccessInterface, 
     }
 
     @Override
-    public Collection<Item> getAllItems() throws DataAccessException {
+    public Collection<Item> getAll() throws DataAccessException {
         try {
             return this.taskList.getAll();
         } catch (IOException | AuthenticationException e) {
