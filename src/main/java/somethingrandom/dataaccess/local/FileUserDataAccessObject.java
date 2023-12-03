@@ -20,6 +20,9 @@ public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
         dataFile = new File(dataFilePath);
         this.factory = factory;
         this.items = new HashMap<>();
+        if (dataFile.length() == 0){
+            save();
+        }
         load(this.items);
     }
 
@@ -36,19 +39,20 @@ public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
             reader.close();
 
             for (String key: data.keySet()) {
-                Map<String, String> itemData = new HashMap<>();
-                JSONObject item = data.getJSONObject(key);
-                loadHelper(itemData, item);
+                if(!items.containsKey(UUID.fromString(key))) {
+                    Map<String, String> itemData = new HashMap<>();
+                    JSONObject item = data.getJSONObject(key);
+                    loadHelper(itemData, item);
 
-                if (itemData.get("itemKind").equals("ACTIONABLE")){
-                    itemData.put("neededTime", item.getString("neededTime"));
-                } else if (itemData.get("itemKind").equals("DELAYED")){
-                    itemData.put("remindDate", item.getString("remindDate"));
-                } else if (itemData.get("itemKind").equals("REFERENCE")){
-                    itemData.put("description", item.getString("description"));
+                    if (itemData.get("itemKind").equals("ACTIONABLE")) {
+                        itemData.put("neededTime", item.getString("neededTime"));
+                    } else if (itemData.get("itemKind").equals("DELAYED")) {
+                        itemData.put("remindDate", item.getString("remindDate"));
+                    } else if (itemData.get("itemKind").equals("REFERENCE")) {
+                        itemData.put("description", item.getString("description"));
+                    }
+                    items.put(UUID.fromString(key), itemData);
                 }
-
-                items.put(UUID.fromString(key), itemData);
             }
         } catch (IOException e) {
             throw new DataAccessException(e);
