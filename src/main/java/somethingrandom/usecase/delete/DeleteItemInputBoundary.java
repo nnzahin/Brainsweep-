@@ -3,6 +3,7 @@ package somethingrandom.usecase.delete;
 import java.util.UUID;
 
 public interface DeleteItemInputBoundary {
+
     /**
      * Delete an item from the database.
      *
