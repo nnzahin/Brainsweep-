@@ -4,13 +4,14 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 import somethingrandom.entity.*;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.delete.DeleteItemDataAccessInterface;
 
 import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
-public class FileUserDataAccessObject {
+public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
     private final File dataFile;
     private final Map<UUID, Map<String, String>> items;
     private final ItemFactory factory;
@@ -48,9 +49,19 @@ public class FileUserDataAccessObject {
         }
     }
 
+    public String delete(UUID id) throws DataAccessException {
+        try {
+            String name = items.get(id).get("name");
+            items.remove(id);
+            this.save();
+            return name;
+        } catch (DataAccessException e) {
+            throw new DataAccessException(e);
+        }
+    }
+
     /**
      * Helper function to save items
-     *
      */
     private void saveItemHelper(Map<String, String> itemData, Item item) {
         itemData.put("name", item.getName());
