@@ -1,6 +1,4 @@
 package somethingrandom.view;
-
-import somethingrandom.interfaceadapters.additem.AddItemState;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchState;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
@@ -18,8 +16,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private final JLabel noItemError = new JLabel();
     private final SearchController searchController;
-
-    private final JPanel result = new JPanel();
 
     private final JLabel itemResultName = new JLabel();
 
