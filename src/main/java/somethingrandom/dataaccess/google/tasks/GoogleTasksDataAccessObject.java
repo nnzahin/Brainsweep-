@@ -10,6 +10,7 @@ import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 
