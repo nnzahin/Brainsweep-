@@ -11,6 +11,7 @@ import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.details.ItemDetailsDataAccessInterface;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ import java.util.UUID;
  * Currently, Google Tasks is always used; adding Google Keep support,
  * for example, may be possible in an enterprise scenario.
  */
-public class GoogleDataAccessObject implements AddItemDataAccessInterface, ItemDetailsDataAccessInterface {
+public class GoogleDataAccessObject implements AddItemDataAccessInterface, SearchItemsDataAccessInterface, ItemDetailsDataAccessInterface {
     private final GoogleTasksDataAccessObject tasksDAO;
 
     /**
@@ -61,6 +62,11 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface, ItemD
         tasksDAO.save(item);
     }
 
+    @Override
+    public Collection<Item> getAllItems() throws DataAccessException {
+        return tasksDAO.getAllItems();
+    }
+  
     @Override
     public Optional<Item> getItemById(UUID uuid) throws DataAccessException {
         return tasksDAO.getItemById(uuid);
