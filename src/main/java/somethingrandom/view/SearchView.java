@@ -12,7 +12,6 @@ import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "search";
@@ -20,10 +19,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField searchBar = new JTextField(15);
     private final JLabel noItemError = new JLabel();
     private final SearchController searchController;
-    private final JList defaultTaskList = new JList();
-
-
-
 
     public SearchView(SearchController searchController, SearchViewModel searchViewModel){
         this.searchController = searchController;
@@ -36,17 +31,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         SearchState searchState = searchViewModel.getState();
         ArrayList<String> defaultTasks = searchState.getResultNames();
 
-        // Can simplify this if I get time
-        // this is so we can add strings to JList. I'm sure there's a cleaner way to do this
-
         DefaultListModel<String> preDisplay = new DefaultListModel();
         for(String item: defaultTasks)
             preDisplay.addElement(item);
 
-        JList<String> displayList = new JList<>(preDisplay);
-
-
-
+        JList<String> defaultTaskList = new JList<>(preDisplay);
 
         searchBar.addKeyListener(
             new KeyListener() {
@@ -80,20 +69,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             if (!state.getSearchError().isEmpty()) {
                 JOptionPane.showMessageDialog(this, state.getSearchError());
             }
-            else {
-                setFields(state);
-            }
         }
     }
-
-    private void setFields(SearchState searchState){
-        // not sure what to do here
-
-    }
-    // searchBar.setText(state.getSearchQuery());
-    // I don't know if this is necessary since we have property change listeners
-    // }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
