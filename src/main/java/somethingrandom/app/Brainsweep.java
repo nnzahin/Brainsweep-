@@ -23,13 +23,12 @@ public class Brainsweep {
         Constructing the main program view
          */
         JFrame brainSweep = new JFrame("Brainsweep");
-        GridLayout grid = new GridLayout(2, 2);
-        brainSweep.setLayout(grid);
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-        CardLayout cardLayout = new CardLayout();
+        JPanel contents = new JPanel();
+        contents.setLayout(new BoxLayout(contents, BoxLayout.LINE_AXIS));
+        brainSweep.add(contents);
 
         OkHttpClient client = new OkHttpClient();
         LoginFlow loginFlow = new LoginFlow(client, ("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"), new S256CodeVerifier(new SecureRandom()), GoogleDataAccessObject.getScopes());
@@ -41,25 +40,27 @@ public class Brainsweep {
             throw new RuntimeException(e);
         }
 
-
         /*
         Search
          */
+
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
-        brainSweep.add(searchView);
+        contents.add(searchView);
+
+        // Add and Details
+        JPanel rightPane = new JPanel();
+        rightPane.setLayout(new BorderLayout());
+        JButton addButton = new JButton("Add Item...");
+        addButton.setEnabled(false);
+        rightPane.add(addButton, BorderLayout.NORTH);
+        rightPane.add(new JLabel("(placeholder)"), BorderLayout.CENTER);
+        contents.add(rightPane);
 
         brainSweep.pack();
         brainSweep.setVisible(true);
 
-
-        /*
-        Add
-         */
-        JPanel topRightPanel = new JPanel(cardLayout);
-        JButton addButton = new JButton("add+");
-        topRightPanel.add(addButton);
-
+        CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(cardLayout, views, viewManagerModel);

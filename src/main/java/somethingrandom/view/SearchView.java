@@ -28,36 +28,33 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         System.out.println(searchViewModel.getState().getResultNames());
 
 
-        // task display list
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout());
-
         SearchState searchState = searchViewModel.getState();
         ArrayList<String> defaultTasks = searchState.getResultNames();
-
-
-        DefaultListModel<String> preDisplay = new DefaultListModel<>();
-        if (defaultTasks != null) {
-            for (String item : defaultTasks)
-                preDisplay.addElement(item);
-            JList<String> defaultTaskList = new JList<>(preDisplay);
-
-            leftPanel.add(defaultTaskList);
-        }
-        else{
-            preDisplay.addElement("Add an item!");
-            JList<String> emptyTaskList = new JList<String>(preDisplay);
-            leftPanel.add(emptyTaskList);
-
-        }
-
-
 
         // puts together search button and bar
         searchButton = new JButton(SearchViewModel.SEARCH_BUTTON_LABEL);
         JPanel searchPanel = new JPanel();
         searchPanel.add(searchBar);
         searchPanel.add(searchButton);
+
+        this.setLayout(new BorderLayout());
+        this.add(searchPanel, BorderLayout.NORTH);
+
+        DefaultListModel<String> preDisplay = new DefaultListModel<>();
+        JList<String> taskList;
+        if (defaultTasks != null) {
+            for (String item : defaultTasks)
+                preDisplay.addElement(item);
+            taskList = new JList<>(preDisplay);
+
+            add(taskList);
+        }
+        else{
+            preDisplay.addElement("Add an item!");
+            taskList = new JList<String>(preDisplay);
+        }
+
+        add(taskList, BorderLayout.CENTER);
 
         searchButton.addActionListener(
             new ActionListener() {
@@ -90,11 +87,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
             }
         );
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        this.add(searchPanel);
-        this.add(leftPanel);
-
-
     }
 
     @Override
