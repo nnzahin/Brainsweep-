@@ -13,15 +13,7 @@ import java.util.HashMap;
 public class SearchPresenter implements SearchItemsOutputBoundary {
     private final SearchViewModel searchViewModel;
 
-    private ViewManagerModel viewManagerModel;
-
-
-    public SearchPresenter(SearchViewModel searchViewModel, ViewManagerModel viewManagerModel){
-        this.searchViewModel = searchViewModel;
-        this.viewManagerModel = viewManagerModel;
-
-    }
-
+    public SearchPresenter(SearchViewModel searchViewModel){this.searchViewModel = searchViewModel;}
 
     @Override
     public void presentSearchResults(Collection<SearchItemsOutputData> items) {
@@ -40,9 +32,6 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
 
         this.searchViewModel.setState(searchState);
         this.searchViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setActiveView(searchViewModel.getViewName()); // would this apply in search?
-        viewManagerModel.firePropertyChanged();
 
     }
 

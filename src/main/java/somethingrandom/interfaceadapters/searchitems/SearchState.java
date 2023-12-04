@@ -11,7 +11,6 @@ public class SearchState {
     private String search = "";
     private String searchError = "";
     private Collection<SearchItemsOutputData> results;
-
     private ArrayList<String> resultNames;
 
     public SearchState(){}
