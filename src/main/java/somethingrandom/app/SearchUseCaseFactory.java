@@ -3,6 +3,7 @@ import somethingrandom.entity.Item;
 import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchPresenter;
+import somethingrandom.interfaceadapters.searchitems.SearchState;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
 import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
@@ -31,7 +32,12 @@ public class SearchUseCaseFactory {
                 for (Item item: allItems){
                     allItemNames.add(item.getName());
                 }
-                searchViewModel.setItemNamesList(allItemNames);
+
+                // this is also very iffy.
+                SearchState state = new SearchState();
+
+                searchViewModel.setState(state);
+                state.setResultNames(allItemNames);
 
             }
             catch (DataAccessException e){
@@ -41,9 +47,9 @@ public class SearchUseCaseFactory {
             }
 
             SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
+
+            // I believe this makes the default task list
             return new SearchView(searchController, searchViewModel);
-
-
 
         }
         catch (IOException e){
@@ -58,8 +64,5 @@ public class SearchUseCaseFactory {
         SearchItemsInputBoundary searchInteractor = new SearchItemsInteractor(searchDataAccessObject, searchItemsOutputBoundary, clock);
         return new SearchController(searchInteractor);
     }
-
-
-
 
 }

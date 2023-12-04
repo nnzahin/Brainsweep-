@@ -2,15 +2,14 @@ package somethingrandom.usecase.edititem;
 import org.jetbrains.annotations.Nullable;
 import somethingrandom.entity.Item;
 import somethingrandom.entity.CommonItemFactory;
-import somethingrandom.usecase.additem.AddItemOutputBoundary;
 
 public class EditItemInteractor implements EditItemInputBoundary{
     final EditItemDataAccessInterface editItemDataAccessObject;
-    final AddItemOutputBoundary editItemPresenter;
+    final EditItemOutputBoundary editItemPresenter;
     private final CommonItemFactory factory;
 
     public EditItemInteractor(EditItemDataAccessInterface editItemDataAccessObject,
-                              AddItemOutputBoundary editItemOutputBoundary, CommonItemFactory factory) {
+                              EditItemOutputBoundary editItemOutputBoundary, CommonItemFactory factory) {
         this.editItemPresenter = editItemOutputBoundary;
         this.editItemDataAccessObject = editItemDataAccessObject;
         this.factory = factory;
@@ -18,10 +17,8 @@ public class EditItemInteractor implements EditItemInputBoundary{
 
     public void execute(EditItemInputData editItemInputData) {
         Item item = createItemForInputData(editItemInputData);
-        if (item == null) {
-            editItemPresenter.prepareFailView();
+        String itemName = editItemInputData.getName();
 
-        }
 
     }
     private @Nullable Item createItemForInputData(EditItemInputData editItemInputData) {
