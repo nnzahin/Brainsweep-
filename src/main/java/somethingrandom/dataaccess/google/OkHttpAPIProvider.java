@@ -44,6 +44,10 @@ class OkHttpAPIProvider implements APIProvider {
             .build();
 
         try (Response response = client.newCall(request).execute()) {
+            if (response.code() == 404) {
+                return null;
+            }
+
             if (!response.isSuccessful() || response.body() == null) {
                 throw new IOException(response.message());
             }

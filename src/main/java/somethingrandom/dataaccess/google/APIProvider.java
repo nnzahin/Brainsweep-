@@ -1,5 +1,6 @@
 package somethingrandom.dataaccess.google;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import somethingrandom.dataaccess.google.auth.AuthenticationException;
 
@@ -25,6 +26,7 @@ public interface APIProvider {
      * @throws IOException on network errors
      * @throws AuthenticationException if the token could not be refreshed
      */
+    @Nullable
     JSONObject request(APIRequestBody body, String url) throws IOException, AuthenticationException;
 
     class Constant implements APIProvider {
@@ -37,6 +39,14 @@ public interface APIProvider {
         @Override
         public JSONObject request(APIRequestBody body, String url) {
             return new JSONObject(source);
+        }
+    }
+
+    class NotFound implements APIProvider {
+        @Nullable
+        @Override
+        public JSONObject request(APIRequestBody body, String url) throws IOException, AuthenticationException {
+            return null;
         }
     }
 }

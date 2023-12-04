@@ -4,41 +4,52 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 import somethingrandom.entity.*;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.delete.DeleteItemDataAccessInterface;
 
 import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
-public class FileUserDataAccessObject {
+public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
     private final File dataFile;
     private final Map<UUID, Map<String, String>> items;
     private final ItemFactory factory;
 
     public FileUserDataAccessObject(String dataFilePath, ItemFactory factory) throws DataAccessException {
         dataFile = new File(dataFilePath);
-        items = new HashMap<>();
         this.factory = factory;
-        if (dataFile.length() == 0) {
+        this.items = new HashMap<>();
+        if (dataFile.length() == 0){
             save();
-        } else {
-            load();
         }
+        load(this.items);
     }
 
-    private void load() throws DataAccessException {
+    private void loadHelper(Map<String, String> itemData, JSONObject item) {
+        itemData.put("name", item.getString("name"));
+        itemData.put("id", item.getString("id"));
+        itemData.put("creationDate", item.getString("creationDate"));
+        itemData.put("itemKind", item.getString("itemKind"));
+    }
+    private void load(Map<UUID, Map<String, String>> items) throws DataAccessException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dataFile));
             JSONObject data = new JSONObject(reader.readLine());
             reader.close();
+
             for (String key: data.keySet()) {
-                if (!data.keySet().contains(key)) {
+                if(!items.containsKey(UUID.fromString(key))) {
                     Map<String, String> itemData = new HashMap<>();
                     JSONObject item = data.getJSONObject(key);
-                    for (String itemKey : item.keySet()) {
-                        if (!itemKey.equals("empty")) {
-                            itemData.put(itemKey, item.getString(itemKey));
-                        }
+                    loadHelper(itemData, item);
+
+                    if (itemData.get("itemKind").equals("ACTIONABLE")) {
+                        itemData.put("neededTime", item.getString("neededTime"));
+                    } else if (itemData.get("itemKind").equals("DELAYED")) {
+                        itemData.put("remindDate", item.getString("remindDate"));
+                    } else if (itemData.get("itemKind").equals("REFERENCE")) {
+                        itemData.put("description", item.getString("description"));
                     }
                     items.put(UUID.fromString(key), itemData);
                 }
@@ -48,9 +59,18 @@ public class FileUserDataAccessObject {
         }
     }
 
+    public boolean delete(UUID id) throws DataAccessException {
+        if(items.remove(id) == null){
+            return false;
+        } else {
+            items.remove(id, items.get(id));
+            save();
+            return true;
+        }
+    }
+
     /**
      * Helper function to save items
-     *
      */
     private void saveItemHelper(Map<String, String> itemData, Item item) {
         itemData.put("name", item.getName());
@@ -105,13 +125,14 @@ public class FileUserDataAccessObject {
 
     public Collection<Item> getAllItems() {
         Collection<Item> all = new ArrayList<>();
-        for (UUID key: items.keySet()) {
-            if(items.get(key).get("itemKind").equals("ACTIONABLE")){
-                all.add(toItem(items.get(key).get("name"), UUID.fromString(items.get(key).get("id")), Instant.parse(items.get(key).get("creationDate")), Duration.parse(items.get(key).get("neededTime"))));
-            } else if (items.get(key).get("itemKind").equals("DELAYED")){
-                all.add(toItem(items.get(key).get("name"), UUID.fromString(items.get(key).get("id")), Instant.parse(items.get(key).get("creationDate")), Instant.parse(items.get(key).get("remindDate"))));
-            } else if (items.get(key).get("itemKind").equals("REFERENCE")){
-                all.add(toItem(items.get(key).get("name"), UUID.fromString(items.get(key).get("id")), Instant.parse(items.get(key).get("creationDate")), items.get(key).get("description")));
+
+        for (Map<String, String> item : this.items.values()) {
+            if(item.get("itemKind").equals("ACTIONABLE")){
+                all.add(toItem(item.get("name"), UUID.fromString(item.get("id")), Instant.parse(item.get("creationDate")), Duration.parse(item.get("neededTime"))));
+            } else if (item.get("itemKind").equals("DELAYED")){
+                all.add(toItem(item.get("name"), UUID.fromString(item.get("id")), Instant.parse(item.get("creationDate")), Instant.parse(item.get("remindDate"))));
+            } else if (item.get("itemKind").equals("REFERENCE")){
+                all.add(toItem(item.get("name"), UUID.fromString(item.get("id")), Instant.parse(item.get("creationDate")), item.get("description")));
             }
         }
         return all;

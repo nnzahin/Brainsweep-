@@ -20,6 +20,7 @@ public class AddItemTest {
     private final ActionableItem item1;
     private final DelayedItem item2;
     private final ReferenceItem item3;
+
     public AddItemTest() throws IOException {
         ItemFactory factory = new CommonItemFactory();
         UUID id1 = UUID.randomUUID();
@@ -32,7 +33,7 @@ public class AddItemTest {
 
         ActionableItem item1 = factory.createActionableItem("item1",id1, now, time);
         DelayedItem item2 = factory.createDelayedItem("item2", id2, now, later);
-        ReferenceItem item3 = factory.createReferenceItem("item2", id3, now, "description");
+        ReferenceItem item3 = factory.createReferenceItem("item3", id3, now, "description");
 
         this.item1 = item1;
         this.item2 = item2;
