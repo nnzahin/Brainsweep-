@@ -24,37 +24,16 @@ public class SearchUseCaseFactory {
 
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject){
         try {
-
-            // Retrieving names for default view
-            ArrayList<String> allItemNames = new ArrayList<>();
-            try {
-                Collection<Item> allItems = searchDataAccessObject.getAllItems();
-                for (Item item: allItems){
-                    allItemNames.add(item.getName());
-                }
-
-                // this is also very iffy.
-                SearchState state = new SearchState();
-
-                searchViewModel.setState(state);
-                state.setResultNames(allItemNames);
-
-            }
-            catch (DataAccessException e){
-                JOptionPane.showMessageDialog(null, "Error");
-
-                // I don't think this is right, please give suggestions.
-            }
-
             SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
-
-            // I believe this makes the default task list
             return new SearchView(searchController, searchViewModel);
 
-        }
-        catch (IOException e){
-            JOptionPane.showMessageDialog(null, "Item not found.");
-        }
+            }
+            catch (IOException e){
+                JOptionPane.showMessageDialog(null, "Error");
+
+            }
+
+
         return null;
     }
 
