@@ -16,7 +16,6 @@ public class SearchUseCaseFactory {
 
     public static SearchView create(SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) {
         SearchController searchController = createSearchUseCase(searchViewModel, searchDataAccessObject);
-        searchController.execute("");
         return new SearchView(searchController, searchViewModel);
 
     }

@@ -23,10 +23,11 @@ public class Brainsweep {
         Constructing the main program view
          */
         JFrame brainSweep = new JFrame("Brainsweep");
-        GridLayout grid = new GridLayout(1, 2);
+        GridLayout grid = new GridLayout(2, 2);
         brainSweep.setLayout(grid);
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         CardLayout cardLayout = new CardLayout();
 
@@ -47,13 +48,14 @@ public class Brainsweep {
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
         brainSweep.add(searchView);
-        brainSweep.pack();
+
         brainSweep.setVisible(true);
+
 
         /*
         Add
          */
-        JPanel topRightPanel = new JPanel();
+        JPanel topRightPanel = new JPanel(cardLayout);
         JButton addButton = new JButton("add+");
         topRightPanel.add(addButton);
 
@@ -78,6 +80,7 @@ public class Brainsweep {
 
 
         }
+
         /*
         Details would add something like brainSweep.add(detailsView) or whatever your detail implementation is
          */
