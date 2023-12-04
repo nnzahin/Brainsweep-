@@ -9,6 +9,7 @@ import somethingrandom.dataaccess.google.tasks.TaskList;
 import somethingrandom.entity.Item;
 import somethingrandom.usecase.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.delete.DeleteItemDataAccessInterface;
 import somethingrandom.usecase.details.ItemDetailsDataAccessInterface;
 import somethingrandom.usecase.search.SearchItemsDataAccessInterface;
 
@@ -23,7 +24,7 @@ import java.util.UUID;
  * Currently, Google Tasks is always used; adding Google Keep support,
  * for example, may be possible in an enterprise scenario.
  */
-public class GoogleDataAccessObject implements AddItemDataAccessInterface, SearchItemsDataAccessInterface, ItemDetailsDataAccessInterface {
+public class GoogleDataAccessObject implements AddItemDataAccessInterface, SearchItemsDataAccessInterface, ItemDetailsDataAccessInterface, DeleteItemDataAccessInterface {
     private final GoogleTasksDataAccessObject tasksDAO;
 
     /**
@@ -64,10 +65,15 @@ public class GoogleDataAccessObject implements AddItemDataAccessInterface, Searc
     }
 
     @Override
+    public boolean delete(UUID id) throws DataAccessException {
+        return tasksDAO.delete(id);
+    }
+
+    @Override
     public Collection<Item> getAllItems() throws DataAccessException {
         return tasksDAO.getAllItems();
     }
-  
+
     @Override
     public Optional<Item> getItemById(UUID uuid) throws DataAccessException {
         return tasksDAO.getItemById(uuid);

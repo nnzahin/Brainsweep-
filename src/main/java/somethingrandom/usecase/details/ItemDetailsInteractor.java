@@ -35,13 +35,13 @@ public class ItemDetailsInteractor implements ItemDetailsInputBoundary {
 
         Item item = itemOptional.get();
         if (item instanceof ReferenceItem) {
-            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((ReferenceItem) item).getDescription(), item.getCreationDate()));
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getID(), ((ReferenceItem) item).getDescription(), item.getCreationDate()));
         } else if (item instanceof ActionableItem) {
-            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((ActionableItem) item).getNeededTime(), item.getCreationDate()));
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getID(), ((ActionableItem) item).getNeededTime(), item.getCreationDate()));
         } else if (item instanceof DelayedItem) {
-            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), ((DelayedItem) item).getRemindDate(), item.getCreationDate()));
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getID(), ((DelayedItem) item).getRemindDate(), item.getCreationDate()));
         } else {
-            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getCreationDate()));
+            presenter.presentDetails(new ItemDetailsOutputData(item.getName(), item.getID(), item.getCreationDate()));
         }
     }
 }
