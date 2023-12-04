@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +41,7 @@ public class ItemDetailsPresenterTest {
     @Test
     public void shouldShowAllCommonItemProperties() {
         Instant timestamp = Instant.parse("2023-12-01T00:56:00-04:00");
-        ItemDetailsOutputData details = new ItemDetailsOutputData("The Title", timestamp);
+        ItemDetailsOutputData details = new ItemDetailsOutputData("The Title", UUID.fromString("634f6f85-7cb8-4af5-9cc3-17fec4dcf0b6"), timestamp);
         presenter.presentDetails(details);
 
         Map<String, String> state = viewModel.getState();
@@ -56,7 +57,7 @@ public class ItemDetailsPresenterTest {
     @Test
     public void shouldShowAllReferenceItemProperties() {
         Instant timestamp = Instant.parse("2023-12-01T00:56:00-04:00");
-        ItemDetailsOutputData details = new ItemDetailsOutputData("The Title", "This Description", timestamp);
+        ItemDetailsOutputData details = new ItemDetailsOutputData("The Title", UUID.fromString("634f6f85-7cb8-4af5-9cc3-17fec4dcf0b6"), "This Description", timestamp);
         presenter.presentDetails(details);
 
         Map<String, String> state = viewModel.getState();

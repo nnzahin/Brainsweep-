@@ -27,6 +27,7 @@ public class ItemDetailsPresenter implements ItemDetailsOutputBoundary {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale).withZone(zone);
 
         state.put("Title", details.getTitle());
+        state.put("ID", details.getID().toString());
 
         if (details.getDescription() != null) {
             state.put("Description", details.getDescription());
