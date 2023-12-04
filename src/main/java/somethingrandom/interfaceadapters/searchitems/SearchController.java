@@ -12,11 +12,4 @@ public class SearchController {
         SearchItemsInputData searchItemsInputData = new SearchItemsInputData(itemName);
         searchItemUseCaseInteractor.execute(searchItemsInputData);
     }
-
-
-
-
-
-
-
 }

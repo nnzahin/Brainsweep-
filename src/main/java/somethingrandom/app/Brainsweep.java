@@ -26,10 +26,11 @@ public class Brainsweep {
         Constructing the main program view
          */
         JFrame brainSweep = new JFrame("Brainsweep");
-        GridLayout grid = new GridLayout();
+        GridLayout grid = new GridLayout(1, 2);
         brainSweep.setLayout(grid);
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        brainSweep.setVisible(true);
 
 
 
@@ -45,21 +46,14 @@ public class Brainsweep {
             throw new RuntimeException(e);
         }
 
-         /*
-        Left panel task display
-         */
-
-
 
         /*
         Search
          */
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
-        // Was thinking something like searchView.getTopBar.setRightComponent(addButton); ?
         brainSweep.add(searchView);
-
-
+        brainSweep.pack();
 
         /*
         Add
@@ -86,5 +80,9 @@ public class Brainsweep {
 
 
         }
+        /*
+        Details would add something like brainSweep.add(detailsView) or whatever your detail implementation is
+         */
+
     }
 
