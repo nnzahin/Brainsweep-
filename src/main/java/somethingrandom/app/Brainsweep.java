@@ -53,6 +53,9 @@ public class Brainsweep {
         /*
         Add
          */
+        JPanel topRightPanel = new JPanel();
+        JButton addButton = new JButton("add+");
+        topRightPanel.add(addButton);
 
         JPanel views = new JPanel(cardLayout);
         ViewManagerModel viewManagerModel = new ViewManagerModel();

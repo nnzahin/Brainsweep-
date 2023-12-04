@@ -26,6 +26,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.searchViewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
 
+        searchController.execute("");
+
 
         // task display list
         leftPanel.setLayout(new GridLayout());
@@ -33,12 +35,23 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         SearchState searchState = searchViewModel.getState();
         ArrayList<String> defaultTasks = searchState.getResultNames();
 
-        DefaultListModel<String> preDisplay = new DefaultListModel<>();
-        for (String item : defaultTasks)
-            preDisplay.addElement(item);
 
-        JList<String> defaultTaskList = new JList<>(preDisplay);
-        leftPanel.add(defaultTaskList);
+        DefaultListModel<String> preDisplay = new DefaultListModel<>();
+        if (defaultTasks != null) {
+            for (String item : defaultTasks)
+                preDisplay.addElement(item);
+            JList<String> defaultTaskList = new JList<>(preDisplay);
+
+            leftPanel.add(defaultTaskList);
+        }
+        else{
+            preDisplay.addElement("Add an item!");
+            JList<String> emptyTaskList = new JList<String>(preDisplay);
+            leftPanel.add(emptyTaskList);
+
+        }
+
+
 
         // puts together search button and bar
         searchButton = new JButton(SearchViewModel.SEARCH_BUTTON_LABEL);
@@ -46,16 +59,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchPanel.add(searchBar);
         searchPanel.add(searchButton);
 
-        searchButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(searchButton)) {
-                        SearchState currentState = searchViewModel.getState();
-                        searchController.execute(currentState.getSearchQuery());
-                    }
-                }
-            }
-        );
+        searchButton.addActionListener(this);
+//            new ActionListener() {
+//                public void actionPerformed(ActionEvent evt) {
+//                    if (evt.getSource().equals(searchButton)) {
+//                        SearchState currentState = searchViewModel.getState();
+//                        searchController.execute(currentState.getSearchQuery());
+//                    }
+//                }
+//            }
+//        );
 
         searchBar.addKeyListener(
             new KeyListener() {
@@ -86,12 +99,17 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // I have to override these methods to use property change and action listener but idk what to put here
+        SearchState currentState = searchViewModel.getState();
+        searchController.execute(currentState.getSearchQuery());
 
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+//        if (evt.getSource() == searchViewModel){
+//            SearchState searchState = searchViewModel.getState();
+//            searchState.getResultNames();
+//        }
 
     }
 }
