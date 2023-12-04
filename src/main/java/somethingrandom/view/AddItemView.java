@@ -1,6 +1,6 @@
 package somethingrandom.view;
 
-import somethingrandom.interfaceadapters.additem.AddItemController;
+import somethingrandom.interfaceadapters.ItemDialogController;
 import somethingrandom.interfaceadapters.additem.AddItemState;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
 
@@ -12,23 +12,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class AddItemView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "add item";
     private final AddItemViewModel addItemViewModel;
     private final JTextField itemTitleInput = new JTextField(100);
     private final JTextField itemDiscInput = new JTextField(10);
-    private final AddItemController addItemController;
+    private final ItemDialogController controller;
     private final JButton saveItem;
 
-    //private static JPanel panel = new JPanel();
-    //private static JFrame frame = new JFrame();
-    //private static JLabel itemTitle = new JLabel();
+    private final SortedMap<String, Duration> presets = new TreeMap<>();
 
-    //private static JLabel itemDisc = new JLabel();
-
-    public AddItemView(AddItemController itemController, AddItemViewModel addItemViewModel) {
-        this.addItemController = itemController;
+    public AddItemView(ItemDialogController itemController, AddItemViewModel addItemViewModel) {
+        this.controller = itemController;
         this.addItemViewModel = addItemViewModel;
         addItemViewModel.addPropertyChangeListener(this);
 
@@ -37,8 +37,41 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
 
         LabelTextPanel itemTitleInfo = new LabelTextPanel(
             new JLabel(AddItemViewModel.TITLE_LABEL), itemTitleInput);
-        LabelTextPanel itemDiscInfo = new LabelTextPanel(
-            new JLabel(AddItemViewModel.DISC_LABEL), itemDiscInput);
+
+        JPanel additional = new JPanel();
+        additional.setLayout(new GridLayout(0, 2, 16, 8));
+
+        JRadioButton referenceRadio = new JRadioButton(AddItemViewModel.REFERENCE);
+        additional.add(referenceRadio);
+        referenceRadio.setActionCommand("REFERENCE");
+        additional.add(itemDiscInput);
+
+        JSpinner datePicker = new JSpinner();
+        SpinnerDateModel dateModel = new SpinnerDateModel();
+        datePicker.setModel(dateModel);
+        datePicker.setEditor(new JSpinner.DateEditor(datePicker));
+        JRadioButton delayedRadio = new JRadioButton(AddItemViewModel.DELAYED);
+        additional.add(delayedRadio);
+        delayedRadio.setActionCommand("DELAYED");
+        additional.add(datePicker);
+
+        presets.put("5 minutes", Duration.of(5, ChronoUnit.MINUTES));
+        presets.put("30 minutes", Duration.of(30, ChronoUnit.MINUTES));
+        presets.put("1 hour", Duration.of(1, ChronoUnit.HOURS));
+        presets.put("2 hours", Duration.of(2, ChronoUnit.HOURS));
+        presets.put("4 hours", Duration.of(4, ChronoUnit.HOURS));
+        presets.put("1 day", Duration.of(4, ChronoUnit.DAYS));
+
+        JComboBox<String> durations = new JComboBox<>(presets.keySet().toArray(new String[0]));
+        JRadioButton actionableRadio = new JRadioButton(AddItemViewModel.ACTIONABLE);
+        additional.add(actionableRadio);
+        actionableRadio.setActionCommand("ACTIONABLE");
+        additional.add(durations);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(actionableRadio);
+        group.add(delayedRadio);
+        group.add(referenceRadio);
 
         JPanel buttons = new JPanel();
         saveItem = new JButton(AddItemViewModel.SAVE_BUTTON_LABEL);
@@ -51,9 +84,12 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
                     if (e.getSource().equals(saveItem)){
                         AddItemState currentState = addItemViewModel.getState();
 
-                        itemController.execute(
+                        itemController.finished(
                             currentState.getItemName(),
-                            currentState.getDescription()
+                            group.getSelection().getActionCommand(),
+                            currentState.getDescription(),
+                            dateModel.getDate().toInstant(),
+                            presets.get((String) durations.getSelectedItem())
                         );
                     }
                 }
@@ -103,7 +139,7 @@ public class AddItemView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(itemTitleInfo);
-        this.add(itemDiscInfo);
+        this.add(additional);
         this.add(buttons);
     }
 
