@@ -56,7 +56,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         buttons.setLayout(new FlowLayout(FlowLayout.LEADING));
 
         JButton edit = new JButton(ItemDetailsViewModel.EDIT_LABEL);
-        edit.addActionListener((event) -> openEditDialog());
+        edit.setEnabled(false);
         buttons.add(edit);
 
         JButton delete = new JButton(ItemDetailsViewModel.DELETE_LABEL);
@@ -117,10 +117,6 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         detailRows.revalidate();
     }
 
-    public void openEditDialog() {
-        System.out.println("Edit!");
-    }
-
     public void openDeleteDialog() {
         if(JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this item?", "Delete Item", JOptionPane.YES_NO_OPTION) == 0){
             deleteItemController.execute(UUID.fromString(viewModel.getState().get("ID")));
@@ -149,7 +145,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         ItemDetailsViewModel viewModel = new ItemDetailsViewModel();
         ItemDetailsOutputBoundary presenter = new ItemDetailsPresenter(viewModel, Locale.getDefault(), ZoneId.systemDefault());
         ItemDetailsInputBoundary usecase = new ItemDetailsInteractor(new DummyDAO(), presenter);
-        ItemDetailsController controller = new ItemDetailsController(usecase);
+        ItemDetailsController controller = new ItemDetailsController(usecase, viewModel);
 
 
         DeleteItemPresenter deleteItemPresenter = new DeleteItemPresenter(viewModel);

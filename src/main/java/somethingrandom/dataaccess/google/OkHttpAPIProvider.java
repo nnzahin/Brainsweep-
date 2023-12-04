@@ -48,8 +48,12 @@ class OkHttpAPIProvider implements APIProvider {
                 return null;
             }
 
-            if (!response.isSuccessful() || response.body() == null) {
+            if (!response.isSuccessful()) {
                 throw new IOException(response.message());
+            }
+
+            if (response.body() == null || response.body().contentLength() == 0) {
+                return new JSONObject();
             }
 
             return new JSONObject(response.body().string());

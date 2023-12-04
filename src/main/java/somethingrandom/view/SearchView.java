@@ -107,8 +107,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void valueChanged(ListSelectionEvent listSelectionEvent) {
-        SearchState.Result result = taskModel.get(taskList.getSelectedIndex());
+        int index = taskList.getSelectedIndex();
+        if (index == -1) {
+            detailsController.requestDetails(null);
+            return;
+        }
 
+        SearchState.Result result = taskModel.get(index);
         detailsController.requestDetails(result.uuid());
     }
 }

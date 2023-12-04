@@ -18,6 +18,8 @@ public class AddItemPresenter implements AddItemOutputBoundary{
 
     public void prepareSuccessView(String response){
         AddItemState addItemState = addItemViewModel.getState();
+        addItemState.setItemName("");
+        addItemState.setDescription("");
     }
 
     @Override

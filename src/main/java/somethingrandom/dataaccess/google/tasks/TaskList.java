@@ -64,7 +64,7 @@ public class TaskList {
         JSONObject response = provider.request(new APIRequestBody.GetBody(), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
 
         Collection<Item> allItems = new ArrayList<>();
-        for (Object item: response.getJSONArray("items")) {
+            for (Object item: response.getJSONArray("items")) {
             JSONObject jsonItem = (JSONObject) item;
             if (!idsToUUIDs.containsKey(jsonItem.getString("id"))) {
                 UUID id = UUID.randomUUID();

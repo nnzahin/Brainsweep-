@@ -24,8 +24,11 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
         ArrayList<SearchState.Result> results = new ArrayList<>();
 
         for (SearchItemsOutputData item : items){
-            results.add(new SearchState.Result(item.getName(), item.getUUID(), item.getRelevantInstant() != null ? item.getRelevantInstant().getEpochSecond() : Long.MAX_VALUE));
+            // TODO 2038 problem
+            results.add(new SearchState.Result(item.getName(), item.getUUID(), item.getRelevantInstant() != null ? item.getRelevantInstant().getEpochSecond() : Integer.MAX_VALUE));
         }
+
+        results.sort((a, b) -> (int) (a.date() - b.date()));
 
         searchState.setResults(results);
         searchState.setSearchError(null);

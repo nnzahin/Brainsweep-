@@ -31,12 +31,18 @@ import java.time.ZoneId;
 import java.util.Locale;
 
 public class Brainsweep {
-    public static void main(String[] args) {
+    private final JFrame brainSweep;
+    private final GoogleDataAccessObject dataAccess;
 
+    public static void main(String[] args) {
+        new Brainsweep();
+    }
+
+    private Brainsweep() {
         /*
         Constructing the main program view
          */
-        JFrame brainSweep = new JFrame("Brainsweep");
+        brainSweep = new JFrame("Brainsweep");
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -46,7 +52,6 @@ public class Brainsweep {
 
         OkHttpClient client = new OkHttpClient();
         LoginFlow loginFlow = new LoginFlow(client, ("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"), new S256CodeVerifier(new SecureRandom()), GoogleDataAccessObject.getScopes());
-        GoogleDataAccessObject dataAccess;
         try {
             dataAccess = new GoogleDataAccessObject(client, loginFlow.execute(), "Brainsweep");
 
@@ -61,7 +66,7 @@ public class Brainsweep {
         ItemDetailsViewModel detailsViewModel = new ItemDetailsViewModel();
         ItemDetailsOutputBoundary detailsPresenter = new ItemDetailsPresenter(detailsViewModel, Locale.getDefault(), ZoneId.systemDefault());
         ItemDetailsInputBoundary detailsUseCase = new ItemDetailsInteractor(dataAccess, detailsPresenter);
-        ItemDetailsController detailsController = new ItemDetailsController(detailsUseCase);
+        ItemDetailsController detailsController = new ItemDetailsController(detailsUseCase, detailsViewModel);
 
         DeleteItemOutputBoundary deleteItemPresenter = new DeleteItemPresenter(detailsViewModel);
         DeleteItemInputBoundary deleteItemUseCase = new DeleteItemInteractor(dataAccess, deleteItemPresenter);
@@ -75,7 +80,7 @@ public class Brainsweep {
         JPanel rightPane = new JPanel();
         rightPane.setLayout(new BorderLayout());
         JButton addButton = new JButton("Add Item...");
-        addButton.setEnabled(false);
+        addButton.addActionListener((ev) -> createAddDialog());
         rightPane.add(addButton, BorderLayout.NORTH);
         rightPane.add(new ItemDetailsView(detailsController, detailsViewModel, deleteItemController), BorderLayout.CENTER);
         contents.add(rightPane);
@@ -83,13 +88,16 @@ public class Brainsweep {
         brainSweep.pack();
         brainSweep.setVisible(true);
 
+    }
+
+    private void createAddDialog() {
         CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(cardLayout, views, viewManagerModel);
 
-        JFrame application = new JFrame("Add To-Do List Item");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JDialog application = new JDialog(brainSweep, "Add To-Do List Item");
+        application.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         application.add(views);
 
@@ -102,13 +110,6 @@ public class Brainsweep {
 
         application.pack();
         application.setVisible(true);
-
-
-        }
-
-        /*
-        Details would add something like brainSweep.add(detailsView) or whatever your detail implementation is
-         */
-
     }
+}
 

@@ -24,6 +24,7 @@ public class ItemDetailsInteractor implements ItemDetailsInputBoundary {
         try {
             itemOptional = dataAccess.getItemById(id);
         } catch (DataAccessException e) {
+            e.printStackTrace();
             presenter.presentFailure(e.getMessage());
             return;
         }
