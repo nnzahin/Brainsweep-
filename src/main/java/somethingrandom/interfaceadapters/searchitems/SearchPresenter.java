@@ -6,12 +6,15 @@ import somethingrandom.usecase.search.SearchItemsOutputBoundary;
 import somethingrandom.usecase.search.SearchItemsOutputData;
 
 import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class SearchPresenter implements SearchItemsOutputBoundary {
     private final SearchViewModel searchViewModel;
 
     private ViewManagerModel viewManagerModel;
+
 
     public SearchPresenter(SearchViewModel searchViewModel, ViewManagerModel viewManagerModel){
         this.searchViewModel = searchViewModel;
@@ -22,12 +25,23 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
 
     @Override
     public void presentSearchResults(Collection<SearchItemsOutputData> items) {
+
         SearchState searchState = searchViewModel.getState();
         searchState.setResults(items);
+
+        ArrayList<String> resultNames = new ArrayList<>();
+
+        for (SearchItemsOutputData item: searchState.getResults()){
+            resultNames.add(item.getName());
+        }
+
+        searchState.setResultNames(resultNames);
+        // Might be more efficient to store the name of each item mapped to its specific item entity
+
         this.searchViewModel.setState(searchState);
         this.searchViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(searchViewModel.getViewName());
+        this.viewManagerModel.setActiveView(searchViewModel.getViewName()); // would this apply in search?
         viewManagerModel.firePropertyChanged();
 
     }
@@ -40,7 +54,7 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
      */
     public void presentSearchFailure(String message){
         SearchState state = searchViewModel.getState();
-        state.getSearchError();
+        state.setSearchError(message);
         searchViewModel.firePropertyChanged();
     }
 
