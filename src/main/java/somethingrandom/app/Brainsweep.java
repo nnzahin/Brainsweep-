@@ -2,7 +2,6 @@ package somethingrandom.app;
 
 import okhttp3.OkHttpClient;
 import somethingrandom.dataaccess.google.GoogleDataAccessObject;
-import somethingrandom.dataaccess.google.auth.AuthenticationException;
 import somethingrandom.dataaccess.google.auth.LoginFlow;
 import somethingrandom.dataaccess.google.auth.S256CodeVerifier;
 import somethingrandom.interfaceadapters.ViewManagerModel;
@@ -16,8 +15,6 @@ import somethingrandom.view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class Brainsweep {
     public static void main(String[] args) {
@@ -30,9 +27,6 @@ public class Brainsweep {
         brainSweep.setLayout(grid);
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        brainSweep.setVisible(true);
-
-
 
         CardLayout cardLayout = new CardLayout();
 
@@ -54,6 +48,7 @@ public class Brainsweep {
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
         brainSweep.add(searchView);
         brainSweep.pack();
+        brainSweep.setVisible(true);
 
         /*
         Add
