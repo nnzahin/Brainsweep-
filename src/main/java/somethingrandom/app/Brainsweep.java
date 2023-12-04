@@ -26,7 +26,6 @@ import java.util.Collection;
 public class Brainsweep {
     public static void main(String[] args) {
 
-
         /*
         Constructing the main program view
          */
@@ -36,11 +35,13 @@ public class Brainsweep {
         brainSweep.setSize(800, 600);
         brainSweep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
         /*
         Left panel task display
          */
 
         JPanel left = new JPanel(grid);
+        brainSweep.add(left);
 
 
         CardLayout cardLayout = new CardLayout();
@@ -49,7 +50,7 @@ public class Brainsweep {
 
 
         OkHttpClient client = new OkHttpClient();
-        LoginFlow loginFlow = new LoginFlow(client, System.getenv("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"), new S256CodeVerifier(new SecureRandom()), GoogleDataAccessObject.getScopes());
+        LoginFlow loginFlow = new LoginFlow(client, ("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"), new S256CodeVerifier(new SecureRandom()), GoogleDataAccessObject.getScopes());
         GoogleDataAccessObject dataAccess;
         try {
             dataAccess = new GoogleDataAccessObject(client, loginFlow.execute(), "Brainsweep");
@@ -65,61 +66,43 @@ public class Brainsweep {
         JPanel views = new JPanel(cardLayout);
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(cardLayout, views, viewManagerModel);
-        AddItemDataAccessInterface addItemDataAccessObject;
 
+        JFrame application = new JFrame("Add To-Do List Item");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        try {
-            addItemDataAccessObject = new GoogleDataAccessObject(client, loginFlow.execute(), "Brainsweep");
+        application.add(views);
 
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
-        }
+        AddItemViewModel addItemViewModel = new AddItemViewModel();
+        AddItemView addItemView = AddItemUseCaseFactory.create(viewManagerModel, addItemViewModel, dataAccess);
+        views.add(addItemView, addItemView.viewName);
 
+        viewManagerModel.setActiveView(addItemView.viewName);
+        viewManagerModel.firePropertyChanged();
 
-            JFrame application = new JFrame("Add To-Do List Item");
-            application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-            application.add(views);
-
-            AddItemViewModel addItemViewModel = new AddItemViewModel();
-            AddItemView addItemView = AddItemUseCaseFactory.create(viewManagerModel, addItemViewModel, addItemDataAccessObject);
-            views.add(addItemView, addItemView.viewName);
-
-            viewManagerModel.setActiveView(addItemView.viewName);
-            viewManagerModel.firePropertyChanged();
-
-            application.pack();
-            application.setVisible(true);
-
+        application.pack();
+        application.setVisible(true);
 
         /*
         Search
          */
-            SearchItemsDataAccessInterface searchItemsDataAccessObject;
-            try {
-                searchItemsDataAccessObject = new GoogleDataAccessObject(client, loginFlow.execute(), "Brainsweep");
 
-            } catch (DataAccessException e) {
-                throw new RuntimeException(e);
-            }
+        SearchViewModel searchViewModel = new SearchViewModel();
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, dataAccess);
 
-            SearchViewModel searchViewModel = new SearchViewModel();
-            SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, searchItemsDataAccessObject);
+        JLabel emptyMessage = new JLabel("Add an item.");
+        left.add(emptyMessage);
+        emptyMessage.setVisible(false);
+        // There's probably a more efficient way to do this
+        // It's for when there are no items if I did SearchView correctly
 
-            JLabel emptyMessage = new JLabel("Add an item.");
-            left.add(emptyMessage);
-            emptyMessage.setVisible(false);
-            // There's probably a more efficient way to do this
-            // It's for when there are no items if I did SearchView correctly
+        if (searchView == null){
+            emptyMessage.setVisible(true);
+        }
+        // This should make The JList appear on the left panel if they have tasks
+        else{
+            left.add(searchView, searchView.viewName);
 
-            if (searchView == null){
-                emptyMessage.setVisible(true);
-            }
-            // This should make The JList appear on the left panel if they have tasks
-            else{
-                left.add(searchView, searchView.viewName);
-
-                left.setVisible(true);
+            left.setVisible(true);
 
             }
         }
