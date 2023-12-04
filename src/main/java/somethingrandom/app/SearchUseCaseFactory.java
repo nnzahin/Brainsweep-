@@ -22,22 +22,13 @@ public class SearchUseCaseFactory {
 
     private SearchUseCaseFactory(){}
 
-    public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject){
-        try {
-            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
-            return new SearchView(searchController, searchViewModel);
+    public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) {
+        SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, searchDataAccessObject);
+        return new SearchView(searchController, searchViewModel);
 
-            }
-            catch (IOException e){
-                JOptionPane.showMessageDialog(null, "Error");
-
-            }
-
-
-        return null;
     }
 
-    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) throws IOException {
+    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) {
         SearchItemsOutputBoundary searchItemsOutputBoundary = new SearchPresenter(searchViewModel, viewManagerModel);
         Clock clock = Clock.systemUTC();
         SearchItemsInputBoundary searchInteractor = new SearchItemsInteractor(searchDataAccessObject, searchItemsOutputBoundary, clock);
