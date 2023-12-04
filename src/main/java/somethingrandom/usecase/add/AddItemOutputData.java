@@ -1,4 +1,4 @@
-package somethingrandom.usecase;
+package somethingrandom.usecase.add;
 
 public class AddItemOutputData {
     private String name;

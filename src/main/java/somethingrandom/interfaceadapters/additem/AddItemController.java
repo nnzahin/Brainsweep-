@@ -1,9 +1,7 @@
 package somethingrandom.interfaceadapters.additem;
-import somethingrandom.usecase.AddItemInputBoundary;
-import somethingrandom.usecase.AddItemInputData;
-import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.add.AddItemInputBoundary;
+import somethingrandom.usecase.add.AddItemInputData;
 
-import java.util.Date;
 public class AddItemController {
 
     final AddItemInputBoundary addItemUseCaseInteractor;

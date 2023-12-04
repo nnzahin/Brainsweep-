@@ -1,4 +1,4 @@
-package somethingrandom.usecase;
+package somethingrandom.usecase.add;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;

@@ -1,10 +1,7 @@
 package somethingrandom.interfaceadapters.additem;
 
 import somethingrandom.interfaceadapters.ViewManagerModel;
-import somethingrandom.interfaceadapters.additem.AddItemState;
-import somethingrandom.interfaceadapters.additem.AddItemViewModel;
-import somethingrandom.usecase.AddItemOutputBoundary;
-import somethingrandom.usecase.AddItemOutputData;
+import somethingrandom.usecase.add.AddItemOutputBoundary;
 
 
 public class AddItemPresenter implements AddItemOutputBoundary{

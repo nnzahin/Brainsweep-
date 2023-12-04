@@ -1,6 +1,7 @@
-package somethingrandom.usecase;
+package somethingrandom.usecase.add;
 
 import somethingrandom.entity.Item;
+import somethingrandom.usecase.DataAccessException;
 
 public interface AddItemDataAccessInterface {
 

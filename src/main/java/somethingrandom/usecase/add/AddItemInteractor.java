@@ -1,13 +1,14 @@
-package somethingrandom.usecase;
+package somethingrandom.usecase.add;
 
 import org.jetbrains.annotations.Nullable;
 import somethingrandom.entity.CommonItemFactory;
 import somethingrandom.entity.Item;
+import somethingrandom.usecase.DataAccessException;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public class AddItemInteractor implements AddItemInputBoundary{
+public class AddItemInteractor implements AddItemInputBoundary {
     final AddItemDataAccessInterface addItemDataAccessObject;
 
     final AddItemOutputBoundary addItemPresenter;

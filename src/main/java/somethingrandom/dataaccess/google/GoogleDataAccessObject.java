@@ -7,7 +7,7 @@ import somethingrandom.dataaccess.google.tasks.GoogleTasksDataAccessObject;
 import somethingrandom.dataaccess.google.tasks.TaskAccount;
 import somethingrandom.dataaccess.google.tasks.TaskList;
 import somethingrandom.entity.Item;
-import somethingrandom.usecase.AddItemDataAccessInterface;
+import somethingrandom.usecase.add.AddItemDataAccessInterface;
 import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.delete.DeleteItemDataAccessInterface;
 import somethingrandom.usecase.details.ItemDetailsDataAccessInterface;

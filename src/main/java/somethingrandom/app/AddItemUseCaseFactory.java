@@ -5,10 +5,10 @@ import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.additem.AddItemController;
 import somethingrandom.interfaceadapters.additem.AddItemPresenter;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
-import somethingrandom.usecase.AddItemDataAccessInterface;
-import somethingrandom.usecase.AddItemInputBoundary;
-import somethingrandom.usecase.AddItemInteractor;
-import somethingrandom.usecase.AddItemOutputBoundary;
+import somethingrandom.usecase.add.AddItemDataAccessInterface;
+import somethingrandom.usecase.add.AddItemInputBoundary;
+import somethingrandom.usecase.add.AddItemInteractor;
+import somethingrandom.usecase.add.AddItemOutputBoundary;
 import somethingrandom.view.AddItemView;
 
 public class AddItemUseCaseFactory {
