@@ -1,6 +1,5 @@
 package somethingrandom.interfaceadapters.delete;
 
-import somethingrandom.usecase.DataAccessException;
 import somethingrandom.usecase.delete.DeleteItemInputBoundary;
 
 import java.util.UUID;
@@ -14,11 +13,6 @@ public class DeleteItemController {
     }
 
     public void execute(UUID id) {
-        try {
-            deleteItemUseCaseInteractor.execute(id);
-            presenter.prepareSuccessView();
-        } catch (DataAccessException e) {
-            presenter.prepareFailView();
-        }
+        deleteItemUseCaseInteractor.execute(id);
     }
 }
