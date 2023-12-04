@@ -1,8 +1,11 @@
 package somethingrandom.view;
+import somethingrandom.interfaceadapters.details.ItemDetailsController;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchState;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,17 +15,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
+public class SearchView extends JPanel implements ActionListener, PropertyChangeListener, ListSelectionListener {
     public final String viewName = "search";
     private final SearchViewModel searchViewModel;
     private final JTextField searchBar = new JTextField(15);
     private final JButton searchButton;
     private final SearchController searchController;
+    private final ItemDetailsController detailsController;
     private final DefaultListModel<SearchState.Result> taskModel = new DefaultListModel<>();
+    private final JList<SearchState.Result> taskList;
 
-    public SearchView(SearchController searchController, SearchViewModel searchViewModel) {
+    public SearchView(SearchController searchController, SearchViewModel searchViewModel, ItemDetailsController detailsController) {
         this.searchController = searchController;
         this.searchViewModel = searchViewModel;
+        this.detailsController = detailsController;
         searchViewModel.addPropertyChangeListener(this);
 
         searchController.execute("");
@@ -38,7 +44,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BorderLayout());
         this.add(searchPanel, BorderLayout.NORTH);
 
-        JList<SearchState.Result> taskList = new JList<>(taskModel);
+        taskList = new JList<>(taskModel);
+        taskList.addListSelectionListener(this);
 
         add(taskList, BorderLayout.CENTER);
 
@@ -96,5 +103,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         }
 
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent listSelectionEvent) {
+        SearchState.Result result = taskModel.get(taskList.getSelectedIndex());
+
+        detailsController.requestDetails(result.uuid());
     }
 }

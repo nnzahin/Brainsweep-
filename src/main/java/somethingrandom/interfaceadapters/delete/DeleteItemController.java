@@ -5,11 +5,10 @@ import somethingrandom.usecase.delete.DeleteItemInputBoundary;
 import java.util.UUID;
 
 public class DeleteItemController {
-    final DeleteItemInputBoundary deleteItemUseCaseInteractor;
-    final DeleteItemPresenter presenter;
-    public DeleteItemController(DeleteItemInputBoundary deleteItemUseCaseInteractor, DeleteItemPresenter presenter) {
+    private final DeleteItemInputBoundary deleteItemUseCaseInteractor;
+
+    public DeleteItemController(DeleteItemInputBoundary deleteItemUseCaseInteractor) {
         this.deleteItemUseCaseInteractor = deleteItemUseCaseInteractor;
-        this.presenter = presenter;
     }
 
     public void execute(UUID id) {

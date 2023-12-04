@@ -1,4 +1,5 @@
 package somethingrandom.app;
+import somethingrandom.interfaceadapters.details.ItemDetailsController;
 import somethingrandom.interfaceadapters.searchitems.SearchController;
 import somethingrandom.interfaceadapters.searchitems.SearchPresenter;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
@@ -14,9 +15,9 @@ public class SearchUseCaseFactory {
 
     private SearchUseCaseFactory(){}
 
-    public static SearchView create(SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject) {
+    public static SearchView create(SearchViewModel searchViewModel, SearchItemsDataAccessInterface searchDataAccessObject, ItemDetailsController detailsController) {
         SearchController searchController = createSearchUseCase(searchViewModel, searchDataAccessObject);
-        return new SearchView(searchController, searchViewModel);
+        return new SearchView(searchController, searchViewModel, detailsController);
 
     }
 

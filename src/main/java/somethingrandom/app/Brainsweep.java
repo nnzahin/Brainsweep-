@@ -6,15 +6,29 @@ import somethingrandom.dataaccess.google.auth.LoginFlow;
 import somethingrandom.dataaccess.google.auth.S256CodeVerifier;
 import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.interfaceadapters.additem.AddItemViewModel;
+import somethingrandom.interfaceadapters.delete.DeleteItemController;
+import somethingrandom.interfaceadapters.delete.DeleteItemPresenter;
+import somethingrandom.interfaceadapters.details.ItemDetailsController;
+import somethingrandom.interfaceadapters.details.ItemDetailsPresenter;
+import somethingrandom.interfaceadapters.details.ItemDetailsViewModel;
 import somethingrandom.interfaceadapters.searchitems.SearchViewModel;
 import somethingrandom.usecase.DataAccessException;
+import somethingrandom.usecase.delete.DeleteItemInputBoundary;
+import somethingrandom.usecase.delete.DeleteItemInteractor;
+import somethingrandom.usecase.delete.DeleteItemOutputBoundary;
+import somethingrandom.usecase.details.ItemDetailsInputBoundary;
+import somethingrandom.usecase.details.ItemDetailsInteractor;
+import somethingrandom.usecase.details.ItemDetailsOutputBoundary;
 import somethingrandom.view.AddItemView;
+import somethingrandom.view.ItemDetailsView;
 import somethingrandom.view.SearchView;
 import somethingrandom.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.security.SecureRandom;
+import java.time.ZoneId;
+import java.util.Locale;
 
 public class Brainsweep {
     public static void main(String[] args) {
@@ -44,8 +58,17 @@ public class Brainsweep {
         Search
          */
 
+        ItemDetailsViewModel detailsViewModel = new ItemDetailsViewModel();
+        ItemDetailsOutputBoundary detailsPresenter = new ItemDetailsPresenter(detailsViewModel, Locale.getDefault(), ZoneId.systemDefault());
+        ItemDetailsInputBoundary detailsUseCase = new ItemDetailsInteractor(dataAccess, detailsPresenter);
+        ItemDetailsController detailsController = new ItemDetailsController(detailsUseCase);
+
+        DeleteItemOutputBoundary deleteItemPresenter = new DeleteItemPresenter(detailsViewModel);
+        DeleteItemInputBoundary deleteItemUseCase = new DeleteItemInteractor(dataAccess, deleteItemPresenter);
+        DeleteItemController deleteItemController = new DeleteItemController(deleteItemUseCase);
+
         SearchViewModel searchViewModel = new SearchViewModel();
-        SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
+        SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess, detailsController);
         contents.add(searchView);
 
         // Add and Details
@@ -54,7 +77,7 @@ public class Brainsweep {
         JButton addButton = new JButton("Add Item...");
         addButton.setEnabled(false);
         rightPane.add(addButton, BorderLayout.NORTH);
-        rightPane.add(new JLabel("(placeholder)"), BorderLayout.CENTER);
+        rightPane.add(new ItemDetailsView(detailsController, detailsViewModel, deleteItemController), BorderLayout.CENTER);
         contents.add(rightPane);
 
         brainSweep.pack();

@@ -35,7 +35,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
     private final JPanel detailRows;
     private final JLabel errorMessage;
 
-    public ItemDetailsView(ItemDetailsController controller, ItemDetailsViewModel viewModel, DeleteItemController deleteItemController) throws DataAccessException {
+    public ItemDetailsView(ItemDetailsController controller, ItemDetailsViewModel viewModel, DeleteItemController deleteItemController) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.deleteItemController = deleteItemController;
@@ -154,7 +154,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
 
         DeleteItemPresenter deleteItemPresenter = new DeleteItemPresenter(viewModel);
         DeleteItemInputBoundary deleteItemUseCaseInteractor = new DeleteItemInteractor(new DummyDAO(), deleteItemPresenter);
-        DeleteItemController deleteItemController = new DeleteItemController(deleteItemUseCaseInteractor, deleteItemPresenter);
+        DeleteItemController deleteItemController = new DeleteItemController(deleteItemUseCaseInteractor);
 
         JPanel jp = new ItemDetailsView(controller, viewModel, deleteItemController);
         application.add(jp);
