@@ -1,11 +1,7 @@
 package somethingrandom.interfaceadapters.searchitems;
-
-import somethingrandom.usecase.search.SearchItemsInteractor;
 import somethingrandom.usecase.search.SearchItemsOutputData;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SearchState {
     private String search = "";

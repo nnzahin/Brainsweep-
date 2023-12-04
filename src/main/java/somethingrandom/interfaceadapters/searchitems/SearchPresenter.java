@@ -1,14 +1,9 @@
 package somethingrandom.interfaceadapters.searchitems;
 
-import somethingrandom.entity.Item;
-import somethingrandom.interfaceadapters.ViewManagerModel;
 import somethingrandom.usecase.search.SearchItemsOutputBoundary;
 import somethingrandom.usecase.search.SearchItemsOutputData;
-
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class SearchPresenter implements SearchItemsOutputBoundary {
     private final SearchViewModel searchViewModel;
