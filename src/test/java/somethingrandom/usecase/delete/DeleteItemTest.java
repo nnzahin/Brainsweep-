@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import somethingrandom.entity.ActionableItem;
 import somethingrandom.entity.Item;
+import somethingrandom.interfaceadapters.delete.DeleteItemPresenter;
+import somethingrandom.interfaceadapters.details.ItemDetailsViewModel;
 import somethingrandom.usecase.DataAccessException;
 
 import java.time.Duration;
@@ -35,8 +37,8 @@ public class DeleteItemTest {
 
     @Test
     public void testDeleteExistingItem() throws DataAccessException {
-        DeleteItemOutputBoundary presenter = new Presenter();
-        DeleteItemInputBoundary useCase = new DeleteItemInteractor(this.dao);
+        DeleteItemOutputBoundary presenter = new DeleteItemPresenter(new ItemDetailsViewModel());
+        DeleteItemInputBoundary useCase = new DeleteItemInteractor(this.dao, presenter);
         useCase.execute(id);
         assertEquals(new HashMap<>(), dao.getData());
     }

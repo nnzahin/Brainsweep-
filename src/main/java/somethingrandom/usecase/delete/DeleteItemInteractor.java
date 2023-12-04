@@ -1,15 +1,14 @@
 package somethingrandom.usecase.delete;
 
-import somethingrandom.interfaceadapters.delete.DeleteItemPresenter;
 import somethingrandom.usecase.DataAccessException;
 
 import java.util.UUID;
 
 public class DeleteItemInteractor implements DeleteItemInputBoundary{
     private final DeleteItemDataAccessInterface dao;
-    private final DeleteItemPresenter presenter;
+    private final DeleteItemOutputBoundary presenter;
 
-    public DeleteItemInteractor(DeleteItemDataAccessInterface dao, DeleteItemPresenter presenter) {
+    public DeleteItemInteractor(DeleteItemDataAccessInterface dao, DeleteItemOutputBoundary presenter) {
         this.dao = dao;
         this.presenter = presenter;
     }
@@ -17,12 +16,12 @@ public class DeleteItemInteractor implements DeleteItemInputBoundary{
     public void execute(UUID id) {
         try {
             if(dao.delete(id)) {
-                presenter.prepareSuccessView();
+                presenter.presentSuccessView();
             } else {
-                presenter.prepareFailView();
+                presenter.presentFailureView();
             }
         } catch (DataAccessException e) {
-            presenter.prepareFailView();
+            presenter.presentFailureView();
         }
     }
 }

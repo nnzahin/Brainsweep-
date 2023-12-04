@@ -2,7 +2,6 @@ package somethingrandom.usecase.delete;
 
 import somethingrandom.entity.Item;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class DataAccess implements DeleteItemDataAccessInterface{
     public Map<UUID, Item> getData(){
         return data;
     }
-    public Boolean delete(UUID id){
+    public boolean delete(UUID id){
         return data.remove(id) != null;
     }
 }

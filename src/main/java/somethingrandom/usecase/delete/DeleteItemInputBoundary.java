@@ -1,7 +1,5 @@
 package somethingrandom.usecase.delete;
 
-import somethingrandom.usecase.DataAccessException;
-
 import java.util.UUID;
 
 public interface DeleteItemInputBoundary {
@@ -11,5 +9,5 @@ public interface DeleteItemInputBoundary {
      *
      * @param id The ID of the item to delete.
      */
-    void execute(UUID id) throws DataAccessException;
+    void execute(UUID id);
 }
