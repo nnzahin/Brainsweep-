@@ -6,6 +6,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class AddItemViewModel extends ViewModel {
+
+    public static final String ADD_BUTTON_LABEL = "Add +";
     public static final String CANCEL_BUTTON_LABEL = "x";
     public static final String SAVE_BUTTON_LABEL = "Save";
     public static final String TITLE_LABEL = "Add Item";

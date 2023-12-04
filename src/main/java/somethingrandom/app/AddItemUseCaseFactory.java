@@ -23,7 +23,8 @@ public class AddItemUseCaseFactory {
         return new AddItemView(addItemController, addItemViewModel);
     }
 
-    private static AddItemController createAddItemUseCase(ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface addItemDataAccessObject) {
+    private static AddItemController createAddItemUseCase
+        (ViewManagerModel viewManagerModel, AddItemViewModel addItemViewModel, AddItemDataAccessInterface addItemDataAccessObject) {
         AddItemOutputBoundary addItemOutputBoundary = new AddItemPresenter(addItemViewModel,viewManagerModel);
         CommonItemFactory commonItemFactory = new CommonItemFactory();
 

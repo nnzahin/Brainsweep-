@@ -61,7 +61,8 @@ public class TaskList {
     }
 
     public Collection<Item> getAll() throws DataAccessException, IOException {
-        JSONObject response = provider.request(new APIRequestBody.JSONBody("GET", new JSONObject()), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+        JSONObject response = provider.request(new APIRequestBody.GetBody(), "https://tasks.googleapis.com/tasks/v1/lists/" + identifier + "/tasks");
+
         Collection<Item> allItems = new ArrayList<>();
         for (Object item: response.getJSONArray("items")) {
             JSONObject jsonItem = (JSONObject) item;
@@ -89,3 +90,21 @@ public class TaskList {
         idsToUUIDs.put(apiID, uuid);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

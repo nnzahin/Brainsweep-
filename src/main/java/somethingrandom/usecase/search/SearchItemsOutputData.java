@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-public class SearchItemsResult {
+public class SearchItemsOutputData {
     private final String name;
     private final UUID uuid;
     private @Nullable Instant couldBeReadyWhen = null;
@@ -20,7 +20,7 @@ public class SearchItemsResult {
      * @param name The name of the item.
      * @param uuid The identifier of the item.
      */
-    SearchItemsResult(String name, UUID uuid) {
+    SearchItemsOutputData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
     }
@@ -38,7 +38,7 @@ public class SearchItemsResult {
      * @param querySubmitted The time when the use-case was executed.
      * @param duration How long the item is expected to complete.
      */
-    SearchItemsResult(String name, UUID uuid, Instant querySubmitted, Duration duration) {
+    SearchItemsOutputData(String name, UUID uuid, Instant querySubmitted, Duration duration) {
         this.name = name;
         this.uuid = uuid;
         this.couldBeReadyWhen = querySubmitted.plus(duration);
@@ -53,7 +53,7 @@ public class SearchItemsResult {
      * @param uuid The identifier of the item.
      * @param reminder The relevant time of the item.
      */
-    SearchItemsResult(String name, UUID uuid, @NotNull Instant reminder) {
+    SearchItemsOutputData(String name, UUID uuid, @NotNull Instant reminder) {
         this.name = name;
         this.uuid = uuid;
         this.couldBeReadyWhen = reminder;
