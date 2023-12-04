@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SearchState {
     private String search = "";
-    private String searchError = "";
+    private String searchError = null;
     private Collection<SearchItemsOutputData> results;
     private ArrayList<String> resultNames;
 

@@ -28,6 +28,7 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
         }
 
         searchState.setResultNames(resultNames);
+        searchState.setSearchError(null);
         // Might be more efficient to store the name of each item mapped to its specific item entity
 
         this.searchViewModel.setState(searchState);

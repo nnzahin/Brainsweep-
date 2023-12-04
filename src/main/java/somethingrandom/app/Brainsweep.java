@@ -49,6 +49,7 @@ public class Brainsweep {
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
         brainSweep.add(searchView);
 
+        brainSweep.pack();
         brainSweep.setVisible(true);
 
 
