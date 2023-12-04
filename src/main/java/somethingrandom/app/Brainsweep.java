@@ -48,12 +48,18 @@ public class Brainsweep {
          /*
         Left panel task display
          */
-        JPanel displayTasks = new JPanel();
 
+
+
+        /*
+        Search
+         */
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchView searchView = SearchUseCaseFactory.create(searchViewModel, dataAccess);
+        // Was thinking something like searchView.getTopBar.setRightComponent(addButton); ?
+        brainSweep.add(searchView);
 
-        brainSweep.add(displayTasks);
+
 
         /*
         Add
