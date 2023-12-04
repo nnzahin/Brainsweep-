@@ -3,27 +3,31 @@ package somethingrandom.interfaceadapters.searchitems;
 import somethingrandom.usecase.search.SearchItemsInteractor;
 import somethingrandom.usecase.search.SearchItemsOutputData;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class SearchState {
     private String search = "";
     private String searchError = null;
-    private Collection<SearchItemsOutputData> results;
-    private ArrayList<String> resultNames;
+    private List<Result> results;
+
+    public record Result(String name, UUID uuid, long date) {
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
     public SearchState(){}
     public void setSearchQuery(String search){this.search = search;}
 
     public String getSearchQuery(){return this.search;}
-    public void setResults(Collection<SearchItemsOutputData> results){this.results = results;}
-    public Collection<SearchItemsOutputData> getResults(){return results;}
+    public void setResults(List<Result> results){
+        this.results = results;
+    }
 
-    public void setResultNames(ArrayList<String> resultNames) {
-        this.resultNames = resultNames;}
-
-    public ArrayList<String> getResultNames() {return resultNames;}
+    public List<Result> getResults() {
+        return this.results;
+    }
 
     public void setSearchError(String error) {this.searchError = error;}
 

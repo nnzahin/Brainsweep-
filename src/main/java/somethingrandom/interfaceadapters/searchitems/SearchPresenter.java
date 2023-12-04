@@ -9,6 +9,7 @@ import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SearchPresenter implements SearchItemsOutputBoundary {
     private final SearchViewModel searchViewModel;
@@ -19,15 +20,14 @@ public class SearchPresenter implements SearchItemsOutputBoundary {
     public void presentSearchResults(Collection<SearchItemsOutputData> items) {
 
         SearchState searchState = searchViewModel.getState();
-        searchState.setResults(items);
 
-        ArrayList<String> resultNames = new ArrayList<>();
+        ArrayList<SearchState.Result> results = new ArrayList<>();
 
-        for (SearchItemsOutputData item: searchState.getResults()){
-            resultNames.add(item.getName());
+        for (SearchItemsOutputData item : items){
+            results.add(new SearchState.Result(item.getName(), item.getUUID(), item.getRelevantInstant() != null ? item.getRelevantInstant().getEpochSecond() : Long.MAX_VALUE));
         }
 
-        searchState.setResultNames(resultNames);
+        searchState.setResults(results);
         searchState.setSearchError(null);
         // Might be more efficient to store the name of each item mapped to its specific item entity
 

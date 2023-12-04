@@ -18,7 +18,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField searchBar = new JTextField(15);
     private final JButton searchButton;
     private final SearchController searchController;
-    private final DefaultListModel<String> taskModel = new DefaultListModel<>();
+    private final DefaultListModel<SearchState.Result> taskModel = new DefaultListModel<>();
 
     public SearchView(SearchController searchController, SearchViewModel searchViewModel) {
         this.searchController = searchController;
@@ -26,11 +26,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchViewModel.addPropertyChangeListener(this);
 
         searchController.execute("");
-        System.out.println(searchViewModel.getState().getResultNames());
-
 
         SearchState searchState = searchViewModel.getState();
-        ArrayList<String> defaultTasks = searchState.getResultNames();
 
         // puts together search button and bar
         searchButton = new JButton(SearchViewModel.SEARCH_BUTTON_LABEL);
@@ -41,7 +38,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BorderLayout());
         this.add(searchPanel, BorderLayout.NORTH);
 
-        JList<String> taskList = new JList<>(taskModel);
+        JList<SearchState.Result> taskList = new JList<>(taskModel);
 
         add(taskList, BorderLayout.CENTER);
 
@@ -94,8 +91,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
 
             taskModel.removeAllElements();
-            for (String item : state.getResultNames())
+            for (SearchState.Result item : state.getResults()) {
                 taskModel.addElement(item);
+            }
         }
 
     }
