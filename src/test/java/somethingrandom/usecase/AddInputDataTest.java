@@ -1,8 +1,12 @@
 package somethingrandom.usecase;
+
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.time.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 public class AddInputDataTest{
 
     Duration duration = Duration.ofHours(5).plusMinutes(33);
@@ -14,29 +18,28 @@ public class AddInputDataTest{
 
     @Test
     public void getName(){
-
-        Assertions.assertEquals(referenceInput.getName(), "Reference");
-        Assertions.assertEquals(delayedInput.getName(), "Delayed");
-        Assertions.assertEquals(actionableInput.getName(), "Actionable");
+        assertEquals(referenceInput.getName(), "Reference");
+        assertEquals(delayedInput.getName(), "Delayed");
+        assertEquals(actionableInput.getName(), "Actionable");
     }
     @Test
     public void getDescription(){
-        Assertions.assertEquals(referenceInput.getDescription(), "Favorite books");
-        Assertions.assertNull(delayedInput.getDescription());
-        Assertions.assertNull(actionableInput.getDescription());
+        assertEquals(referenceInput.getDescription(), "Favorite books");
+        assertNull(delayedInput.getDescription());
+        assertNull(actionableInput.getDescription());
     }
     @Test
     public void getNeededTime() {
 
-        Assertions.assertEquals(actionableInput.getNeededTime(), duration);
-        Assertions.assertNull(delayedInput.getNeededTime());
-        Assertions.assertNull(referenceInput.getNeededTime());
+        assertEquals(actionableInput.getNeededTime(), duration);
+        assertNull(delayedInput.getNeededTime());
+        assertNull(referenceInput.getNeededTime());
     }
     @Test
     public void getRemindDate(){
-        Assertions.assertEquals(delayedInput.getRemindDate(), instant);
-        Assertions.assertNull(referenceInput.getRemindDate());
-        Assertions.assertNull(actionableInput.getRemindDate());
+        assertEquals(delayedInput.getRemindDate(), instant);
+        assertNull(referenceInput.getRemindDate());
+        assertNull(actionableInput.getRemindDate());
     }
 
 }
