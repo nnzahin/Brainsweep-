@@ -26,7 +26,7 @@ public class ItemDetailsControllerTest {
     @Before
     public void setup() {
         usecase = new DummyUseCase();
-        controller = new ItemDetailsController(usecase);
+        controller = new ItemDetailsController(usecase, new ItemDetailsViewModel());
     }
 
     @Test
