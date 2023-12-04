@@ -59,7 +59,7 @@ public class FileUserDataAccessObject implements DeleteItemDataAccessInterface {
         }
     }
 
-    public Boolean delete(UUID id) throws DataAccessException {
+    public boolean delete(UUID id) throws DataAccessException {
         if(items.remove(id) == null){
             return false;
         } else {

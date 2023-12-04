@@ -2,7 +2,8 @@ package somethingrandom.view;
 
 import somethingrandom.entity.Item;
 import somethingrandom.entity.ReferenceItem;
-import somethingrandom.interfaceadapters.deleteItem.DeleteItemController;
+import somethingrandom.interfaceadapters.delete.DeleteItemController;
+import somethingrandom.interfaceadapters.delete.DeleteItemPresenter;
 import somethingrandom.interfaceadapters.details.ItemDetailsController;
 import somethingrandom.interfaceadapters.details.ItemDetailsPresenter;
 import somethingrandom.interfaceadapters.details.ItemDetailsViewModel;
@@ -34,7 +35,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
     private final JPanel detailRows;
     private final JLabel errorMessage;
 
-    public ItemDetailsView(ItemDetailsController controller, ItemDetailsViewModel viewModel, DeleteItemController deleteItemController) {
+    public ItemDetailsView(ItemDetailsController controller, ItemDetailsViewModel viewModel, DeleteItemController deleteItemController) throws DataAccessException {
         this.controller = controller;
         this.viewModel = viewModel;
         this.deleteItemController = deleteItemController;
@@ -62,13 +63,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         delete.setEnabled(true);
         buttons.add(delete);
 
-        delete.addActionListener((event) -> {
-            try {
-                openDeleteDialog();
-            } catch (DataAccessException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        delete.addActionListener((event) -> openDeleteDialog());
 
         itemContainer = new JPanel();
         itemContainer.setLayout(new BorderLayout());
@@ -126,7 +121,7 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         System.out.println("Edit!");
     }
 
-    public void openDeleteDialog() throws DataAccessException {
+    public void openDeleteDialog() {
         if(JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this item?", "Delete Item", JOptionPane.YES_NO_OPTION) == 0){
             deleteItemController.execute(UUID.fromString(viewModel.getState().get("ID")));
         }
@@ -139,12 +134,12 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         }
 
         @Override
-        public Boolean delete(UUID uuid) throws DataAccessException {
+        public boolean delete(UUID uuid) throws DataAccessException {
             return true;
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DataAccessException {
         JFrame application = new JFrame("Details Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,8 +151,10 @@ public class ItemDetailsView extends JPanel implements PropertyChangeListener {
         ItemDetailsInputBoundary usecase = new ItemDetailsInteractor(new DummyDAO(), presenter);
         ItemDetailsController controller = new ItemDetailsController(usecase);
 
+
+        DeleteItemPresenter deleteItemPresenter = new DeleteItemPresenter(viewModel);
         DeleteItemInputBoundary deleteItemUseCaseInteractor = new DeleteItemInteractor(new DummyDAO());
-        DeleteItemController deleteItemController = new DeleteItemController(deleteItemUseCaseInteractor);
+        DeleteItemController deleteItemController = new DeleteItemController(deleteItemUseCaseInteractor, deleteItemPresenter);
 
         JPanel jp = new ItemDetailsView(controller, viewModel, deleteItemController);
         application.add(jp);
