@@ -48,7 +48,7 @@ public class SearchItemsInteractor implements SearchItemsInputBoundary{
         try {
             Instant baseTime = clock.instant();
             Collection<Item> items = dataAccess.getAllItems();
-            List<SearchItemsResult> results = new ArrayList<>();
+            List<SearchItemsOutputData> results = new ArrayList<>();
 
             String searchText = query.getSearchQuery().toLowerCase();
 
@@ -65,15 +65,15 @@ public class SearchItemsInteractor implements SearchItemsInputBoundary{
     }
 
     @NotNull
-    private static SearchItemsResult createSearchResult(Instant baseTime, Item item) {
+    private static SearchItemsOutputData createSearchResult(Instant baseTime, Item item) {
         if (item instanceof ActionableItem) {
-            return new SearchItemsResult(item.getName(), item.getID(), baseTime, ((ActionableItem) item).getNeededTime());
+            return new SearchItemsOutputData(item.getName(), item.getID(), baseTime, ((ActionableItem) item).getNeededTime());
         }
 
         if (item instanceof DelayedItem) {
-            return new SearchItemsResult(item.getName(), item.getID(), ((DelayedItem) item).getRemindDate());
+            return new SearchItemsOutputData(item.getName(), item.getID(), ((DelayedItem) item).getRemindDate());
         }
 
-        return new SearchItemsResult(item.getName(), item.getID());
+        return new SearchItemsOutputData(item.getName(), item.getID());
     }
 }
