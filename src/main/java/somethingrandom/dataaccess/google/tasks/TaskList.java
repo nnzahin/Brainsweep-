@@ -71,7 +71,15 @@ public class TaskList {
                 idsToUUIDs.put(jsonItem.getString("id"), id);
                 uuidsToIds.put(id, jsonItem.getString("id"));
             }
-            allItems.add(JsonItemFactory.createItem(idsToUUIDs.get(jsonItem.getString("id")), jsonItem));
+
+            try {
+                Item newItem = JsonItemFactory.createItem(idsToUUIDs.get(jsonItem.getString("id")), jsonItem);
+                if (newItem != null) {
+                    allItems.add(newItem);
+                }
+            } catch (DataAccessException e) {
+                // ignore
+            }
         }
         return allItems;
     }

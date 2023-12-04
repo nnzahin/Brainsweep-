@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import somethingrandom.entity.ActionableItem;
 import somethingrandom.entity.DelayedItem;
 import somethingrandom.entity.Item;
+import somethingrandom.entity.ReferenceItem;
 import somethingrandom.usecase.DataAccessException;
 
 import java.time.Duration;
@@ -35,7 +36,7 @@ public class JsonItemFactory {
             }
 
             return createItemHelper(uuid, object);
-        } catch (JSONException | DateTimeParseException e) {
+        } catch (JSONException | DateTimeParseException | NumberFormatException e) {
             throw new DataAccessException(e);
         }
     }
@@ -47,6 +48,8 @@ public class JsonItemFactory {
         Instant createdDate = Instant.now();
         Duration neededTime = null;
         String kind = "UNKNOWN";
+        String description = "";
+        Instant remindDate = null;
         for (String line : notes) {
             if (line.startsWith("Creation Date:")) {
                 createdDate = Instant.parse(line.split(" ")[2]);
@@ -59,10 +62,30 @@ public class JsonItemFactory {
             if (line.startsWith("Item kind:")) {
                 kind = line.split(":")[1].strip();
             }
+
+            if (line.startsWith("Description:")) {
+                description = line.split(":", 2)[1].strip();
+            }
+
+            if (line.startsWith("Remind Date:")) {
+                remindDate = Instant.parse(line.split(":", 2)[1].strip());
+            }
+        }
+
+        if (name.isBlank()) {
+            return null;
         }
 
         if (kind.equals("ACTIONABLE")) {
             return new ActionableItem(name, uuid, createdDate, neededTime);
+        }
+
+        if (kind.equals("REFERENCE")) {
+            return new ReferenceItem(name, uuid, createdDate, description);
+        }
+
+        if (kind.equals("DELAYED")) {
+            return new DelayedItem(name, uuid, createdDate, remindDate);
         }
 
         return new UnknownItem(name, uuid, createdDate, kind);
